@@ -3,20 +3,22 @@ layout: home
 permalink: index.html
 
 # Please update this with your repository name and project title
-repository-name: eYY-3yp-project-template
-title: Project Template
+repository-name: e19-3yp-First-Person-AR-Game-with-Localization
+title: First-Person AR Game with Localization
 ---
 
 [comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
-# Project Title
+# First-Person AR Game with Localization
 
 ---
 
 ## Team
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
--  eNumber, Name, [email](mailto:name@email.com)
+-  E/19/003, Harith Abeysinghe, [email](mailto:e19003@eng.pdn.ac.lk)
+-  E/19/095, Lakshitha Edirisinghe, [email](mailto:e19095@eng.pdn.ac.lk)
+-  E/19/163, Eshan Jayasundara, [email](mailto:e19163@eng.pdn.ac.lk)
+-  E/19/236, Lahiru Manikdiwela, [email](mailto:e19236@eng.pdn.ac.lk)
+-  E/19/443, Dasun Theekshana, [email](mailto:e19443@eng.pdn.ac.lk)
 
 <!-- Image (photo/drawing of the final hardware) should be here -->
 
