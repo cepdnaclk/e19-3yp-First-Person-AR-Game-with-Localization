@@ -20,11 +20,11 @@ title: First-Person AR Game with Localization
 -  E/19/236, Lahiru Manikdiwela, [email](mailto:e19236@eng.pdn.ac.lk)
 -  E/19/443, Dasun Theekshana, [email](mailto:e19443@eng.pdn.ac.lk)
 
-<!-- Image (photo/drawing of the final hardware) should be here -->
+<div align="center">
+  <img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/b2548dac-6936-4b7b-b2eb-65d7c75c424b" width="400"/>
+  <h2 style="display: inline-block; margin-left: 20px;"> Bridging Virtual Realms with Physical Fitness 🏃‍♂️</h2>
+</div>
 
-<!-- This is a sample image, to show how to add images to your page. To learn more options, please refer [this](https://projects.ce.pdn.ac.lk/docs/faq/how-to-add-an-image/) -->
-
-<!-- ![Sample Image](./images/sample.png) -->
 
 #### Table of Contents
 1. [Introduction](#introduction)
@@ -37,12 +37,22 @@ title: First-Person AR Game with Localization
 
 ## Introduction
 
-Description of the real world problem and solution, impact
+### Real World Problem 🌎:
+
+Many people spend too much time playing video games and not enough time exercising, especially in cities where there's not much space for physical activity.
+The gaming industry is growing fast, with new technologies like VR and AR making games more popular.
+
+### Proposed Solution💡:
+
+Making video games that involve physical activity, like using VR to move around, can help. Also, creating special places in cities where people can play these games and exercise at the same time is a good idea. Teaching people about balancing gaming and staying active is important.
+
+### Potential Impact 🚀:
+
+Creating games that involve physical activity and providing spaces for gaming and exercise can help more people stay healthy while enjoying games. It could reduce problems like obesity and other health issues related to not moving enough. This approach uses technology and gaming to encourage a healthier lifestyle.
 
 
 ## Solution Architecture
-
-High level diagram + description
+<img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/bbd2659f-5935-4a47-80a9-baf196b56f5a"/>
 
 ## Hardware and Software Designs
 
