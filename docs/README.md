@@ -7,8 +7,6 @@ repository-name: e19-3yp-First-Person-AR-Game-with-Localization
 title: First-Person AR Game with Localization
 ---
 
-[comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
-
 # First-Person AR Game with Localization
 
 ---
@@ -21,10 +19,9 @@ title: First-Person AR Game with Localization
 -  E/19/443, Dasun Theekshana, [email](mailto:e19443@eng.pdn.ac.lk)
 
 <div align="center">
-  <img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/b2548dac-6936-4b7b-b2eb-65d7c75c424b" width="400"/>
+  <img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/a8bd3889-4209-419f-a64f-c732ec513473" width="400"/>
   <h2 style="display: inline-block; margin-left: 20px;"> Bridging Virtual Realms with Physical Fitness 🏃‍♂️</h2>
 </div>
-
 
 #### Table of Contents
 1. [Introduction](#introduction)
@@ -52,7 +49,7 @@ Creating games that involve physical activity and providing spaces for gaming an
 
 
 ## Solution Architecture
-<img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/bbd2659f-5935-4a47-80a9-baf196b56f5a"/>
+<img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/b533f712-d774-40f1-8ca1-c3a2923909b6"/>
 
 ## Hardware and Software Designs
 
