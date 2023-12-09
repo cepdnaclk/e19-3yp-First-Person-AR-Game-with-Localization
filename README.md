@@ -1,13 +1,25 @@
----
-layout: home
-permalink: index.html
+<div align="center">
+  <h1 style="display: inline-block;">ActivePlay</h1>
+  <img src="Assets/logo.png" alt="logo"  width="200" />
+  <h2>Bridging Virtual Realms with Physical Fitness 🏃‍♂️</h2>
+</div>
 
-# Please update this with your repository name and project title
-repository-name: e19-3yp-First-Person-AR-Game-with-Localization
-title: First-Person AR Game with Localization
+<div align="center">
+
+[![Contributors][contributors-shield]](https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/graphs/contributors)&ensp;
+[![Forks][forks-shield]](https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/network/members)&ensp;
+[![Stargazers][stars-shield]](https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/stargazers)&ensp;
+[![Issues][issues-shield]](https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/issues)
+
+</div>
+
+[contributors-shield]: https://img.shields.io/github/contributors/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization.svg?style=for-the-badge
+
 ---
 
-[comment]: # "This is the standard layout for the project, but you can clean this and use your own template"
 
 # First-Person AR Game with Localization
 
