@@ -22,7 +22,7 @@
 # First-Person AR Game with Localization - ARCombat
 
 
-## Introduction 🎮
+## 🎮 Introduction 
 
 ### Real World Problem 🌎:
 Many people spend too much time playing video games and not enough time exercising, especially in cities where there’s not much space for physical activity. The gaming industry is growing fast, with new technologies like VR and AR making games more popular.
@@ -34,13 +34,12 @@ Making video games that involve physical activity, like using VR to move around,
 Creating games that involve physical activity and providing spaces for gaming and exercise can help more people stay healthy while enjoying games. It could reduce problems like obesity and other health issues related to not moving enough. This approach uses technology and gaming to encourage a healthier lifestyle.
 
 
+## 🎮 Software Features
 
 
-All items and costs
+## 🎮 Hardware Features
 
-| Item        | Quantity | Unit Cost |  Total |
-| ----------- | :------: | :-------: | -----: |
-| Sample item |    5     |  10 LKR   | 50 LKR |
+
 
 ## Contributors
 
