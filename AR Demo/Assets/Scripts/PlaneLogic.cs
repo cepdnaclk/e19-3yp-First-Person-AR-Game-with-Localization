@@ -28,7 +28,7 @@ public class PlaneLogic : MonoBehaviour
         arTapToPlace = FindObjectOfType<ARTaptoPlace>();
         arTapToPlace.enabled = false;
     }
-
+    /*
     private void OnEnable()
     {
         startButton.onClick.AddListener(OnStartButtonClicked);
@@ -51,6 +51,7 @@ public class PlaneLogic : MonoBehaviour
         arTapToPlace.enabled = true;
         startButton.interactable = false;
     }
+    */
 
     public bool VerticalPlaneToggle
     {
