@@ -1,5 +1,5 @@
 <div align="center">
-  <h1 style="display: inline-block;">ActivePlay</h1>
+  <h1 style="display: inline-block;">ARCombat</h1>
   <img src="Assets/logo.png" alt="logo"  width="200" />
   <h2>Bridging Virtual Realms with Physical Fitness 🏃‍♂️</h2>
 </div>
@@ -19,53 +19,22 @@
 [issues-shield]: https://img.shields.io/github/issues/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization.svg?style=for-the-badge
 
 ---
+# First-Person AR Game with Localization - ARCombat
 
 
-# First-Person AR Game with Localization
+## Introduction 🎮
 
----
+### Real World Problem 🌎:
+Many people spend too much time playing video games and not enough time exercising, especially in cities where there’s not much space for physical activity. The gaming industry is growing fast, with new technologies like VR and AR making games more popular.
 
-## Team
+### Proposed Solution💡:
+Making video games that involve physical activity, like using VR to move around, can help. Also, creating special places in cities where people can play these games and exercise at the same time is a good idea. Teaching people about balancing gaming and staying active is important.
 
-- E/19/003, Harith Abeysinghe, [email](mailto:e19003@eng.pdn.ac.lk)
-- E/19/095, Lakshitha Edirisinghe, [email](mailto:e19095@eng.pdn.ac.lk)
-- E/19/163, Eshan Jayasundara, [email](mailto:e19163@eng.pdn.ac.lk)
-- E/19/236, Lahiru Manikdiwela, [email](mailto:e19236@eng.pdn.ac.lk)
-- E/19/443, Dasun Theekshana, [email](mailto:e19443@eng.pdn.ac.lk)
+### Potential Impact 🚀:
+Creating games that involve physical activity and providing spaces for gaming and exercise can help more people stay healthy while enjoying games. It could reduce problems like obesity and other health issues related to not moving enough. This approach uses technology and gaming to encourage a healthier lifestyle.
 
-<!-- Image (photo/drawing of the final hardware) should be here -->
 
-<!-- This is a sample image, to show how to add images to your page. To learn more options, please refer [this](https://projects.ce.pdn.ac.lk/docs/faq/how-to-add-an-image/) -->
 
-<!-- ![Sample Image](./images/sample.png) -->
-
-#### Table of Contents
-
-1. [Introduction](#introduction)
-2. [Solution Architecture](#solution-architecture)
-3. [Hardware & Software Designs](#hardware-and-software-designs)
-4. [Testing](#testing)
-5. [Detailed budget](#detailed-budget)
-6. [Conclusion](#conclusion)
-7. [Links](#links)
-
-## Introduction
-
-Description of the real world problem and solution, impact
-
-## Solution Architecture
-
-High level diagram + description
-
-## Hardware and Software Designs
-
-Detailed designs with many sub-sections
-
-## Testing
-
-Testing done on hardware and software, detailed + summarized results
-
-## Detailed budget
 
 All items and costs
 
@@ -73,9 +42,20 @@ All items and costs
 | ----------- | :------: | :-------: | -----: |
 | Sample item |    5     |  10 LKR   | 50 LKR |
 
-## Conclusion
+## Contributors
 
-What was achieved, future developments, commercialization plans
+- E/19/003, Harith Abeysinghe, [email](mailto:e19003@eng.pdn.ac.lk)
+- E/19/095, Lakshitha Edirisinghe, [email](mailto:e19095@eng.pdn.ac.lk)
+- E/19/163, Eshan Jayasundara, [email](mailto:e19163@eng.pdn.ac.lk)
+- E/19/236, Lahiru Manikdiwela, [email](mailto:e19236@eng.pdn.ac.lk)
+- E/19/443, Dasun Theekshana, [email](mailto:e19443@eng.pdn.ac.lk)
+<div>
+  <a href="https://github.com/harith-abeysinghe">   <img src="https://github.com/harith-abeysinghe.png" alt="Harith" width="100" style="margin-right: 20px; border-radius: 50%;" />  </a>
+  <a href="https://github.com/lakshithaKaveen">     <img src="https://github.com/lakshithaKaveen.png" alt="Lakshitha" width="100" style="margin-right: 20px;" />                     </a>
+  <a href="https://github.com/EshanJayasundara">    <img src="https://github.com/EshanJayasundara.png" alt="Eshan" width="100" style="margin-right: 20px;" />                        </a>
+  <a href="https://github.com/lahirumenik">         <img src="https://github.com/lahirumenik.png" alt="Lahiru" width="100" style="margin-right: 20px;" />                            </a>
+  <a href="https://github.com/dasuntheekshanagit">  <img src="https://github.com/dasuntheekshanagit.png" alt="Dasun" width="100" style="margin-right: 20px;" />                      </a>
+</div>
 
 ## Links
 
@@ -84,5 +64,4 @@ What was achieved, future developments, commercialization plans
 - [Department of Computer Engineering](http://www.ce.pdn.ac.lk/)
 - [University of Peradeniya](https://eng.pdn.ac.lk/)
 
-[//]: # "Please refer this to learn more about Markdown syntax"
-[//]: # "https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet"
+
