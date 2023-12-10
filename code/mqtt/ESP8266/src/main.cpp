@@ -1,13 +1,10 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
+#include "../lib/credentials.h"
  
-const char* SSID = "Dasun's Galaxy M21";    // WiFi name
-const char* PASSWORD =  "sise9444";         // WiFi password
 const char* ID = "nodemcu01";               // Device ID
 const char* TOPIC = "node/nodemcu01";
 const char* NODESTATUS = "node/status";
-const char* mqttServer = "192.168.182.122"; // Broker IP
-const int mqttPort = 1883;                  // Broker port
 
 int OB_LED = 16;        // Assign LED1 to pin GPIO2
 int MQTT_LED = 2;    // Assign LED1 to pin GPIO16
