@@ -1,7 +1,7 @@
 <div align="center">
   <h1 style="display: inline-block;">ARCombat</h1>
   <img src="Assets/logo.png" alt="logo"  width="200" />
-  <h2>Bridging Virtual Realms with Physical Fitness 🏃‍♂️</h2>
+  <h2>Game for Wellness, Aim for Health 🏃‍♂️</h2>
 </div>
 
 <div align="center">
