@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1615,6 +1615,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e48110cbb4151e04e864b9042406bf52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arPlaneManager: {fileID: 1659859600}
   gameObjectToInstantiate: {fileID: 2912470072421854214, guid: 38e04c9aa6f1ad040a42c61783ed74d2,
     type: 3}
 --- !u!1 &1703699202
