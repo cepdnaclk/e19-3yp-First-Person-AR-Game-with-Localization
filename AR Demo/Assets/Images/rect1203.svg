@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="23.973206mm"
+   height="71.993637mm"
+   viewBox="0 0 23.973206 71.993637"
+   version="1.1"
+   id="svg1"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs1">
+    <linearGradient
+       id="swatch1036">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop1037" />
+    </linearGradient>
+    <linearGradient
+       id="swatch958">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop958" />
+    </linearGradient>
+    <linearGradient
+       id="swatch1">
+      <stop
+         style="stop-color:#40cadd;stop-opacity:0.98067597;"
+         offset="0"
+         id="stop1" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer1"
+     transform="translate(-130.31844,-208.57221)">
+    <rect
+       style="fill:none;fill-opacity:1;stroke:#000000;stroke-width:0.94643;stroke-dasharray:none;stroke-opacity:1"
+       id="rect1203"
+       width="14.304483"
+       height="5.1358738"
+       x="130.79169"
+       y="242.0011"
+       rx="2.7265954"
+       ry="2.5679369" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       id="use1204"
+       transform="translate(104.13046,103.91711)"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(5,-1051.2278,1385.1002)"
+       id="use1205"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(10,-455.0702,787.71878)"
+       id="use1206"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(15,-255.84561,588.0851)"
+       id="use1207"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(20,-155.85279,487.88706)"
+       id="use1208"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(25,-95.551077,427.46152)"
+       id="use1209"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(30,-55.093167,386.92055)"
+       id="use1210"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(35,-25.972677,357.74028)"
+       id="use1211"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(-35,303.61032,27.480666)"
+       id="use1212"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(-30,332.73079,-1.6995959)"
+       id="use1213"
+       style="fill:none;fill-opacity:0" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(-25,373.18872,-42.240574)"
+       id="use1214"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(-20,433.49043,-102.6661)"
+       id="use1215"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(-15,533.48322,-202.86419)"
+       id="use1216"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(-10,732.70783,-402.49775)"
+       id="use1217"
+       style="fill:none;fill-opacity:1" />
+    <use
+       x="0"
+       y="0"
+       xlink:href="#rect470"
+       transform="rotate(-5,1328.8654,-999.87929)"
+       id="use1218"
+       style="fill:none;fill-opacity:1" />
+  </g>
+</svg>
