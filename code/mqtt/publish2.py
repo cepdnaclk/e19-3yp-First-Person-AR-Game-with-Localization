@@ -9,7 +9,7 @@ from paho.mqtt import client as mqtt_client
 
 BROKER = '192.168.182.122'
 PORT = 1883
-TOPIC = "python/mqtt"
+TOPIC = "node/nodemcu01"
 # generate client ID with pub prefix randomly
 CLIENT_ID = f'python-mqtt-tcp-pub-sub-{random.randint(0, 1000)}'
 USERNAME = 'emqx'
