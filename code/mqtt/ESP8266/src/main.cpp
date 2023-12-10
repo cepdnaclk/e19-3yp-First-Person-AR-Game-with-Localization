@@ -9,8 +9,10 @@ const char* NODESTATUS = "node/status";
 const char* mqttServer = "192.168.182.122"; // Broker IP
 const int mqttPort = 1883;                  // Broker port
 
-int WIFI_LED = 2;      // Assign LED1 to pin GPIO2
-int MQTT_LED = 16;     // Assign LED1 to pin GPIO16
+int OB_LED = 16;        // Assign LED1 to pin GPIO2
+int MQTT_LED = 2;    // Assign LED1 to pin GPIO16
+
+int ob_sts = HIGH; 
 
 unsigned long lasttime = 0;
 
@@ -28,34 +30,31 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print((char)payload[i]);
   }
   Serial.println();
+  ob_sts = LOW;
 }
 
 void wifi_connect(){
-  analogWrite(WIFI_LED, 512);
- 
   WiFi.begin(SSID, PASSWORD);
  
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
   }
-
-  analogWrite(WIFI_LED, 0);
 }
 
 void mqtt_connect() {
-  analogWrite(MQTT_LED, 512);
+  digitalWrite(MQTT_LED, LOW);
 
   // while (!client.connected()) {
     if (client.connect(ID)) {
-      analogWrite(MQTT_LED, 0);
+      digitalWrite(MQTT_LED, HIGH);
 
-      client.publish(NODESTATUS, "1"); // Update Node Status
+      client.publish(NODESTATUS, ID); // Update Node Status
       client.subscribe(TOPIC);
     } else {
       Serial.print("failed, rc=");
       Serial.print(client.state());
-      Serial.println(" try again in 5 seconds");
-      delay(5000);
+      Serial.println(" try again in 500 miliseconds");
+      delay(500);
     }
   // }
 }
@@ -65,13 +64,13 @@ void setup() {
   Serial.begin(115200);
 
   // initialize GPIO2 and GPIO16 as an output
-  pinMode(WIFI_LED, OUTPUT);
+  pinMode(OB_LED, OUTPUT);
   pinMode(MQTT_LED, OUTPUT);
 
-  analogWrite(WIFI_LED, 512);
-  analogWrite(MQTT_LED, 512);
+  digitalWrite(OB_LED, HIGH);
+  digitalWrite(MQTT_LED, LOW);
 
-  delay(500);
+  // delay(500);
  
   wifi_connect();
  
@@ -94,13 +93,13 @@ void loop() {
     unsigned long now = millis();
     if (now - lasttime > 1000) {
       lasttime = now;
-      client.publish(NODESTATUS, "1");
-      analogWrite(WIFI_LED, 512);
-      analogWrite(MQTT_LED, 512);
+      client.publish(NODESTATUS, ID);
+      digitalWrite(OB_LED, ob_sts);
+      digitalWrite(MQTT_LED, LOW);
     }
     if (now - lasttime > 500) {
-      analogWrite(WIFI_LED, 0);
-      analogWrite(MQTT_LED, 0);
+      digitalWrite(OB_LED, HIGH);
+      digitalWrite(MQTT_LED, HIGH);
     }
   }
 }
