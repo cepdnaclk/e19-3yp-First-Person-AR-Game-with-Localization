@@ -46,10 +46,12 @@ public class ARTaptoPlace : MonoBehaviour
             if ((spawnedObject == null)){
                 spawnedObject = Instantiate(gameObjectToInstatiate, hitPose.position, hitPose.rotation);
             }
+            /*
             else
             {
                 spawnedObject.transform.position = hitPose.position;
             }
+            */
         }
     }
 }
