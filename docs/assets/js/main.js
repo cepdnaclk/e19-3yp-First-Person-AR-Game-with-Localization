@@ -28,6 +28,13 @@
   }
 
   /**
+  * Initiate  glightbox 
+  */
+  const glightbox = GLightbox({
+    selector: '.glightbox'
+  });
+
+  /**
    * Easy on scroll event listener 
    */
   const onscroll = (el, listener) => {
