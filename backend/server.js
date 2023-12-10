@@ -1,8 +1,15 @@
-const app = require('express')();
-const port = 3000;
+const express = require("express");
+const connectDb = require("./config/db");
 
-const bodyparser = require('express').json;
-app.use(bodyparser())
-app.listen(port, ()=>{
-    console.log('serve running')
-})
+const dotenv = require("dotenv").config();
+
+connectDb();
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+app.use(express.json());
+
+app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
