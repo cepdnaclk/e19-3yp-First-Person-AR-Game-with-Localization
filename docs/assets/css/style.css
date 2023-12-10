@@ -44,6 +44,11 @@ a:hover {
   opacity: 1;
 }
 
+.justified-text {
+  text-align: justify;
+  text-justify: inter-word; 
+}
+
 /* Header */
 
 #header {
@@ -59,7 +64,17 @@ a:hover {
 
 #footer{
   background: rgba(40, 58, 90, 0.9);
+}
+
+#footer a{
   color: #fff;
+  text-decoration: none;
+  padding: 5px 0px;
+  font-size: 20px;
+}
+
+#footer a:hover{
+  color: rgb(226, 199, 119);
 }
 
 /* Navigation Menu - Desktop Navigation  */
@@ -246,6 +261,10 @@ a:hover {
 
 #home .btn-watch-video:hover i {
   color: #47b2e4;
+}
+
+#home .animated {
+  animation: up-down 2s ease-in-out infinite alternate-reverse both;
 }
 
 @media (max-width: 991px) {
