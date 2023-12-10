@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 
-
 [RequireComponent(typeof(ARRaycastManager))]
 public class RandomObjectGeneration : MonoBehaviour
 {
@@ -27,38 +26,49 @@ public class RandomObjectGeneration : MonoBehaviour
     IEnumerator GenerateObjects()
     {
         int maxObjects = 3;
-        int objectsSpawned = 0;
 
-        while (objectsSpawned < maxObjects)
+        while (true)
         {
-            if (raycastManager.Raycast(new Vector2(Screen.width * 0.5f, Screen.height * 0.5f), hitList, TrackableType.PlaneWithinPolygon))
+            if (spawnedObjects.Count < maxObjects)
             {
-                var hitPose = hitList[0].pose;
+                bool objectSpawned = false;
 
-
-                Vector3 randomOffset = new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
-                Vector3 spawnPosition = hitPose.position + randomOffset;
-
-
-                bool positionValid = true;
-                foreach (GameObject obj in spawnedObjects)
+                if (raycastManager.Raycast(new Vector2(Screen.width * 0.5f, Screen.height * 0.5f), hitList, TrackableType.PlaneWithinPolygon))
                 {
-                    if (Vector3.Distance(obj.transform.position, spawnPosition) < 0.3f)
+                    var hitPose = hitList[0].pose;
+
+                    Vector3 randomOffset = new Vector3(Random.Range(-0.5f, 0.5f), 0, Random.Range(-0.5f, 0.5f));
+                    Vector3 spawnPosition = hitPose.position + randomOffset;
+
+                    bool positionValid = true;
+                    foreach (GameObject obj in spawnedObjects)
                     {
-                        positionValid = false;
-                        break;
+                        if (Vector3.Distance(obj.transform.position, spawnPosition) < 0.3f)
+                        {
+                            positionValid = false;
+                            break;
+                        }
+                    }
+
+                    if (positionValid)
+                    {
+                        GameObject newObject = Instantiate(gameObjectToInstantiate, spawnPosition, hitPose.rotation);
+                        spawnedObjects.Add(newObject);
+                        objectSpawned = true;
                     }
                 }
 
-                if (positionValid)
+                if (!objectSpawned)
                 {
-                    GameObject newObject = Instantiate(gameObjectToInstantiate, spawnPosition, hitPose.rotation);
-                    spawnedObjects.Add(newObject);
-                    objectsSpawned++;
+                    // If no object was spawned in the current iteration, yield for a shorter duration before retrying
+                    yield return new WaitForSeconds(0.1f);
                 }
             }
-
-            yield return new WaitForSeconds(0.5f);
+            else
+            {
+                // If max objects reached, yield for a longer duration before checking again
+                yield return new WaitForSeconds(0.5f);
+            }
         }
     }
 }
