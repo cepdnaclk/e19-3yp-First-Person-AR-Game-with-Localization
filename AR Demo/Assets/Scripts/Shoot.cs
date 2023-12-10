@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class Shoot : MonoBehaviour
 {
 
     public GameObject arCamera;
     private int score = 0;
-    
+    public TMPro.TextMeshProUGUI scoreText;
     
     
     // Start is called before the first frame update
@@ -22,6 +22,7 @@ public class Shoot : MonoBehaviour
             {
                 Destroy(hit.transform.gameObject);
                 score++;
+                scoreText.text = "Score: " + score;
             }
         }
     }
