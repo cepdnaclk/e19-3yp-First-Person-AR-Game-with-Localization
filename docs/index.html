@@ -156,77 +156,90 @@
     </section>
     
     <section id="implementation">
-      <section id="software">
+      <section id="solution">
+        <div class="container" data-aos="fade-up">
+          <div class="section-title">
+            <h2>Solution Architecture</h2>
+          </div>
+
+          <div class="row content">
+            <div class="col-md-6" data-aos="fade-right">
+              <img src="./assets/img/highleveloverview.png" class="img-fluid">
+            </div>
+            <div class="col-md-6 pt-6 fs-4">
+              <h2>High Level Architecture</h2>
+
+            </div> 
+          </div>
+
+          <div class="row content">
+            <div class="col-md-6 pt-5">
+              <h2>Dataflow</h2>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+              <img src="./assets/img/dataflow.png" class="img-fluid" alt="">
+            </div>
+          </div>
+
+          <div class="row content">
+            <div class="col-md-6" data-aos="fade-right">
+              <img src="./assets/img/controlflow.png" class="img-fluid">
+            </div>
+            <div class="col-md-6 pt-5 fs-4">
+              <h2>Control Flow</h2>
+            </div> 
+          </div>
+
+
+          <div class="row content">
+            <div class="col-md-6 pt-5">
+              <h2>Cloud Architecture</h2>
+            </div>
+            <div class="col-md-6" data-aos="fade-left">
+              <img src="./assets/img/cloudarchi.png" class="img-fluid" alt="">
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <section id="software" class="section-bg">
         <div class="container" data-aos="fade-up">
           <div class="section-title">
             <h2>Software Architecture</h2>
           </div>
+       
           <div class="row content">
-            <div class="col-lg-6">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
-              </p>
+            <div class="col-md-6">
+              <img src="./assets/img/software.png" class="img-fluid" alt="Software">
             </div>
-            <div class="col-lg-6 pt-4 pt-lg-0">
+            <div class="col-md-6 pt-5 fs-4">
               <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum.
+                <b>Unity</b>: Supports the development of AR games and applications. The AR foundation package is used to implement AR features.
+              </p>
+              <p>
+                <b>AWS</b>: For running OpenCV scripts, storing data and keeping a secure connection between IoT devices.
+              </p>
+              <p>
+                <b>OpenCV</b>: For video and image processing.
+              </p>
+              <p>
+                <b>ExpressJS</b>: For backend development.
               </p>
             </div>
           </div>
-          <div class="row content">
-            <p>
-              Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-              velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-              culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-          </div>
+
         </div>
       </section>
 
-      <section id="hardware" class="section-bg">
+      <section id="hardware">
         <div class="container" data-aos="fade-up">
           <div class="section-title">
             <h2>Hardware Architecture</h2>
           </div>
           <div class="row content">
             <div class="col-lg-6">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
-              </p>
-            </div>
-            <div class="col-lg-6 pt-4 pt-lg-0">
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-            </div>
-          </div>
-          <div class="row content">
-              <p>
-                Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-                velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-                culpa qui officia deserunt mollit anim id est laborum.
-              </p>
-          </div>
-        </div>
-      </section>
-
-      <section id="security">
-        <div class="container" data-aos="fade-up">
-          <div class="section-title">
-            <h2>Security</h2>
-          </div>
-          <div class="row content">
-            <div class="col-lg-6">
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-                magna aliqua.
-              </p>
+              <img src="./assets/img/gundiagram.jpg" class="img-fluid" alt="Software">
             </div>
             <div class="col-lg-6 pt-4 pt-lg-0">
               <p>
@@ -318,14 +331,22 @@
                 </tr>
                 <tr class = "table-body">
                   <th scope="row">06</th>
-                  <td>IR Sensors</td>
-                  <td>06</td>
-                  <td style="text-align: right;">500.00</td>
-                  <td style="text-align: right;">3000.00</td>
+                  <td>PIR Sensors</td>
+                  <td>02</td>
+                  <td style="text-align: right;">600.00</td>
+                  <td style="text-align: right;">1200.00</td>
                   <td></td>
                 </tr>
                 <tr class = "table-body">
                   <th scope="row">07</th>
+                  <td>IR Sensors</td>
+                  <td>04</td>
+                  <td style="text-align: right;">500.00</td>
+                  <td style="text-align: right;">2000.00</td>
+                  <td></td>
+                </tr>
+                <tr class = "table-body">
+                  <th scope="row">08</th>
                   <td>LiPo Battery</td>
                   <td>05</td>
                   <td style="text-align: right;">1125.00</td>
@@ -333,7 +354,7 @@
                   <td></td>
                 </tr>
                 <tr class = "table-body">
-                  <th scope="row">08</th>
+                  <th scope="row">09</th>
                   <td>Glove</td>
                   <td>02</td>
                   <td style="text-align: right;">700.00</td>
@@ -341,7 +362,7 @@
                   <td></td>
                 </tr>
                 <tr class = "table-body">
-                  <th scope="row">09</th>
+                  <th scope="row">10</th>
                   <td>Jumper Wires Set</td>
                   <td>02</td>
                   <td style="text-align: right;">200.00</td>
@@ -353,7 +374,7 @@
                   <td></td>
                   <td></td>
                   <th style="text-align: right;">Total</th>
-                  <th style="text-align: right;">33625.00</th>
+                  <th style="text-align: right;">33825.00</th>
                   <td></td>
                 </tr>
               </tbody>
