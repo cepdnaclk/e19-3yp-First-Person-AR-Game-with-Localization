@@ -15,6 +15,10 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add the user password"],
     },
+    arCombatKey: {
+      type: String,
+      required: [true, "Please add the user aRCombatKey"],
+    },
     gameIds: {
       type: [String],
       default: [],     
