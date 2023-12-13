@@ -10,3 +10,4 @@ lib/ca.srl
 lib/server.key
 lib/server.crt
 lib/server.csr
+lib/te.txt

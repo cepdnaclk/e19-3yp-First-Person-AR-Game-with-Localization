@@ -2,8 +2,8 @@
 #include <PubSubClient.h>
 #include "../lib/credentials.h"
  
-const char* ID = "nodemcu01";               // Device ID
-const char* TOPIC = "node/nodemcu01";
+const char* ID = "nodemcu03";               // Device ID
+const char* TOPIC = "node/nodemcu03";
 const char* NODESTATUS = "node/status";
 
 int OB_LED = 16;        // Assign LED1 to pin GPIO2
@@ -16,8 +16,10 @@ unsigned long lasttime = 0;
 // const char* mqttUser = "otfxknod";
 // const char* mqttPassword = "nSuUc1dDLygF";
  
-WiFiClient espClient;
+WiFiClientSecure espClient;
 PubSubClient client(espClient);
+
+BearSSL::X509List cert(ca_crt);
 
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
@@ -67,6 +69,8 @@ void setup() {
   digitalWrite(OB_LED, HIGH);
   digitalWrite(MQTT_LED, LOW);
 
+  // espClient.setCACert(ca_crt, sizeof(ca_crt)); // Set the CA certificate for verification
+  espClient.setInsecure(); // Allow insecure connection for testing purposes
   // delay(500);
  
   wifi_connect();
