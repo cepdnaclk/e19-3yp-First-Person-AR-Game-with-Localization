@@ -16,17 +16,21 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 435b7e69285c59b4588a39e3308b6576, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 435b7e69285c59b4588a39e3308b6576, type: 3}
       propertyPath: m_LocalScale.x
-      value: 50
+      value: 124.87999
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 435b7e69285c59b4588a39e3308b6576, type: 3}
       propertyPath: m_LocalScale.y
-      value: 50
+      value: 124.87999
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 435b7e69285c59b4588a39e3308b6576, type: 3}
       propertyPath: m_LocalScale.z
-      value: 50
+      value: 124.87999
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 435b7e69285c59b4588a39e3308b6576, type: 3}
       propertyPath: m_LocalPosition.x
