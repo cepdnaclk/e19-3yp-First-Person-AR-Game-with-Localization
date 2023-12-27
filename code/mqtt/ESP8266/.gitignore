@@ -4,3 +4,10 @@
 .vscode/launch.json
 .vscode/ipch
 lib/credentials.h
+lib/ca.key
+lib/ca.crt
+lib/ca.srl
+lib/server.key
+lib/server.crt
+lib/server.csr
+lib/te.txt

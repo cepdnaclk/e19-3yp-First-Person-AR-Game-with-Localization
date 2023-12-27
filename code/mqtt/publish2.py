@@ -9,7 +9,7 @@ from paho.mqtt import client as mqtt_client
 
 BROKER = '192.168.182.122'
 PORT = 1883
-TOPIC = "node/nodemcu01"
+TOPIC = "node/nodemcu02"
 # generate client ID with pub prefix randomly
 CLIENT_ID = f'python-mqtt-tcp-pub-sub-{random.randint(0, 1000)}'
 USERNAME = 'emqx'
@@ -61,6 +61,8 @@ def connect_mqtt():
     client = mqtt_client.Client(CLIENT_ID)
     # client.username_pw_set(USERNAME, PASSWORD)
     client.on_connect = on_connect
+    client.tls_set("ESP8266/lib/ca.crt")
+    client.tls_insecure_set(True)
     # client.on_message = on_message
     client.connect(BROKER, PORT, keepalive=120)
     client.on_disconnect = on_disconnect
