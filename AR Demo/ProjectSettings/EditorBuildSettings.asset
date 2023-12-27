@@ -6,7 +6,13 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/PlaneDetection.unity
+    path: Assets/Scenes/Login.unity
+    guid: 21d8adc7726b7878a98a7a3f545456b2
+  - enabled: 1
+    path: Assets/Scenes/Register.unity
+    guid: 2f37842a9dfa0e34c965d654d6690e10
+  - enabled: 1
+    path: Assets/Scenes/MapNewPlane.unity
     guid: 6bdce89659816455b9f906fc62d19910
   - enabled: 1
     path: Assets/Scenes/GameScreen.unity

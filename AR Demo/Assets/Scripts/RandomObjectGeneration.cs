@@ -14,6 +14,7 @@ public class RandomObjectGeneration : MonoBehaviour
 
     public GameObject gameObjectToInstantiate;
     private ARRaycastManager raycastManager;
+    private ARPlaneDetect arPlaneDetect;
 
 
     private List<GameObject> spawnedObjects = new List<GameObject>();
@@ -39,7 +40,15 @@ public class RandomObjectGeneration : MonoBehaviour
     }
     void Start()
     {
-        
+      arPlaneDetect = GetComponent<ARPlaneDetect>();
+        if (arPlaneDetect != null)
+        {
+            arPlaneDetect.LoadPlanes();
+        }
+        else
+        {
+            Debug.LogError("ARPlaneDetect component not found!");
+        }  
     }
 
   
