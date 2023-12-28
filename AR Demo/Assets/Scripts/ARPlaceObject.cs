@@ -16,7 +16,9 @@ public class ARPlaceObject : MonoBehaviour
     private GameObject spawnedObject;
     private ARRaycastManager raycastManager;
     private Vector2 touchPos;
-    public GameObject arCamera;
+
+    
+    public Camera arCamera;
 
 
     static List<ARRaycastHit> hitList = new List<ARRaycastHit>();
@@ -34,6 +36,8 @@ public class ARPlaceObject : MonoBehaviour
 
     private bool canMove = false;
     private bool canDelete = false;
+    private Vector2 touchPosition;
+    private PlacementObject lastSelectedObject;
 
     // Start is called before the first frame update
     private void Awake()
@@ -54,114 +58,14 @@ public class ARPlaceObject : MonoBehaviour
         return false;
     }
 
-    /*
-     void Update()
-     {
-         if (!TryGetTouchPos(out Vector2 touchPos))
-         {
-             return;
-         }
-         if (raycastManager.Raycast(touchPos, hitList, TrackableType.PlaneWithinPolygon) && gameObjectToInstatiate != null)
-         {
-             var hitPose = hitList[0].pose;
-
-             // Instantiate a new object of the selected type and add it to the dictionary
-             GameObject newObject = Instantiate(gameObjectToInstatiate, hitPose.position, hitPose.rotation);
-             if (spawnedObjects.ContainsKey(gameObjectToInstatiate))
-             {
-                 spawnedObjects[gameObjectToInstatiate].Add(newObject);
-             }
-             else
-             {
-                 List<GameObject> newList = new List<GameObject>();
-                 newList.Add(newObject);
-                 spawnedObjects.Add(gameObjectToInstatiate, newList);
-             }
-             objectPlaced = true;
-         }
-         if (Input.touchCount == 0)
-         {
-             objectPlaced = false; // Reset the flag when no longer touching the screen
-         }
-     }
-    */
-    /*
-     void Update()
-     {
-         if (!canPlace)
-         {
-             cooldownTimer -= Time.deltaTime;
-             if (cooldownTimer <= 0)
-             {
-                 canPlace = true;
-                 cooldownTimer = cooldownTime;
-             }
-         }
-
-         if (!TryGetTouchPos(out Vector2 touchPos))
-         {
-             return;
-         }
-
-         if (raycastManager.Raycast(touchPos, hitList, TrackableType.PlaneWithinPolygon) && gameObjectToInstantiate != null && canPlace)
-         {
-             var hitPose = hitList[0].pose;
-
-             // Instantiate a new object of the selected type and add it to the dictionary
-             GameObject newObject = Instantiate(gameObjectToInstantiate, hitPose.position, hitPose.rotation);
-             if (spawnedObjects.ContainsKey(gameObjectToInstantiate))
-             {
-                 spawnedObjects[gameObjectToInstantiate].Add(newObject);
-             }
-             else
-             {
-                 List<GameObject> newList = new List<GameObject>();
-                 newList.Add(newObject);
-                 spawnedObjects.Add(gameObjectToInstantiate, newList);
-             }
-             canPlace = false;
-         }
-     }
-     */
+    
     void Update()
     {
-        if (canMove || canDelete)
+        if(canMove|| canDelete)
         {
-            if (Input.touchCount > 0)
-            {
-                Touch touch = Input.GetTouch(0);
-
-                if (touch.phase == TouchPhase.Began)
-                {
-                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                    RaycastHit hit;
-
-                    if (Physics.Raycast(ray, out hit))
-                    {
-                        if (canMove)
-                        {
-                            if (hit.collider.gameObject.CompareTag("barrel(Clone)"))
-                            {
-                                // Move the object to the touched position
-                                hit.transform.position = hit.point;
-
-                            }
-                        }
-                        else if (canDelete)
-                        {
-                            if (hit.collider.gameObject.CompareTag("barrel(Clone)"))
-                            {
-                                Destroy(hit.transform.gameObject);
-                                // Remove it from the spawned objects dictionary if needed
-                            }
-                        }
-                    }
-                }
-            }
             return;
         }
-
-        // Your existing object placement logic
+        
         if (!canPlace)
         {
             cooldownTimer -= Time.deltaTime;
@@ -181,7 +85,7 @@ public class ARPlaceObject : MonoBehaviour
         {
             var hitPose = hitList[0].pose;
 
-            // Instantiate a new object of the selected type and add it to the dictionary
+
             GameObject newObject = Instantiate(gameObjectToInstantiate, hitPose.position, hitPose.rotation);
             if (spawnedObjects.ContainsKey(gameObjectToInstantiate))
             {
