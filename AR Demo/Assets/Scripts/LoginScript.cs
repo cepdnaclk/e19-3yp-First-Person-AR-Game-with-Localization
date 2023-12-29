@@ -21,7 +21,7 @@ public class LoginScript : MonoBehaviour
     IEnumerator LoginAndGetToken()
     {
         // Create login data in JSON format
-        string loginJson = "{\"username\":\"" + username + "\",\"password\":\"" + password + "\"}";
+        string loginJson = "{\"username\":\"" + username.text + "\",\"password\":\"" + password.text + "\"}";
 
         // Create a UnityWebRequest for login
         UnityWebRequest loginRequest = new UnityWebRequest(loginEndpoint, "POST");
