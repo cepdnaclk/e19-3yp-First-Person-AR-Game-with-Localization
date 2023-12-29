@@ -65,11 +65,11 @@ public class PlacementWithMultipleDraggingDroppingController : MonoBehaviour
         if(loadedGameObject != null)
         {
             PlacedPrefab = loadedGameObject;
-            Debug.Log($"Game object with name {gameObject.name} was loaded");
+           // Debug.Log($"Game object with name {gameObject.name} was loaded");
         }
         else 
         {
-            Debug.Log($"Unable to find a game object with name {gameObject.name}");
+            //Debug.Log($"Unable to find a game object with name {gameObject.name}");
         }
     }
 
