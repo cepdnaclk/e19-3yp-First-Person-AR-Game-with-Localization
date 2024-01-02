@@ -3,6 +3,7 @@ using UnityEngine.Networking;
 using System.Collections;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 [System.Serializable]
 public class TokenResponse
@@ -17,6 +18,12 @@ public class LoginScript : MonoBehaviour
     public string loginEndpoint = "https://your-backend-endpoint-url.com/api/login";
     [SerializeField] private TMP_InputField username;
     [SerializeField] private TMP_InputField password;
+    [SerializeField] private TMP_Text textBox;
+
+    IEnumerator Notification(String text){
+        textBox.text = text;
+        yield return text;
+    }
 
     IEnumerator LoginAndGetToken()
     {
@@ -37,6 +44,7 @@ public class LoginScript : MonoBehaviour
         if (loginRequest.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError("Login Error: " + loginRequest.error);
+            StartCoroutine(Notification("Login failed"));
         }
         else
         {
