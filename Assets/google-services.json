@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "84837774445",
+    "project_id": "ar-game-409612",
+    "storage_bucket": "ar-game-409612.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:84837774445:android:68a742614da182aa987b64",
+        "android_client_info": {
+          "package_name": "com.argame.ardemo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXQ8MHXpnQ3ukUpZlEYDNffsniyo5JYPc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
