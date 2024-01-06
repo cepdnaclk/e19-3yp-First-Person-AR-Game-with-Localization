@@ -18,6 +18,9 @@ Gemfile
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 
+# OpenCV+Unity directory
+AR\ Demo/[Aa]ssets/OpenCV+Unity/
+
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
 /[Mm]emoryCaptures/
