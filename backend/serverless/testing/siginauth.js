@@ -7,18 +7,22 @@ exports.handler = async  (event, context, callback) => {
   const cognitoResponse = await cognito.initiateAuth({
     AuthFlow: 'USER_PASSWORD_AUTH',
     AuthParameters: {
-      Username: event.username,
-      Password: event.password,
+      USERNAME: event.username,
+      PASSWORD: event.password,
     },
     ClientId: '1q2aum3ptjv1hpb4u3spldal8r',
   }).promise();
 
   // Generate access token
-  const accessToken = cognitoResponse.AuthenticationResult.AccessToken;
+  //const accessToken = cognitoResponse.AuthenticationResult.AccessToken;
+  const { AccessToken, RefreshToken } = cognitoResponse.AuthenticationResult
 
   // Include the access token in the response
   return {
     statusCode: 200,
-    body: JSON.stringify({ accessToken }),
+    body: {
+      accessToken: AccessToken,
+      refreshToken: RefreshToken
+    }
   };
 }
