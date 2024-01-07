@@ -54,10 +54,10 @@ exports.handler = async (event, context, callback) => {
 
         //add to user db
         const commandUser = new PutItemCommand(dynamoDBParamsUser);
-        const responsedbUser = await client.send(command);
+        const responsedbUser = await client.send(commandUser);
 
         const commandEnv = new PutItemCommand(dynamoDBParamsEnv);
-        const responsedbEnv = await client.send(command);
+        const responsedbEnv = await client.send(commandEnv);
 
         // Return a response
         const response = {
