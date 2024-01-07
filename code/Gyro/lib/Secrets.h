@@ -5,7 +5,10 @@
 
 const char WIFI_SSID[] = "Dasun's Galaxy M21";          
 const char WIFI_PASSWORD[] = "sise9444";       
-const char AWS_IOT_ENDPOINT[] = "a33hi7uoksyr8d-ats.iot.eu-north-1.amazonaws.com";
+// const char AWS_IOT_ENDPOINT[] = "a33hi7uoksyr8d-ats.iot.eu-north-1.amazonaws.com";
+const char AWS_IOT_ENDPOINT[] = "192.168.201.122";
+// const int AWS_IOT_PORT = 8883;
+const int AWS_IOT_PORT = 1883;
 
 // Amazon Root CA 1
 static const char AWS_CERT_CA[] PROGMEM = R"EOF(

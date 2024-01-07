@@ -3,11 +3,11 @@ import cv2
 # Load the pre-trained Haarcascades classifier for detecting faces
 face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
 
-# Open a video capture object
-cap = cv2.VideoCapture('your_video_feed.mp4')  # Replace 'your_video_feed.mp4' with your actual video feed source
+# Open a video capture object for webcam (use 0 for default webcam)
+cap = cv2.VideoCapture(0)
 
 while cap.isOpened():
-    # Read a frame from the video feed
+    # Read a frame from the webcam
     ret, frame = cap.read()
 
     if not ret:
@@ -24,7 +24,7 @@ while cap.isOpened():
         cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
 
     # Display the frame with borders
-    cv2.imshow('Video Feed with Borders', frame)
+    cv2.imshow('Real-time Face Detection', frame)
 
     # Break the loop if 'q' key is pressed
     if cv2.waitKey(1) & 0xFF == ord('q'):

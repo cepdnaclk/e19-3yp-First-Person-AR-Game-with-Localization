@@ -3,7 +3,8 @@
 #include <Wire.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
-#include <WiFiClientSecure.h>
+// #include <WiFiClientSecure.h>
+#include <WiFiClient.h>
 #include <ArduinoJson.h>
 
 #include "../lib/Secrets.h"
@@ -13,7 +14,8 @@
 
 Adafruit_MPU6050 mpu;
 
-WiFiClientSecure net = WiFiClientSecure();
+// WiFiClientSecure net = WiFiClientSecure();
+WiFiClient net;
 PubSubClient client(net);
 
 void messageHandler(char* topic, byte* payload, unsigned int length)
@@ -27,7 +29,7 @@ void messageHandler(char* topic, byte* payload, unsigned int length)
   Serial.println(message);
 }
 
-void connectAWS(){
+void connectWIFI(){
   WiFi.mode(WIFI_STA);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
  
@@ -38,18 +40,10 @@ void connectAWS(){
     delay(500);
     Serial.print(".");
   }
- 
-  // Configure WiFiClientSecure to use the AWS IoT device credentials
-  net.setCACert(AWS_CERT_CA);
-  net.setCertificate(AWS_CERT_CRT);
-  net.setPrivateKey(AWS_CERT_PRIVATE);
- 
-  // Connect to the MQTT broker on the AWS endpoint we defined earlier
-  client.setServer(AWS_IOT_ENDPOINT, 8883);
- 
-  // Create a message handler
-  client.setCallback(messageHandler);
- 
+  Serial.println();
+}
+
+void connectAWS(){
   Serial.println("Connecting to AWS IOT");
  
   while (!client.connect(THINGNAME))
@@ -88,8 +82,8 @@ void publishMessage(sensors_event_t a,sensors_event_t g)
 void setup(void) {
   Serial.begin(115200);
   
-  while (!Serial)
-    delay(10); // will pause Zero, Leonardo, etc until serial console opens
+  // while (!Serial)
+  //   delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
   Serial.println("Adafruit MPU6050 test!");
 
@@ -161,7 +155,22 @@ void setup(void) {
     break;
   }
 
+  connectWIFI();
+
+  // Configure the Broker
+  // Configure WiFiClientSecure to use the AWS IoT device credentials
+  // net.setCACert(AWS_CERT_CA);
+  // net.setCertificate(AWS_CERT_CRT);
+  // net.setPrivateKey(AWS_CERT_PRIVATE);
+ 
+  // Connect to the MQTT broker on the AWS endpoint we defined earlier
+  client.setServer(AWS_IOT_ENDPOINT, AWS_IOT_PORT);
+ 
+  // Create a message handler
+  client.setCallback(messageHandler);
+
   connectAWS();
+
   Serial.println("");
   delay(100);
 }
