@@ -1,7 +1,5 @@
 const AWS = require('aws-sdk');
-//const dynamodb = new AWS.DynamoDB.DocumentClient();
 const cognito = new AWS.CognitoIdentityServiceProvider();
-//import { DynamoDBClient, PutItemCommand } from "@aws-sdk/client-dynamodb"; 
 const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
 const client = new DynamoDBClient()
 
@@ -18,7 +16,7 @@ exports.handler = async (event, context, callback) => {
 
         // Add user to Cognito User Pool
         const signUpParams = {
-            ClientId: '1q2aum3ptjv1hpb4u3spldal8r',
+            ClientId: 'b88o4dc1gh1tme961egfh6le2',
             Username: email,
             Password: password,
             UserAttributes: [
@@ -26,38 +24,37 @@ exports.handler = async (event, context, callback) => {
                     Name: 'email',
                     Value: email
                 }
-                // Add more user attributes as needed
             ]
         };
 
         const signUpResponse = await cognito.signUp(signUpParams).promise();
 
-        // Add user to DynamoDB
-        const dynamoDBParams = {
-            "TableName": 'test',
+        // Add user to DynamoDBUser model
+        const dynamoDBParamsUser = {
+            "TableName": 'Arcombat-user',
             "Item": {
                 //"UserId": signUpResponse.UserSub,  // Use the Cognito User Sub as the DynamoDB key
                 "email": {"S": email},
                 "password": {"S": password},
-                // Add more attributes as needed
+                "gunid": {"S": gunid},
+                "gloveid": {"S": gloveid},
+                "headsetid": {"S": headsetid},
+                
             }
         };
-        
-//         const input = {
-//           "email": {
-//             "AlbumTitle": {
-//               "S": "Somewhat Famous"
-//             },
-//             "Artist": {
-//               "S": "No One You Know"
-//             },
-//             "SongTitle": {
-//               "S": "Call Me Today"
-//             }
-//           },
-//           "ReturnConsumedCapacity": "TOTAL",
-//           "TableName": "Music"
-// };
+        //add environment to DynamoDB model
+        const dynamoDBParamsEnv = {
+            "TableName": 'Arcombat-env',
+            "Item": {
+                //"UserId": signUpResponse.UserSub,  // Use the Cognito User Sub as the DynamoDB key
+                "email": {"S": email},
+                "password": {"S": password},
+                "gunid": {"S": gunid},
+                "gloveid": {"S": gloveid},
+                "headsetid": {"S": headsetid},
+                
+            }
+        };
 
         //await dynamodb.put(dynamoDBParams).promise();
         const command = new PutItemCommand(dynamoDBParams);
@@ -70,6 +67,8 @@ exports.handler = async (event, context, callback) => {
         };
 
         return response;
+
+    //error handleing
     } catch (error) {
         console.error('Error:', error);
         return {
