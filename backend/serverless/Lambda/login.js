@@ -5,6 +5,7 @@ exports.handler = async  (event, context, callback) => {
  
 
   // Use Cognito API to authenticate the user
+  try {
   const cognitoResponse = await cognito.initiateAuth({
     AuthFlow: 'USER_PASSWORD_AUTH',
     AuthParameters: {
@@ -25,4 +26,13 @@ exports.handler = async  (event, context, callback) => {
       refreshToken: RefreshToken
     }
   };
+} catch (error) {
+    // Handle errors appropriately
+    //console.error('Error:', error);
+
+    return {
+      statusCode: 400,
+      body: { error: 'invalid credentials' },
+    };
+  }
 }
