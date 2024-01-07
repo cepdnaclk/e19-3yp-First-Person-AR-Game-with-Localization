@@ -13,8 +13,8 @@ exports.handler = async (event, context, callback) => {
             TableName: 'Arcombat-env',
             Item: {
                 email: { S: email },
-                users: { L: users.map(user => ({ S: user })) }, // Assuming users is an array of strings
-                stationid: { L: stationid.map(id => ({ S: id})) } // Assuming stationid is an array of numbers
+                users: { L: users.map(user => ({ S: user })) }, 
+                stationid: { L: stationid.map(id => ({ S: id})) } 
             }
         };
 
