@@ -8,7 +8,7 @@ exports.handler = async  (event, context, callback) => {
   const cognitoResponse = await cognito.initiateAuth({
     AuthFlow: 'USER_PASSWORD_AUTH',
     AuthParameters: {
-      USERNAME: event.username,
+      USERNAME: event.email,
       PASSWORD: event.password,
     },
     ClientId: '35l37eb37u1bknkqleadfbcui5',
