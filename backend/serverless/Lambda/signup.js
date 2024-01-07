@@ -35,7 +35,6 @@ exports.handler = async (event, context, callback) => {
             "Item": {
                 //"UserId": signUpResponse.UserSub,  // Use the Cognito User Sub as the DynamoDB key
                 "email": {"S": email},
-                "password": {"S": password},
                 "gunid": {"S": gunid},
                 "gloveid": {"S": gloveid},
                 "headsetid": {"S": headsetid},
@@ -46,19 +45,19 @@ exports.handler = async (event, context, callback) => {
         const dynamoDBParamsEnv = {
             "TableName": 'Arcombat-env',
             "Item": {
-                //"UserId": signUpResponse.UserSub,  // Use the Cognito User Sub as the DynamoDB key
                 "email": {"S": email},
-                "password": {"S": password},
-                "gunid": {"S": gunid},
-                "gloveid": {"S": gloveid},
-                "headsetid": {"S": headsetid},
-                
+                "users": {"L":{}},
+                "stationid": {"L":{}}
+                           
             }
         };
 
-        //await dynamodb.put(dynamoDBParams).promise();
-        const command = new PutItemCommand(dynamoDBParams);
-        const responsedb = await client.send(command);
+        //add to user db
+        const commandUser = new PutItemCommand(dynamoDBParamsUser);
+        const responsedbUser = await client.send(command);
+
+        const commandEnv = new PutItemCommand(dynamoDBParamsEnv);
+        const responsedbEnv = await client.send(command);
 
         // Return a response
         const response = {
