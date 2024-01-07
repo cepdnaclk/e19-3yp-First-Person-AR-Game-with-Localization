@@ -7,7 +7,7 @@ import time
 
 from paho.mqtt import client as mqtt_client
 
-BROKER = '192.168.182.122'
+BROKER = 'localhost'
 PORT = 1883
 TOPIC = "node/nodemcu02"
 # generate client ID with pub prefix randomly

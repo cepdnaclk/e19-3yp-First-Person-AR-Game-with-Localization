@@ -1,13 +1,29 @@
 # python3.6
 
 import random
-
+import matplotlib.pyplot as plt
+import json
 from paho.mqtt import client as mqtt_client
 
+# Create empty lists for each of the values
+acceleration_x = [0] * 20
+acceleration_y = [0] * 20
+acceleration_z = [0] * 20
+rotation_x = [0] * 20
+rotation_y = [0] * 20
+rotation_z = [0] * 20
 
-broker = '192.168.182.122'
+correction_acc_x = 0
+correction_acc_y = 0
+correction_acc_z = 0
+correction_rot_x = 0.063418068
+correction_rot_y = 0.030643184
+correction_rot_z = -0.518802464
+
+broker = 'localhost'
 port = 1883
-topic = "python/mqtt"
+topic = "gyro/pub"
+
 # Generate a Client ID with the subscribe prefix.
 client_id = f'subscribe-{random.randint(0, 100)}'
 # username = 'emqx'
@@ -27,14 +43,50 @@ def connect_mqtt() -> mqtt_client:
     client.connect(broker, port)
     return client
 
-
 def subscribe(client: mqtt_client):
     def on_message(client, userdata, msg):
+        global acceleration_x, acceleration_y, acceleration_z
+        global rotation_x, rotation_y, rotation_z
+    
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+        data = json.loads(msg.payload.decode())  # decode JSON data
+
+        # Append new values to the lists
+        acceleration_x.append(data['Acceleration X: '] + correction_acc_x)
+        acceleration_y.append(data['Acceleration Y: '] + correction_acc_y)
+        acceleration_z.append(data['Acceleration Z: '] + correction_acc_z)
+        rotation_x.append(data['Rotation X: '] + correction_rot_x)
+        rotation_y.append(data['Rotation Y: '] + correction_rot_y)
+        rotation_z.append(data['Rotation Z: '] + correction_rot_z)
+
+        # Keep only the last 20 data points in each array
+        acceleration_x = acceleration_x[-20:]
+        acceleration_y = acceleration_y[-20:]
+        acceleration_z = acceleration_z[-20:]
+        rotation_x = rotation_x[-20:]
+        rotation_y = rotation_y[-20:]
+        rotation_z = rotation_z[-20:]
+
+        # Clear the current figure
+        plt.clf()
+
+        # Plot the new values
+        plt.plot(acceleration_x, label='Acceleration X')
+        plt.plot(acceleration_y, label='Acceleration Y')
+        plt.plot(acceleration_z, label='Acceleration Z')
+        # plt.plot(rotation_x, label='Rotation X')
+        # plt.plot(rotation_y, label='Rotation Y')
+        # plt.plot(rotation_z, label='Rotation Z')
+
+        # Add a legend
+        plt.legend()
+
+        # Draw the plot
+        plt.pause(0.01)  # pause a bit so that plots are updated
 
     client.subscribe(topic)
+    plt.show(block=False)  # start the plot outside the function
     client.on_message = on_message
-
 
 def run():
     client = connect_mqtt()
