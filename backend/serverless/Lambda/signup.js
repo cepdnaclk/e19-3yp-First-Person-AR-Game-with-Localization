@@ -6,17 +6,15 @@ const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
 const client = new DynamoDBClient()
 
 
-
-
-
-
 exports.handler = async (event, context, callback) => {
     try {
-        console.log(event);
         
         const requestBody = event;
         const email = requestBody.email;
         const password = requestBody.password;
+        const gunid = requestBody.gunid;
+        const gloveid = requestBody.gloveid;
+        const headsetid = requestBody.headsetid;
 
         // Add user to Cognito User Pool
         const signUpParams = {
