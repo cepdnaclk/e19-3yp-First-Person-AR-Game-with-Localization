@@ -16,7 +16,7 @@ exports.handler = async (event, context, callback) => {
 
         // Add user to Cognito User Pool
         const signUpParams = {
-            ClientId: 'b88o4dc1gh1tme961egfh6le2',
+            ClientId: '35l37eb37u1bknkqleadfbcui5',
             Username: email,
             Password: password,
             UserAttributes: [
@@ -46,18 +46,18 @@ exports.handler = async (event, context, callback) => {
             "TableName": 'Arcombat-env',
             "Item": {
                 "email": {"S": email},
-                "users": {"L":{}},
-                "stationid": {"L":{}}
+                // "users": {"L":{}},
+                // "stationid": {"L":{}}
                            
             }
         };
 
         //add to user db
         const commandUser = new PutItemCommand(dynamoDBParamsUser);
-        const responsedbUser = await client.send(command);
+        const responsedbUser = await client.send(commandUser);
 
         const commandEnv = new PutItemCommand(dynamoDBParamsEnv);
-        const responsedbEnv = await client.send(command);
+        const responsedbEnv = await client.send(commandEnv);
 
         // Return a response
         const response = {
