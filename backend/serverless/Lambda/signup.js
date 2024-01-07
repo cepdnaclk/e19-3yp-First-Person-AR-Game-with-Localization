@@ -16,7 +16,7 @@ exports.handler = async (event, context, callback) => {
 
         // Add user to Cognito User Pool
         const signUpParams = {
-            ClientId: 'b88o4dc1gh1tme961egfh6le2',
+            ClientId: '35l37eb37u1bknkqleadfbcui5',
             Username: email,
             Password: password,
             UserAttributes: [
