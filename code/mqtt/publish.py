@@ -6,9 +6,9 @@ import time
 from paho.mqtt import client as mqtt_client
 
 
-broker = '192.168.182.122'
+broker = '192.168.201.122'
 port = 1883
-topic = "python/mqtt"
+topic = "gyro/pub"
 # Generate a Client ID with the publish prefix.
 client_id = f'publish-{random.randint(0, 1000)}'
 # username = 'emqx'
