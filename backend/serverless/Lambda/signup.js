@@ -46,8 +46,8 @@ exports.handler = async (event, context, callback) => {
             "TableName": 'Arcombat-env',
             "Item": {
                 "email": {"S": email},
-                "users": {"L":{}},
-                "stationid": {"L":{}}
+                // "users": {"L":{}},
+                // "stationid": {"L":{}}
                            
             }
         };
