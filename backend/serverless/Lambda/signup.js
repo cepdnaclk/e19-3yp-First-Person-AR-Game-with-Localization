@@ -7,8 +7,13 @@ const client = new DynamoDBClient()
 exports.handler = async (event, context, callback) => {
     try {
         
-        const requestBody = event;
+        
+        const requestBody = JSON.parse(event.body);
         const email = requestBody.email;
+        // console.log(event);
+        // console.log(event.body);
+        // console.log(email);
+        // console.log(JSON.stringify(requestBody.email));
         const password = requestBody.password;
         const gunid = requestBody.gunid;
         const gloveid = requestBody.gloveid;
@@ -17,9 +22,9 @@ exports.handler = async (event, context, callback) => {
         // Add user to Cognito User Pool
         const signUpParams = {
             ClientId: '35l37eb37u1bknkqleadfbcui5',
-            Username: email,
-            Password: password,
-            UserAttributes: [
+            "Username": email,
+            "Password": password,
+            "UserAttributes": [
                 {
                     Name: 'email',
                     Value: email
@@ -72,7 +77,7 @@ exports.handler = async (event, context, callback) => {
         console.error('Error:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify('Internal Server Error')
+            body: {"msg":JSON.stringify('Internal Server Error')}
         };
     }
 };
