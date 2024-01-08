@@ -2,9 +2,10 @@ const { CognitoIdentityProviderClient, ConfirmForgotPasswordCommand } = require(
 const client = new CognitoIdentityProviderClient();
 
 exports.handler = async (event, context, callback) => {
-    const email = event.email;
-    const password = event.password;
-    const confirmcode = event.confirmcode;
+    const requestBody = JSON.parse(event.body);
+    const email = requestBody.email;
+    const password = requestBody.password;
+    const confirmcode = requestBody.confirmcode;
     try {
         const input = { // ConfirmForgotPasswordRequest
             ClientId: '35l37eb37u1bknkqleadfbcui5',
@@ -17,7 +18,7 @@ exports.handler = async (event, context, callback) => {
 
         return {
             statusCode: 200,
-            body: { message: 'change password success' },
+            body: JSON.stringify({ message: 'change password success' }),
           };
 
     }catch (error) {
