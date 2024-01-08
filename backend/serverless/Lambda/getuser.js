@@ -7,12 +7,12 @@ exports.handler = async (event, context, callback) => {
         const params = {
             AccessToken: accessToken,
         };
-        const userData = await cognito.getUser(params).promise();
-        const email = userData.Username
+        const command = new GetUserCommand(params);
+        const response = await client.send(command)
         return {
             statusCode: 200,
             body: {
-                "email": email,
+                "email": response.UserAttributes,
             }
         };
     }catch (error) {
