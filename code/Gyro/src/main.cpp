@@ -11,6 +11,19 @@
 
 #define AWS_IOT_PUBLISH_TOPIC   "gyro/pub"
 #define AWS_IOT_SUBSCRIBE_TOPIC "gyro/sub"
+#define ZOOM_PUBLISH_TOPIC   "gyro/zoom"
+
+#define GUN_PIN 34
+#define ZOOM_PIN 36
+
+// Define constants
+const int GUN_STEPS = 4095 / 5;
+
+// Pin Definitions
+int latchPin = 33;
+int clockPin = 25;
+int dataPin = 32;
+int triger = 35;
 
 Adafruit_MPU6050 mpu;
 
@@ -18,13 +31,39 @@ Adafruit_MPU6050 mpu;
 WiFiClient net;
 PubSubClient client(net);
 
-// Define your offsets here
+// Define offsets
 float accel_x_offset = 0.0;
 float accel_y_offset = 0.0;
 float accel_z_offset = 0.0;
 float gyro_x_offset = 0.0;
 float gyro_y_offset = 0.0;
 float gyro_z_offset = 0.0;
+
+// Variables Declaration
+byte bulletsLEDs = 0b1111111111;
+
+int getGun(){
+  int zoomVal = analogRead(GUN_PIN);
+  int zoomCategory = zoomVal / GUN_STEPS + 1;
+  return zoomCategory;
+}
+
+void updateBullets()
+{
+  bulletsLEDs = bulletsLEDs << 1;
+  digitalWrite(latchPin, LOW);
+  shiftOut(dataPin, clockPin, LSBFIRST, bulletsLEDs);
+  digitalWrite(latchPin, HIGH);
+}
+
+void updateShiftRegister()
+{
+  bulletsLEDs = bulletsLEDs << 1;
+  client.publish(AWS_IOT_PUBLISH_TOPIC, "ISR");
+  digitalWrite(latchPin, LOW);
+  shiftOut(dataPin, clockPin, LSBFIRST, bulletsLEDs);
+  digitalWrite(latchPin, HIGH);
+}
 
 void messageHandler(char* topic, byte* payload, unsigned int length)
 {
@@ -131,19 +170,24 @@ void calibrateSensor() {
 
 void setup(void) {
   Serial.begin(115200);
-  
-  // while (!Serial)
-  //   delay(10); // will pause Zero, Leonardo, etc until serial console opens
+
+  pinMode(latchPin, OUTPUT);
+  pinMode(dataPin, OUTPUT);  
+  pinMode(clockPin, OUTPUT);
+
+  // pinMode(triger, INPUT);
+
+  // attachInterrupt(digitalPinToInterrupt(triger), updateShiftRegister, HIGH);
 
   Serial.println("Adafruit MPU6050 test!");
 
   // Try to initialize!
-  if (!mpu.begin()) {
-    Serial.println("Failed to find MPU6050 chip");
-    while (1) {
-      delay(10);
-    }
-  }
+  // if (!mpu.begin()) {
+  //   Serial.println("Failed to find MPU6050 chip");
+  //   while (1) {
+  //     delay(10);
+  //   }
+  // }
   Serial.println("MPU6050 Found!");
 
   mpu.setAccelerometerRange(MPU6050_RANGE_2_G);
@@ -205,6 +249,8 @@ void setup(void) {
   //   break;
   // }
 
+  calibrateSensor();
+
   connectWIFI();
 
   // Configure the Broker
@@ -222,36 +268,20 @@ void setup(void) {
   connectAWS();
 
   Serial.println("");
+
+  updateBullets();
+  client.publish(AWS_IOT_PUBLISH_TOPIC, "Hello from ESP32");
   delay(100);
 }
 
 void loop() {
   /* Get new sensor events with the readings */
-  sensors_event_t a, g, temp;
-  mpu.getEvent(&a, &g, &temp);
+  // sensors_event_t a, g, temp;
+  // mpu.getEvent(&a, &g, &temp);
 
-  // /* Print out the values */
-  // Serial.print("Acceleration X: ");
-  // Serial.print(a.acceleration.x);
-  // Serial.print(", Y: ");
-  // Serial.print(a.acceleration.y);
-  // Serial.print(", Z: ");
-  // Serial.print(a.acceleration.z);
-  // Serial.println(" m/s^2");
-
-  // Serial.print("Rotation X: ");
-  // Serial.print(g.gyro.x);
-  // Serial.print(", Y: ");
-  // Serial.print(g.gyro.y);
-  // Serial.print(", Z: ");
-  // Serial.print(g.gyro.z);
-  // Serial.println(" rad/s");
-
-  // Serial.print("Temperature: ");
-  // Serial.print(temp.temperature);
-  // Serial.println(" degC");
-
-  // Serial.println("");
-  publishMessage(a, g);
-  delay(50);
+  // publishMessage(a, g);
+  // delay(50);
+  int zoomVal = analogRead(ZOOM_PIN);
+  client.publish(ZOOM_PUBLISH_TOPIC, String(zoomVal).c_str());
+  delay(100);
 }
