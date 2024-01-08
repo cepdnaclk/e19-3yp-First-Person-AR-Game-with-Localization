@@ -4,7 +4,7 @@ const client = new DynamoDBClient();
 
 exports.handler = async (event, context, callback) => {
     try {
-        const requestBody = event;
+        const requestBody = JSON.parse(event.body);
         const email = requestBody.email;
         const users = requestBody.users;
         const stationid = requestBody.stationid;
@@ -23,7 +23,7 @@ exports.handler = async (event, context, callback) => {
 
         return {
             statusCode: 200,
-            body: { message: 'new game created successfully' },
+            body: JSON.stringify({ message: 'new game created successfully' }),
         };
     } catch (error) {
         console.error('Error:', error);

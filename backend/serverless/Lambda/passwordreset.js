@@ -2,7 +2,8 @@ const AWS = require('aws-sdk');
 const cognito = new AWS.CognitoIdentityServiceProvider();
 
 exports.handler = async (event, context) => {
-  const { email } = event;
+  const requestBody = JSON.parse(event.body);
+  const  email  = event.email;
 
   try {
     
