@@ -24,26 +24,27 @@ public class ARTaptoPlace : MonoBehaviour
 
     bool TryGetTouchPos(out Vector2 touchPos)
     {
-        if(Input.touchCount > 0)
+        if (Input.touchCount > 0)
         {
             touchPos = Input.GetTouch(0).position;
             return true;
         }
-        touchPos = default; 
+        touchPos = default;
         return false;
     }
 
 
     void Update()
     {
-      if(!TryGetTouchPos(out Vector2 touchPos))
+        if (!TryGetTouchPos(out Vector2 touchPos))
         {
             return;
         }
         if (raycastManager.Raycast(touchPos, hitList, TrackableType.PlaneWithinPolygon))
         {
             var hitPose = hitList[0].pose;
-            if ((spawnedObject == null)){
+            if ((spawnedObject == null))
+            {
                 spawnedObject = Instantiate(gameObjectToInstatiate, hitPose.position, hitPose.rotation);
             }
             /*

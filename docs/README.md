@@ -19,7 +19,7 @@ title: First-Person AR Game with Localization
 -  E/19/443, Dasun Theekshana, [email](mailto:e19443@eng.pdn.ac.lk)
 
 <div align="center">
-  <img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/a8bd3889-4209-419f-a64f-c732ec513473" width="400"/>
+  <img src="https://github.com/cepdnaclk/e19-3yp-First-Person-AR-Game-with-Localization/assets/115539769/daccc42f-19e1-4cc0-82bf-eccc388c98a8" width="400"/>
   <h2 style="display: inline-block; margin-left: 20px;"> Bridging Virtual Realms with Physical Fitness 🏃‍♂️</h2>
 </div>
 
