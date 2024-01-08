@@ -15,6 +15,11 @@ exports.handler = async (event, context, callback) => {
           const command = new ConfirmForgotPasswordCommand(input);
           const response = await client.send(command);
 
+        return {
+            statusCode: 200,
+            body: { message: 'change password success' },
+          };
+
     }catch (error) {
         return {
             statusCode: 500,
