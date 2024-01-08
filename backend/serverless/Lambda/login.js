@@ -17,7 +17,8 @@ exports.handler = async  (event, context, callback) => {
   }).promise();
 
   // Generate access token
-  const { AccessToken, RefreshToken } = cognitoResponse.AuthenticationResult
+  const  AccessToken = cognitoResponse.AuthenticationResult.AccessToken;
+  const  RefreshToken = cognitoResponse.AuthenticationResult.RefreshToken;
 
   // Include the tokens in the response
   return {
