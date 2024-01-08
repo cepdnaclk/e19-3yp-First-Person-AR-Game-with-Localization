@@ -1,15 +1,14 @@
 {
   "dependencies": {
     "com.google.ar.core.arfoundation.extensions": {
-      "version": "https://github.com/google-ar/arcore-unity-extensions.git",
+      "version": "file:C:/Users/USER/Downloads/arcore-unity-extensions-1.41.0.tgz",
       "depth": 0,
-      "source": "git",
+      "source": "local-tarball",
       "dependencies": {
         "com.unity.xr.arfoundation": "4.1.5",
         "com.unity.xr.arcore": "4.1.5",
         "com.unity.xr.arkit": "4.1.5"
-      },
-      "hash": "7984b1776fce72cac82f36c791af2306de993745"
+      }
     },
     "com.unity.cinemachine": {
       "version": "2.9.5",
