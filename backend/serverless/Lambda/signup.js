@@ -7,13 +7,13 @@ const client = new DynamoDBClient()
 exports.handler = async (event, context, callback) => {
     try {
         
-        const request = JSON.stringify(event.body);
+        
         const requestBody = JSON.parse(event.body);
         const email = requestBody.email;
-        console.log(event);
-        console.log(event.body);
-        console.log(email);
-        console.log(JSON.stringify(requestBody.email));
+        // console.log(event);
+        // console.log(event.body);
+        // console.log(email);
+        // console.log(JSON.stringify(requestBody.email));
         const password = requestBody.password;
         const gunid = requestBody.gunid;
         const gloveid = requestBody.gloveid;
@@ -77,7 +77,7 @@ exports.handler = async (event, context, callback) => {
         console.error('Error:', error);
         return {
             statusCode: 500,
-            body: JSON.stringify('Internal Server Error')
+            body: {"msg":JSON.stringify('Internal Server Error')}
         };
     }
 };
