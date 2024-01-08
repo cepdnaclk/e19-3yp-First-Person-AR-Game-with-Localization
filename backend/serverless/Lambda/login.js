@@ -6,11 +6,12 @@ exports.handler = async  (event, context, callback) => {
 
   // Use Cognito API to authenticate the user
   try {
+  const requestBody = JSON.parse(event.body);
   const cognitoResponse = await cognito.initiateAuth({
     AuthFlow: 'USER_PASSWORD_AUTH',
     AuthParameters: {
-      USERNAME: event.email,
-      PASSWORD: event.password,
+      USERNAME: requestBody.email,
+      PASSWORD: requestBody.password,
     },
     ClientId: '35l37eb37u1bknkqleadfbcui5',
   }).promise();
@@ -21,18 +22,18 @@ exports.handler = async  (event, context, callback) => {
   // Include the tokens in the response
   return {
     statusCode: 200,
-    body: {
+    body: JSON.stringify({
       accessToken: AccessToken,
       refreshToken: RefreshToken
-    }
-  };
+  })
+  }
 } catch (error) {
     // Handle errors appropriately
     //console.error('Error:', error);
 
     return {
       statusCode: 400,
-      body: { error: 'invalid credentials' },
+      body: JSON.stringify({ error: 'invalid credentials' }),
     };
   }
 }
