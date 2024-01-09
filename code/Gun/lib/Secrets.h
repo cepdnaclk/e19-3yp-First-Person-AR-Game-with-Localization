@@ -2,13 +2,18 @@
 
 #define SECRET
 #define THINGNAME "Gyro_ESP32"
+#define PUBLISH_TOPIC   "gyro/pub"
+#define SUBSCRIBE_TOPIC "gyro/sub"
+#define ISRFIRE_PUBLISH_TOPIC   "gyro/ISR/fire"
+#define ISRMODE_PUBLISH_TOPIC   "gyro/ISR/mode"
+#define ISRRELOAD_PUBLISH_TOPIC   "gyro/ISR/reload"
 
 const char WIFI_SSID[] = "Dasun's Galaxy M21";          
 const char WIFI_PASSWORD[] = "sise9444";       
 // const char AWS_IOT_ENDPOINT[] = "a33hi7uoksyr8d-ats.iot.eu-north-1.amazonaws.com";
-const char AWS_IOT_ENDPOINT[] = "192.168.146.122";
+const char AWS_IOT_ENDPOINT[] = "192.168.224.122";
 // const int AWS_IOT_PORT = 8883;
-const int AWS_IOT_PORT = 1883;
+const int AWS_IOT_PORT = 1884;
 
 // Amazon Root CA 1
 static const char AWS_CERT_CA[] PROGMEM = R"EOF(
