@@ -30,6 +30,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
     using UnityEngine.XR.ARFoundation;
     using UnityEngine.XR.ARSubsystems;
 
+    
+
     /// <summary>
     /// A manager component that helps with hosting and resolving Cloud Anchors.
     /// </summary>
@@ -39,6 +41,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// The main controller for Persistent Cloud Anchors sample.
         /// </summary>
         public PersistentCloudAnchorsController Controller;
+
+        
 
         /// <summary>
         /// The 3D object that represents a Cloud Anchor.

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SocialPlatforms.Impl;
@@ -9,6 +10,8 @@ using UnityEngine.XR.ARSubsystems;
 [RequireComponent(typeof(ARRaycastManager))]
 public class ARPlaceObject : MonoBehaviour
 {
+
+    public ARViewManager aRViewManager;
     private GameObject gameObjectToInstantiate;
     
 
@@ -79,26 +82,26 @@ public class ARPlaceObject : MonoBehaviour
             return;
         }
 
-        if (raycastManager.Raycast(touchPos, hitList, TrackableType.PlaneWithinPolygon) && gameObjectToInstantiate != null && canPlace)
-        {
-            var hitPose = hitList[0].pose;
+        //if (raycastManager.Raycast(touchPos, hitList, TrackableType.PlaneWithinPolygon) && gameObjectToInstantiate != null && canPlace)
+        //{
+        //    var hitPose = hitList[0].pose;
 
 
-            GameObject newObject = Instantiate(gameObjectToInstantiate, hitPose.position, hitPose.rotation);
-            if (spawnedObjects.ContainsKey(gameObjectToInstantiate))
-            {
-                spawnedObjects[gameObjectToInstantiate].Add(newObject);
-            }
-            else
-            {
-                List<GameObject> newList = new List<GameObject>();
-                newList.Add(newObject);
-                spawnedObjects.Add(gameObjectToInstantiate, newList);
-            }
-            Debug.Log("Object placed");
-            GetAnchorPoint(newObject);
-            canPlace = false;
-        }
+        //    GameObject newObject = Instantiate(gameObjectToInstantiate, hitPose.position, hitPose.rotation);
+        //    if (spawnedObjects.ContainsKey(gameObjectToInstantiate))
+        //    {
+        //        spawnedObjects[gameObjectToInstantiate].Add(newObject);
+        //    }
+        //    else
+        //    {
+        //        List<GameObject> newList = new List<GameObject>();
+        //        newList.Add(newObject);
+        //        spawnedObjects.Add(gameObjectToInstantiate, newList);
+        //    }
+        //    Debug.Log("Object placed");
+        //    //GetAnchorPoint(newObject);
+        //    canPlace = false;
+        //}
     }
 
     void CheckObjectManipulation()
@@ -175,98 +178,102 @@ public class ARPlaceObject : MonoBehaviour
     {
         gameObjectToInstantiate = barrel;
         Debug.Log("Barrel");
+        aRViewManager.CloudAnchorPrefab = gameObjectToInstantiate;
     }
 
     public void ClicktoPlaceBarrier()
     {
         gameObjectToInstantiate = barrier;
         Debug.Log("Barrier");
+        aRViewManager.CloudAnchorPrefab = gameObjectToInstantiate;
     }
 
     public void ClicktoPlaceVehicle()
     {
         gameObjectToInstantiate = vehicle;
         Debug.Log("Vehicle");
+        aRViewManager.CloudAnchorPrefab = gameObjectToInstantiate;
     }   
 
     public void ClicktoPlaceSandbag()
     {
         gameObjectToInstantiate = sandbag;
         Debug.Log("Sandbag");
+        aRViewManager.CloudAnchorPrefab = gameObjectToInstantiate;
     }
 
-    public void GetAnchorPoint(GameObject placedObject)
-    {
-        if (placedObject != null)
-        {
+    //public void GetAnchorPoint(GameObject placedObject)
+    //{
+    //    if (placedObject != null)
+    //    {
 
-            if (placedObject.TryGetComponent<ARAnchor>(out var anchor))
-            {
-                Vector3 anchorPosition = anchor.transform.position;
-                Quaternion anchorRotation = anchor.transform.rotation;
+    //        if (placedObject.TryGetComponent<ARAnchor>(out var anchor))
+    //        {
+    //            Vector3 anchorPosition = anchor.transform.position;
+    //            Quaternion anchorRotation = anchor.transform.rotation;
 
-                Debug.Log("Anchor Position: " + anchorPosition);
-                Debug.Log("Anchor Rotation: " + anchorRotation.eulerAngles);
-            }
-            else
-            {
-                Debug.Log("Object does not have an ARAnchor component.");
-            }
-        }
-        else
-        {
-            Debug.Log("No object placed.");
-        }
-    }
+    //            Debug.Log("Anchor Position: " + anchorPosition);
+    //            Debug.Log("Anchor Rotation: " + anchorRotation.eulerAngles);
+    //        }
+    //        else
+    //        {
+    //            Debug.Log("Object does not have an ARAnchor component.");
+    //        }
+    //    }
+    //    else
+    //    {
+    //        Debug.Log("No object placed.");
+    //    }
+    //}
 
     
-    public void AnchorPlacedObjects()
-    {
-        foreach (var entry in spawnedObjects)
-        {
-            List<GameObject> objectsList = entry.Value;
-            foreach (GameObject obj in objectsList)
-            {
-                ActivateAnchor(obj);
-                AnchorObject(obj);
-            }
-        }
-    }
+    //public void AnchorPlacedObjects()
+    //{
+    //    foreach (var entry in spawnedObjects)
+    //    {
+    //        List<GameObject> objectsList = entry.Value;
+    //        foreach (GameObject obj in objectsList)
+    //        {
+    //            ActivateAnchor(obj);
+    //            AnchorObject(obj);
+    //        }
+    //    }
+    //}
 
-    [System.Obsolete]
-    void AnchorObject(GameObject obj)
-    {
-        if (obj != null)
-        {
-            ARAnchor currentAnchor = obj.GetComponent<ARAnchor>();
-            ARAnchorManager anchorManager = FindObjectOfType<ARAnchorManager>(); // Get the ARAnchorManager
+    //[System.Obsolete]
+    //void AnchorObject(GameObject obj)
+    //{
+    //    if (obj != null)
+    //    {
+    //        ARAnchor currentAnchor = obj.GetComponent<ARAnchor>();
+    //        ARAnchorManager anchorManager = FindObjectOfType<ARAnchorManager>(); // Get the ARAnchorManager
 
             
 
-            if (currentAnchor != null && anchorManager != null)
-            {
-                anchorManager.RemoveAnchor(currentAnchor); // Remove the existing anchor
-            }
+    //        if (currentAnchor != null && anchorManager != null)
+    //        {
+    //            anchorManager.RemoveAnchor(currentAnchor); // Remove the existing anchor
+    //        }
 
-            ARAnchor newAnchor = obj.AddComponent<ARAnchor>();
-            if (newAnchor != null)
-            {
-                newAnchor.transform.position = obj.transform.position;
-                newAnchor.transform.rotation = obj.transform.rotation;
-                Debug.Log("Object anchored: " + obj.name);
-            }
-        }
-    }
+    //        ARAnchor newAnchor = obj.AddComponent<ARAnchor>();
+    //        if (newAnchor != null)
+    //        {
+    //            newAnchor.transform.position = obj.transform.position;
+    //            newAnchor.transform.rotation = obj.transform.rotation;
+    //            Debug.Log("Object anchored: " + obj.name);
+    //        }
+    //    }
+    //}
 
 
 
-    void ActivateAnchor(GameObject obj)
-    {
-        ARAnchor anchor = obj.GetComponent<ARAnchor>();
+    //void ActivateAnchor(GameObject obj)
+    //{
+    //    ARAnchor anchor = obj.GetComponent<ARAnchor>();
 
-        if (anchor != null)
-        {
-            anchor.enabled = true; // Activate the ARAnchor
-        }
-    }
+    //    if (anchor != null)
+    //    {
+    //        anchor.enabled = true; // Activate the ARAnchor
+    //    }
+    //}
 }
