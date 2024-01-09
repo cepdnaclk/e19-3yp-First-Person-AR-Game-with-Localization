@@ -25,6 +25,9 @@ EditorBuildSettings:
     guid: df0e14660717e4e4189357122f4fde0c
   - enabled: 1
     path: Assets/Scenes/NewMapNew.unity
+    guid: 69182823c62857a42bae6fc97024a0c1
+  - enabled: 0
+    path: Assets/Scenes/NewMapOLD.unity
     guid: 76e7a37ab567c334a8c7a90d59c775b2
   - enabled: 1
     path: Assets/Scenes/NewGame.unity
