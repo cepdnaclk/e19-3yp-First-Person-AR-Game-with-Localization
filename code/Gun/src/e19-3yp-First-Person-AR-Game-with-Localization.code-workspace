@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		},
+		{
+			"name": "ESP8266",
+			"path": "../../mqtt/ESP8266"
+		},
+		{
+			"name": "Gyro",
+			"path": ".."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"array": "cpp",
+			"deque": "cpp",
+			"list": "cpp",
+			"string": "cpp",
+			"unordered_map": "cpp",
+			"unordered_set": "cpp",
+			"vector": "cpp",
+			"string_view": "cpp",
+			"initializer_list": "cpp",
+			"ranges": "cpp"
+		}
+	}
+}
