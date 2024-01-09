@@ -129,3 +129,8 @@ sysinfo.txt
 *.unitypackage
 
 .DS_Store
+
+code/mqtt/awsRootCA.pem
+code/mqtt/deviceCert.crt
+code/mqtt/deviceCert.key
+code/Gun/lib/Secrete.h

@@ -3,8 +3,8 @@
 #include <Wire.h>
 #include <WiFi.h>
 #include <PubSubClient.h>
-// #include <WiFiClientSecure.h>
-#include <WiFiClient.h>
+#include <WiFiClientSecure.h>
+// #include <WiFiClient.h>
 #include <ArduinoJson.h>
 
 #include "../lib/Secrets.h"
@@ -25,6 +25,7 @@
 // Define constants
 const int GUN_STEPS = 4095 / 5;
 const int BULLET_STEPS = 4095 / 10;
+const IPAddress dns(8, 8, 8, 8); // Google's DNS server
 
 // Variables Declaration
 volatile unsigned long lastInterruptTime = 0;
@@ -56,8 +57,8 @@ float gyro_z_offset = 0.0;
 Adafruit_MPU6050 mpu;
 
 // WIFI Client
-// WiFiClientSecure net = WiFiClientSecure();
-WiFiClient net;
+WiFiClientSecure net = WiFiClientSecure();
+// WiFiClient net;
 
 // MQTT Client
 PubSubClient client(net);
@@ -167,6 +168,7 @@ void updateShiftRegister()
 // Connect to WIFI
 void connectWIFI(){
   WiFi.mode(WIFI_STA);
+  WiFi.config(INADDR_NONE, INADDR_NONE, dns);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
  
   Serial.println("Connecting to Wi-Fi");
@@ -253,10 +255,10 @@ void setup(void) {
   // Try to initialize mpu
   if (!mpu.begin()) {
     Serial.println("Failed to find MPU6050 chip");
-    while (1) {
-      Serial.print(".");
-      delay(10);
-    }
+    // while (1) {
+    //   Serial.print(".");
+    //   delay(10);
+    // }
   }
   Serial.println("MPU6050 Found!");
 
@@ -268,14 +270,17 @@ void setup(void) {
   // Calibrate mpu
   calibrateSensor();
 
-  // Connect to WIFI
-  connectWIFI();
-
   // Configure the Broker
   // Configure WiFiClientSecure to use the AWS IoT device credentials
-  // net.setCACert(AWS_CERT_CA);
-  // net.setCertificate(AWS_CERT_CRT);
-  // net.setPrivateKey(AWS_CERT_PRIVATE);
+  net.setCACert(AWS_CERT_CA);
+  net.setCertificate(AWS_CERT_CRT);
+  net.setPrivateKey(AWS_CERT_PRIVATE);
+
+   // Connect to WIFI
+  connectWIFI();
+
+  Serial.print("WiFi status: ");
+  Serial.println(WiFi.status());
  
   // Connect to the MQTT broker on the AWS endpoint we defined earlier
   client.setServer(AWS_IOT_ENDPOINT, AWS_IOT_PORT);
