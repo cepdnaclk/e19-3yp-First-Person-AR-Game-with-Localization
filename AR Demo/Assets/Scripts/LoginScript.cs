@@ -54,6 +54,8 @@ public class LoginScript : MonoBehaviour
             // Save the access token to PlayerPrefs
             PlayerPrefs.SetString("AccessToken", accessToken);
 
+            StartCoroutine(Notification("Wait"));
+
             Debug.Log("accessToken: " + PlayerPrefs.GetString("AccessToken"));
             
             SceneManager.LoadScene(2); // main menu
