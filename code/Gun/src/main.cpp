@@ -9,29 +9,37 @@
 
 #include "../lib/Secrets.h"
 
-#define AWS_IOT_PUBLISH_TOPIC   "gyro/pub"
-#define AWS_IOT_SUBSCRIBE_TOPIC "gyro/sub"
-#define ZOOM_PUBLISH_TOPIC   "gyro/zoom"
-
-#define GUN_PIN 34
-#define ZOOM_PIN 36
+// Define PINs
+#define MANUAL_FIRE_PIN 18 // 2 Way Switch terminal 1  
+#define AUTOMATIC_FIRE_PIN 19 // 2 Way Switch terminal 2 
+// PIN 21 & 22 used for gyrp
+#define TRIGER_PIN 23 // Push Button
+#define LATCH_PIN 25 // Shift Register
+#define CLOCK_PIN 26 // Shift Register 
+#define DATA_PIN  27 // Shift Register
+#define ZOOM_PIN 32 // Pot 1
+#define RELOAD_PIN 33 // IR Sensor
+#define BULLET_COUNT_PIN 34 // Pot 2
+#define GUN_SELECT_PIN 35 // Pot 3
 
 // Define constants
 const int GUN_STEPS = 4095 / 5;
+const int BULLET_STEPS = 4095 / 10;
 
-// Pin Definitions
-int latchPin = 33;
-int clockPin = 25;
-int dataPin = 32;
-int triger = 35;
+// Variables Declaration
+byte bulletsLEDs = 0b1111111111;
+int gunCategory = 1;
+int bulletVal = 1;
+int zoomVal = 100;
+int gunMod = 0;
+sensors_event_t a, g, temp;
+int zoomPotVal; // Pot 1
+int bulletPotVal; // Pot 2
+int gunPotVal; // Pot 3
+double roll;
+double pitch;
 
-Adafruit_MPU6050 mpu;
-
-// WiFiClientSecure net = WiFiClientSecure();
-WiFiClient net;
-PubSubClient client(net);
-
-// Define offsets
+// Define offsets of Gyro 
 float accel_x_offset = 0.0;
 float accel_y_offset = 0.0;
 float accel_z_offset = 0.0;
@@ -39,101 +47,15 @@ float gyro_x_offset = 0.0;
 float gyro_y_offset = 0.0;
 float gyro_z_offset = 0.0;
 
-// Variables Declaration
-byte bulletsLEDs = 0b1111111111;
+// Create MPU Object
+Adafruit_MPU6050 mpu;
 
-int getGun(){
-  int zoomVal = analogRead(GUN_PIN);
-  int zoomCategory = zoomVal / GUN_STEPS + 1;
-  return zoomCategory;
-}
+// WIFI Client
+// WiFiClientSecure net = WiFiClientSecure();
+WiFiClient net;
 
-void updateBullets()
-{
-  bulletsLEDs = bulletsLEDs << 1;
-  digitalWrite(latchPin, LOW);
-  shiftOut(dataPin, clockPin, LSBFIRST, bulletsLEDs);
-  digitalWrite(latchPin, HIGH);
-}
-
-void updateShiftRegister()
-{
-  bulletsLEDs = bulletsLEDs << 1;
-  client.publish(AWS_IOT_PUBLISH_TOPIC, "ISR");
-  digitalWrite(latchPin, LOW);
-  shiftOut(dataPin, clockPin, LSBFIRST, bulletsLEDs);
-  digitalWrite(latchPin, HIGH);
-}
-
-void messageHandler(char* topic, byte* payload, unsigned int length)
-{
-  Serial.print("incoming: ");
-  Serial.println(topic);
- 
-  StaticJsonDocument<200> doc;
-  deserializeJson(doc, payload);
-  const char* message = doc["message"];
-  Serial.println(message);
-}
-
-void connectWIFI(){
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
- 
-  Serial.println("Connecting to Wi-Fi");
- 
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println();
-}
-
-void connectAWS(){
-  Serial.println("Connecting to AWS IOT");
- 
-  while (!client.connect(THINGNAME))
-  {
-    Serial.print(".");
-    delay(100);
-  }
- 
-  if (!client.connected())
-  {
-    Serial.println("AWS IoT Timeout!");
-    return;
-  }
- 
-  // Subscribe to a topic
-  client.subscribe(AWS_IOT_SUBSCRIBE_TOPIC);
- 
-  Serial.println("AWS IoT Connected!");
-}
- 
-void publishMessage(sensors_event_t a,sensors_event_t g)
-{
-  StaticJsonDocument<200> doc;
-  double ax = a.acceleration.x - accel_x_offset ;
-  double ay = a.acceleration.y - accel_y_offset;
-  double az = a.acceleration.z - accel_z_offset;
-  double roll = atan2(ay, az) * RAD_TO_DEG;
-  double pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
-
-  doc["Acceleration X: "] = ax;
-  doc["Acceleration Y: "] = ay;
-  doc["Acceleration Z: "] = ay;
-  doc["Rotation X: "] = g.gyro.x;
-  doc["Rotation Y: "] = g.gyro.y;
-  doc["Rotation Z: "] = g.gyro.z;
-  doc["Roll: "] = roll;
-  doc["Pitch: "] = pitch;
-
-  char jsonBuffer[512];
-  serializeJson(doc, jsonBuffer); // print to client
- 
-  client.publish(AWS_IOT_PUBLISH_TOPIC, jsonBuffer);
-}
+// MQTT Client
+PubSubClient client(net);
 
 void calibrateSensor() {
   // Calibration variables
@@ -144,7 +66,6 @@ void calibrateSensor() {
 
   // Calibrate accelerometer
   while (count < 1000) {
-    sensors_event_t a, g, temp;
     mpu.getEvent(&a, &g, &temp);
 
     accel_x += a.acceleration.x;
@@ -168,89 +89,150 @@ void calibrateSensor() {
   gyro_z_offset = gyro_z / count;
 }
 
+// Get Potentiameter values
+void getPolVal(){
+  zoomPotVal = analogRead(ZOOM_PIN);
+  bulletPotVal = analogRead(BULLET_COUNT_PIN);
+  gunPotVal = analogRead(GUN_SELECT_PIN);
+
+  zoomVal = (zoomPotVal / 4095) * 100;
+  bulletVal = bulletPotVal / BULLET_STEPS + 1;
+  gunCategory = gunPotVal / GUN_STEPS + 1;
+}
+
+void getGyro(){
+  mpu.getEvent(&a, &g, &temp);
+
+  // Get data
+  double ax = a.acceleration.x - accel_x_offset ;
+  double ay = a.acceleration.y - accel_y_offset;
+  double az = a.acceleration.z - accel_z_offset;
+
+  // Calculate roll and pitch
+  roll = atan2(ay, az) * RAD_TO_DEG;
+  pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
+}
+
+// Show the bullet count on LED bar
+void updateBullets(){
+  // Deduct the buller
+  bulletsLEDs = bulletsLEDs << 1;
+
+  // Write on shift register
+  digitalWrite(LATCH_PIN, LOW);
+  shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, bulletsLEDs);
+  digitalWrite(LATCH_PIN, HIGH);
+}
+
+// TODO: implement ISR for trigure
+void updateShiftRegister()
+{
+  client.publish(PUBLISH_TOPIC, "ISR");
+  updateBullets();
+}
+
+// TODO: implement ISR for 2 way switch
+// TODO: implement ISR for IR
+
+// Connect to WIFI
+void connectWIFI(){
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+ 
+  Serial.println("Connecting to Wi-Fi");
+ 
+  while (WiFi.status() != WL_CONNECTED){
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println();
+}
+
+// Connect to AWS
+void connectAWS(){
+  Serial.println("Connecting to AWS IOT");
+ 
+  while (!client.connect(THINGNAME)){
+    Serial.print(".");
+    delay(100);
+  }
+ 
+  if (!client.connected()){
+    Serial.println("AWS IoT Timeout!");
+    return;
+  }
+ 
+  // Subscribe to a topic
+  client.subscribe(SUBSCRIBE_TOPIC);
+ 
+  Serial.println("AWS IoT Connected!");
+}
+
+// TODO: Implement message handling
+void publishMessage(){
+  // Get Data
+  getPolVal();
+  getGyro();
+
+  StaticJsonDocument<200> doc;
+
+  doc["Roll: "] = roll;
+  doc["Pitch: "] = pitch;
+  doc["BulletVal: "] = bulletVal;
+  doc["ZoomVal: "] = zoomVal;
+  doc["GunMod: "] = gunMod;
+
+  char jsonBuffer[512];
+  serializeJson(doc, jsonBuffer); // print to client
+ 
+  client.publish(PUBLISH_TOPIC, jsonBuffer);
+}
+
+// TODO: Implement to reload action
+void messageHandler(char* topic, byte* payload, unsigned int length)
+{
+  Serial.print("incoming: ");
+  Serial.println(topic);
+ 
+  StaticJsonDocument<200> doc;
+  deserializeJson(doc, payload);
+  const char* message = doc["message"];
+  Serial.println(message);
+}
+
 void setup(void) {
   Serial.begin(115200);
 
-  pinMode(latchPin, OUTPUT);
-  pinMode(dataPin, OUTPUT);  
-  pinMode(clockPin, OUTPUT);
+  // Pin Mode Definition
+  pinMode(LATCH_PIN, OUTPUT);
+  pinMode(DATA_PIN, OUTPUT);  
+  pinMode(CLOCK_PIN, OUTPUT);
 
   // pinMode(triger, INPUT);
 
   // attachInterrupt(digitalPinToInterrupt(triger), updateShiftRegister, HIGH);
 
-  Serial.println("Adafruit MPU6050 test!");
+  Serial.println("Gun Power Up");
 
-  // Try to initialize!
-  // if (!mpu.begin()) {
-  //   Serial.println("Failed to find MPU6050 chip");
-  //   while (1) {
-  //     delay(10);
-  //   }
-  // }
+  // Try to initialize mpu
+  if (!mpu.begin()) {
+    Serial.println("Failed to find MPU6050 chip");
+    while (1) {
+      Serial.print(".");
+      delay(10);
+    }
+  }
   Serial.println("MPU6050 Found!");
 
+  // Configure MPU
   mpu.setAccelerometerRange(MPU6050_RANGE_2_G);
-  // Serial.print("Accelerometer range set to: ");
-  // switch (mpu.getAccelerometerRange()) {
-  // case MPU6050_RANGE_2_G:
-  //   Serial.println("+-2G");
-  //   break;
-  // case MPU6050_RANGE_4_G:
-  //   Serial.println("+-4G");
-  //   break;
-  // case MPU6050_RANGE_8_G:
-  //   Serial.println("+-8G");
-  //   break;
-  // case MPU6050_RANGE_16_G:
-  //   Serial.println("+-16G");
-  //   break;
-  // }
   mpu.setGyroRange(MPU6050_RANGE_250_DEG);
-  // Serial.print("Gyro range set to: ");
-  // switch (mpu.getGyroRange()) {
-  // case MPU6050_RANGE_250_DEG:
-  //   Serial.println("+- 250 deg/s");
-  //   break;
-  // case MPU6050_RANGE_500_DEG:
-  //   Serial.println("+- 500 deg/s");
-  //   break;
-  // case MPU6050_RANGE_1000_DEG:
-  //   Serial.println("+- 1000 deg/s");
-  //   break;
-  // case MPU6050_RANGE_2000_DEG:
-  //   Serial.println("+- 2000 deg/s");
-  //   break;
-  // }
-
   mpu.setFilterBandwidth(MPU6050_BAND_44_HZ);
-  // Serial.print("Filter bandwidth set to: ");
-  // switch (mpu.getFilterBandwidth()) {
-  // case MPU6050_BAND_260_HZ:
-  //   Serial.println("260 Hz");
-  //   break;
-  // case MPU6050_BAND_184_HZ:
-  //   Serial.println("184 Hz");
-  //   break;
-  // case MPU6050_BAND_94_HZ:
-  //   Serial.println("94 Hz");
-  //   break;
-  // case MPU6050_BAND_44_HZ:
-  //   Serial.println("44 Hz");
-  //   break;
-  // case MPU6050_BAND_21_HZ:
-  //   Serial.println("21 Hz");
-  //   break;
-  // case MPU6050_BAND_10_HZ:
-  //   Serial.println("10 Hz");
-  //   break;
-  // case MPU6050_BAND_5_HZ:
-  //   Serial.println("5 Hz");
-  //   break;
-  // }
 
+  // Calibrate mpu
   calibrateSensor();
 
+  // Connect to WIFI
   connectWIFI();
 
   // Configure the Broker
@@ -265,23 +247,20 @@ void setup(void) {
   // Create a message handler
   client.setCallback(messageHandler);
 
+  // Connect to AWS
   connectAWS();
 
   Serial.println("");
 
+  // Initialize the gun
+  client.publish(PUBLISH_TOPIC, "Hello from ESP32");
+  getPolVal();
   updateBullets();
-  client.publish(AWS_IOT_PUBLISH_TOPIC, "Hello from ESP32");
   delay(100);
 }
 
 void loop() {
   /* Get new sensor events with the readings */
-  // sensors_event_t a, g, temp;
-  // mpu.getEvent(&a, &g, &temp);
-
-  // publishMessage(a, g);
-  // delay(50);
-  int zoomVal = analogRead(ZOOM_PIN);
-  client.publish(ZOOM_PUBLISH_TOPIC, String(zoomVal).c_str());
+  publishMessage();
   delay(100);
 }
