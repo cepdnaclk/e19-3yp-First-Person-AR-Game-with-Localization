@@ -1,5 +1,4 @@
 const { CognitoIdentityProviderClient, GetUserCommand } = require("@aws-sdk/client-cognito-identity-provider");
-const { request } = require("express");
 const client = new CognitoIdentityProviderClient();
 
 exports.handler = async (event, context, callback) => {

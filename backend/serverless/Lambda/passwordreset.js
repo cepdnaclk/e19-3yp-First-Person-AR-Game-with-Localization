@@ -3,7 +3,7 @@ const cognito = new AWS.CognitoIdentityServiceProvider();
 
 exports.handler = async (event, context) => {
   const requestBody = JSON.parse(event.body);
-  const  email  = event.email;
+  const  email  = requestBody.email;
 
   try {
     
