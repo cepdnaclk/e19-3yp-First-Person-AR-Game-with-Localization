@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 3873758868726247655}
   - component: {fileID: -6412576892229306454}
   - component: {fileID: 8477197905741762908}
-  - component: {fileID: -1191021941985655312}
   m_Layer: 0
   m_Name: barrier_plastic
   m_TagString: Untagged
@@ -160,19 +159,6 @@ MonoBehaviour:
   onSelectedSelectFingerUp:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &-1191021941985655312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 157148}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb898793194e03f4bb10dba03ec2cb70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_DestroyOnRemoval: 1
 --- !u!1 &183878
 GameObject:
   m_ObjectHideFlags: 0

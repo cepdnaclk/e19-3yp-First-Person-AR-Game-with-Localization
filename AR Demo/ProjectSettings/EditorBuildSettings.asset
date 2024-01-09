@@ -20,18 +20,24 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameScreen.unity
     guid: f910bee0b1c5c9d41bf15842890d57ad
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/NewMap.unity
     guid: df0e14660717e4e4189357122f4fde0c
+  - enabled: 1
+    path: Assets/Scenes/NewMapNew.unity
+    guid: 76e7a37ab567c334a8c7a90d59c775b2
   - enabled: 1
     path: Assets/Scenes/NewGame.unity
     guid: 3facd1f02ae536142bab2e24c7d1d41c
   - enabled: 0
     path: Assets/PlacementIndicator/DemoScene.unity
     guid: a776f0f2b23b7ec48a536a6129f0bdfa
-  - enabled: 1
+  - enabled: 0
     path: Assets/Samples/ARCore Extensions/1.41.0/Persistent Cloud Anchor Sample/Scenes/PersistentCloudAnchorsArf4.unity
     guid: a1cbde3cab63248f4bbf8d8ad6586754
+  - enabled: 1
+    path: Assets/Scenes/LoadMap.unity
+    guid: 4f0f68f431edbec4cb2677f68ce2b038
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 744b813df90924c169af73489b8325de,
       type: 2}
@@ -39,6 +45,10 @@ EditorBuildSettings:
       type: 2}
     UnityEditor.XR.ARKit.ARKitSettings: {fileID: 11400000, guid: de8a8e4f987434338a4b1062feb8d069,
       type: 2}
+    com.unity.adaptiveperformance.loader_settings: {fileID: 11400000, guid: dda7e70d7c6a4954aa42309823b8cf7d,
+      type: 2}
+    com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
+      guid: 0900370c49136bd4fb5c173d516a3183, type: 2}
     com.unity.xr.arcore.PlayerSettings: {fileID: 11400000, guid: c2f7b8d7c0bff4d10874cbcf3f24af78,
       type: 2}
     com.unity.xr.arfoundation.simulation_settings: {fileID: 11400000, guid: fdea7d63f5e36d34880021adf1f629d5,

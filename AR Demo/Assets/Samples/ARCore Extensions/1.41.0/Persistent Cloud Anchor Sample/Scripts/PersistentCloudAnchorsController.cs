@@ -295,10 +295,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         public void Awake()
         {
             // Lock screen to portrait.
-            Screen.autorotateToLandscapeLeft = false;
-            Screen.autorotateToLandscapeRight = false;
+            Screen.autorotateToLandscapeLeft = true;
+            Screen.autorotateToLandscapeRight = true;
             Screen.autorotateToPortraitUpsideDown = false;
-            Screen.orientation = ScreenOrientation.Portrait;
+            //Screen.orientation = ScreenOrientation.Portrait;
 
             // Enable Persistent Cloud Anchors sample to target 60fps camera capture frame rate
             // on supported devices.

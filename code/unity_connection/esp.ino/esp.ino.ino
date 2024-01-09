@@ -3,9 +3,11 @@
 
 const char* ssid = "SLT_FIBER_XXXXX";
 const char* password = "43266@abc";
+const IPAddress unityIP(192, 168, 1, 80);  // Unity's IP address
+const unsigned int unityPort = 12345;       // Unity's port
 
 WiFiUDP udp;
-unsigned int localPort = 12345; // Must match the port number in Unity
+unsigned int localPort = 12345;
 
 void setup() {
   Serial.begin(115200);
@@ -20,11 +22,11 @@ void setup() {
 }
 
 void loop() {
-  int packetSize = udp.parsePacket();
-  if (packetSize) {
-    char packetData[packetSize];
-    udp.read(packetData, packetSize);
-    Serial.write(packetData, packetSize);
-    // Process received data here
-  }
+  String message = "Hello from ESP8266!";
+  
+  udp.beginPacket(unityIP, unityPort);
+  udp.write((const uint8_t*)message.c_str(), message.length());
+  udp.endPacket();
+
+  delay(1000); // Adjust delay as needed
 }
