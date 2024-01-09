@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3e02ebcc2b6fce468f65ba40d94db64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  screenshotPrefix: ARDemo
 --- !u!4 &94887911
 Transform:
   m_ObjectHideFlags: 0
@@ -2184,7 +2185,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_PlanePrefab: {fileID: 8592833393631230723, guid: 44efd5ffccca74b4d9b2a15f713cb658,
     type: 3}
-  m_DetectionMode: -1
+  m_DetectionMode: 1
 --- !u!114 &1659859601
 MonoBehaviour:
   m_ObjectHideFlags: 0

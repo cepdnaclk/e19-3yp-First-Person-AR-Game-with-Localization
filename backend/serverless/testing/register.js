@@ -6,10 +6,6 @@ const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
 const client = new DynamoDBClient()
 
 
-
-
-
-
 exports.handler = async (event, context, callback) => {
     try {
         console.log(event);
@@ -20,7 +16,7 @@ exports.handler = async (event, context, callback) => {
 
         // Add user to Cognito User Pool
         const signUpParams = {
-            ClientId: '1q2aum3ptjv1hpb4u3spldal8r',
+            ClientId: 'b88o4dc1gh1tme961egfh6le2',
             Username: email,
             Password: password,
             UserAttributes: [
@@ -35,8 +31,8 @@ exports.handler = async (event, context, callback) => {
         const signUpResponse = await cognito.signUp(signUpParams).promise();
 
         // Add user to DynamoDB
-        const dynamoDBParams = {
-            "TableName": 'test',
+        const dynamoDBParamsUser = {
+            "TableName": 'Arcombat-user',
             "Item": {
                 //"UserId": signUpResponse.UserSub,  // Use the Cognito User Sub as the DynamoDB key
                 "email": {"S": email},
