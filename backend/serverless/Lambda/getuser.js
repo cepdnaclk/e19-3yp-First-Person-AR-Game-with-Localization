@@ -3,7 +3,8 @@ const client = new CognitoIdentityProviderClient();
 
 exports.handler = async (event, context, callback) => {
     try {
-        const accessToken = event.Authorization; 
+        const requestBody = JSON.parse(event.body);
+        const accessToken = requestBody.Authorization; 
         const params = {
             AccessToken: accessToken,
         };
@@ -11,9 +12,9 @@ exports.handler = async (event, context, callback) => {
         const response = await client.send(command)
         return {
             statusCode: 200,
-            body: {
+            body: JSON.stringify({
                 "email": response.UserAttributes,
-            }
+            })
         };
     }catch (error) {
         return {

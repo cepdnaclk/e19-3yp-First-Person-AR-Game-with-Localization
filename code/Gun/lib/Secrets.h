@@ -2,6 +2,11 @@
 
 #define SECRET
 #define THINGNAME "Gyro_ESP32"
+#define PUBLISH_TOPIC   "gyro/pub"
+#define SUBSCRIBE_TOPIC "gyro/sub"
+#define ISRFIRE_PUBLISH_TOPIC   "gyro/ISR/fire"
+#define ISRMODE_PUBLISH_TOPIC   "gyro/ISR/mode"
+#define ISRRELOAD_PUBLISH_TOPIC   "gyro/ISR/reload"
 
 const char WIFI_SSID[] = "Dasun's Galaxy M21";          
 const char WIFI_PASSWORD[] = "sise9444";       

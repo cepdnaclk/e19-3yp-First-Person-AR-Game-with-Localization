@@ -8,14 +8,13 @@ using System;
 [System.Serializable]
 public class TokenResponse
 {
-    public string token;
+    public string accessToken;
     public int expires_in; // You can remove this if not needed
 }
 
 
 public class LoginScript : MonoBehaviour
 {
-    public string loginEndpoint = "https://your-backend-endpoint-url.com/api/login";
     [SerializeField] private TMP_InputField username;
     [SerializeField] private TMP_InputField password;
     [SerializeField] private TMP_Text textBox;
@@ -25,17 +24,14 @@ public class LoginScript : MonoBehaviour
         yield return text;
     }
 
-    IEnumerator LoginAndGetToken()
+    IEnumerator LoginAndGetToken(string url, string jsonData)
     {
-        // Create login data in JSON format
-        string loginJson = "{\"username\":\"" + username.text + "\",\"password\":\"" + password.text + "\"}";
-
         // Create a UnityWebRequest for login
-        UnityWebRequest loginRequest = new UnityWebRequest(loginEndpoint, "POST");
-        loginRequest.SetRequestHeader("Content-Type", "application/json");
-        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(loginJson);
+        UnityWebRequest loginRequest = new UnityWebRequest(url, "POST");
+        byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
         loginRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
         loginRequest.downloadHandler = new DownloadHandlerBuffer();
+        loginRequest.SetRequestHeader("Content-Type", "application/json");
 
         // Send login request
         yield return loginRequest.SendWebRequest();
@@ -43,19 +39,23 @@ public class LoginScript : MonoBehaviour
         // Check for login errors
         if (loginRequest.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Login Error: " + loginRequest.error);
             StartCoroutine(Notification("Login failed"));
+            Debug.LogError("Login Error: " + loginRequest.error);
         }
         else
         {
-            // Login successful, extract token from response
+            // Login successful, extract accessToken from response
             string jsonResponse = loginRequest.downloadHandler.text;
-            // Parse the JSON response to get the token
-            // (Assuming the response contains a 'token' field)
-            string token = ParseTokenFromResponse(jsonResponse);
-            Debug.Log("Token: " + token);
+            // Parse the JSON response to get the accessToken
+            // (Assuming the response contains a 'accessToken' field)
+            string accessToken = ParseTokenFromResponse(jsonResponse);
+
+            // Save the access token to PlayerPrefs
+            PlayerPrefs.SetString("AccessToken", accessToken);
+
+            Debug.Log("accessToken: " + PlayerPrefs.GetString("AccessToken"));
             
-            // Here, you might save the token for further use, like storing it in PlayerPrefs or using it in subsequent requests.
+            // Here, you might save the accessToken for further use, like storing it in PlayerPrefs or using it in subsequent requests.
         }
     }
 
@@ -64,14 +64,19 @@ public class LoginScript : MonoBehaviour
         // Deserialize the JSON response into TokenResponse object
         TokenResponse tokenResponse = JsonUtility.FromJson<TokenResponse>(jsonResponse);
         
-        // Return the token from the deserialized object
-        return tokenResponse.token;
+        // Return the accessToken from the deserialized object
+        return tokenResponse.accessToken;
     }
 
     public void OnLoginClick()
     {
+        string loginEndpoint = "https://z760hx70mc.execute-api.ap-southeast-1.amazonaws.com/beta/login";
+        // Create login data in JSON format
+        string loginJson =  "{\"email\":\"" + username.text +
+                              "\",\"password\":\"" + password.text + "\"}";
+
         // Get a reference to the Button component
-        StartCoroutine(LoginAndGetToken());
+        StartCoroutine(LoginAndGetToken(loginEndpoint,loginJson));
         // Debug.Log($"{username.text}:{password.text}");
     }
 }
