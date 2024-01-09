@@ -10,6 +10,15 @@
         "com.unity.xr.arkit": "4.1.5"
       }
     },
+    "com.unity.adaptiveperformance": {
+      "version": "5.0.2",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.profiling.core": "1.0.2"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.unity.cinemachine": {
       "version": "2.9.5",
       "depth": 0,
@@ -131,6 +140,13 @@
       "dependencies": {
         "com.unity.modules.physics": "1.0.0"
       },
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.profiling.core": {
+      "version": "1.0.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.progrids": {
