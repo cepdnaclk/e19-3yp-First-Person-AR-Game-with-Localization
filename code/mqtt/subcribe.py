@@ -52,8 +52,8 @@ def subscribe(client: mqtt_client):
         data = json.loads(msg.payload.decode())  # decode JSON data
 
         # # Append new values to the lists
-        acceleration_x.append(data['GunMod'])
-        #acceleration_y.append(data['Pitch: '])
+        acceleration_x.append(data['Roll: '])
+        acceleration_y.append(data['Pitch: '])
         #acceleration_z.append(data['GunCategory: '])
         # rotation_x.append(data['Rotation X: '] + correction_rot_x)
         # rotation_y.append(data['Rotation Y: '] + correction_rot_y)
@@ -76,7 +76,7 @@ def subscribe(client: mqtt_client):
 
         # # Plot the new values
         plt.plot(acceleration_x, label='GunMod')
-        #plt.plot(acceleration_y, label='ZoomVal: ')
+        plt.plot(acceleration_y, label='ZoomVal: ')
         #plt.plot(acceleration_z, label='GunCategory: ')
         # plt.plot(rotation_x, label='Rotation X')
         # plt.plot(rotation_y, label='Rotation Y')

@@ -18,17 +18,17 @@ def on_message(client, userdata, msg):
 
     # Update the center of the cross using the X and Y rotations
     center[1] = 200 - 5 * int(data['Roll: '])
-    x = int(data['Pitch: '])
-    if x > 0:
-        center[0] -= 15 * x
-    else:
-        center[0] -=25 * x
+    # x = int(data['Pitch: '])
+    # if x > 0:
+    #     center[0] -= 15 * x
+    # else:
+    #     center[0] -=25 * x
 
-    if center[0] > 600:
-        center[0] = 600
+    # if center[0] > 600:
+    #     center[0] = 600
 
-    if center[0] < 0:
-        center[0] = 0
+    # if center[0] < 0:
+    #     center[0] = 0
 
     # Update the size of the cross using the Z rotation
     # cross_size += int(data['Acceleration Z: '])

@@ -27,11 +27,16 @@ const int GUN_STEPS = 4095 / 5;
 const int BULLET_STEPS = 4095 / 10;
 
 // Variables Declaration
+volatile unsigned long lastInterruptTime = 0;
+volatile unsigned long lastTime = 0;
 byte bulletsLEDs = 0b1111111111;
 int gunCategory = 1;
 int bulletVal = 1;
 int zoomVal = 100;
 int gunMod = 0;
+bool trigerState = 0;
+bool reloadState = 0;
+bool gunModeStatus = 0;
 sensors_event_t a, g, temp;
 int zoomPotVal; // Pot 1
 int bulletPotVal; // Pot 2
@@ -116,26 +121,28 @@ void getGyro(){
 // TODO: Implement middle 0 functionallity
 void IRAM_ATTR setManuvalFire(){
   gunMod = 1;
-  Serial.println("Manual Fire");
-  client.publish(ISRMODE_PUBLISH_TOPIC, "1");
+  gunModeStatus = 1;
 }
 
 void IRAM_ATTR setAutomaticFire(){
   gunMod = -1;
-  Serial.println("Automatic Fire");
-  client.publish(ISRMODE_PUBLISH_TOPIC, "-1");
+  gunModeStatus = 1;
 }
 
 void IRAM_ATTR setTriger(){
-  Serial.println("Triger");
-  client.publish(ISRFIRE_PUBLISH_TOPIC, "1");
-  delay(50);
+  unsigned long interruptTime = millis();
+  if (interruptTime - lastInterruptTime > 50){
+    trigerState = 1;
+  }
+  lastInterruptTime = interruptTime;
 }
 
 void IRAM_ATTR setReload(){
-  Serial.println("Reload");
-  client.publish(ISRRELOAD_PUBLISH_TOPIC, "1");
-  delay(50);
+  unsigned long interruptTime = millis();
+  if (interruptTime - lastInterruptTime > 100){
+    reloadState = 1;
+  }
+  lastInterruptTime = interruptTime;
 }
 
 // Show the bullet count on LED bar
@@ -283,7 +290,6 @@ void setup(void) {
 
   // Initialize the gun
   client.publish(PUBLISH_TOPIC, "Hello from ESP32");
-  // Serial.println("Hello from ESP32");
   getPolVal();
   updateBullets();
   delay(100);
@@ -291,6 +297,23 @@ void setup(void) {
 
 void loop() {
   /* Get new sensor events with the readings */
-  publishMessage();
-  delay(50);
+  if (trigerState){
+    Serial.println("Triger");
+    client.publish(ISRFIRE_PUBLISH_TOPIC, "1");
+    trigerState = 0;
+  }
+  if (reloadState){
+    Serial.println("Reload");
+    client.publish(ISRRELOAD_PUBLISH_TOPIC, "1");
+    reloadState = 0;
+  }
+  if (gunModeStatus){
+    client.publish(ISRMODE_PUBLISH_TOPIC, String(gunMod).c_str());
+    gunModeStatus = 0;
+  }
+  unsigned long time = millis();
+  if (time - lastTime > 100){
+    publishMessage();
+    lastTime = time;
+  }
 }

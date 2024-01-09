@@ -1,12 +1,15 @@
-int flashPin = 4;
+#define pushButton_pin   25
 
-void setup() {
-    pinMode(flashPin, OUTPUT);
+void IRAM_ATTR toggleLED()
+{
+  Serial.println("sds");
 }
-
-void loop() {
-    digitalWrite(flashPin, HIGH);
-    delay(1000);
-    digitalWrite(flashPin, LOW);
-    delay(1000);
+void setup()
+{
+  Serial.begin(115200);
+  pinMode(pushButton_pin, INPUT_PULLUP);
+  attachInterrupt(pushButton_pin, toggleLED, RISING);
+} 
+void loop()
+{
 }
