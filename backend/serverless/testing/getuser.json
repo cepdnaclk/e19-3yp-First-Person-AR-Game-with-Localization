@@ -1,0 +1,24 @@
+{
+    "Authorization": "eyJraWQiOiJtVHR6UFwvamZ1a0M1M2J4QW9DS2xYbENLWER6UHpLYVM5UFJId2JcL1phYzQ9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiIxNGM2MDk4Zi0xNjg4LTQxZTktYWYwNC0yNDA1MDU5NDUyMTEiLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTFfQWhPMFlxRFA1IiwiY2xpZW50X2lkIjoiMzVsMzdlYjM3dTFia25rcWxlYWRmYmN1aTUiLCJvcmlnaW5fanRpIjoiOTkxYjU3NzktODNmYS00ODNjLTk2MGItOTU0ZGEwMWVjM2UxIiwiZXZlbnRfaWQiOiI4YzJjNTNmOC01NGRkLTQ2NjYtOTkyYS1kZWUxZTBkNDYyOTMiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNzA0NzE1MTE5LCJleHAiOjE3MDQ4MDE1MTksImlhdCI6MTcwNDcxNTExOSwianRpIjoiMTdjYzgzOGItOTAxZC00MTk5LWJiNzctODVkZDhkNjQ2YjAzIiwidXNlcm5hbWUiOiIxNGM2MDk4Zi0xNjg4LTQxZTktYWYwNC0yNDA1MDU5NDUyMTEifQ.TL62Q04CsMBy761mLCIj0mm2H8_4YX5ZF5L_nxBLWSir9nUh_mB0CDZT8eCseBhDVvZtT7BqYzqzHUA_8oCBemy0zfX9Zo9UZMMzfmQ5dVU_H5jx0CJUa3xTkCJCgtfdR80QOP0R7WtSOirjGQ8nr9Ct4-0MpoAypuRBavN5TSjjuwABQn9Ss00E6lp3mHiuKp8-47o3H7dLlgROrBJbxrvp72aBae5-wy_lv80VTiazT0QIDsN2QdDFlgIsB5SNY8t0QHJ22CVI940DtHPNTv-mec7CCvBQsHIxIJyGJgdz7hwehIxGGooCtUYOpuic5C4FxFtABHGIDk1fy_pCwQ"
+}
+
+//example response
+{
+    "statusCode": 200,
+    "body": {
+      "email": [
+        {
+          "Name": "sub",
+          "Value": "14c6098f-1688-41e9-af04-240505945211"
+        },
+        {
+          "Name": "email_verified",
+          "Value": "true"
+        },
+        {
+          "Name": "email",
+          "Value": "lahirumenik@gmail.com"
+        }
+      ]
+    }
+  }
