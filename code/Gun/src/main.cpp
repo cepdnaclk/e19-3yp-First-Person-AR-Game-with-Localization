@@ -95,7 +95,7 @@ void getPolVal(){
   bulletPotVal = analogRead(BULLET_COUNT_PIN);
   gunPotVal = analogRead(GUN_SELECT_PIN);
 
-  zoomVal = (zoomPotVal / 4095) * 100;
+  zoomVal = (zoomPotVal / 4095.0) * 100;
   bulletVal = bulletPotVal / BULLET_STEPS + 1;
   gunCategory = gunPotVal / GUN_STEPS + 1;
 }
@@ -111,6 +111,31 @@ void getGyro(){
   // Calculate roll and pitch
   roll = atan2(ay, az) * RAD_TO_DEG;
   pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
+}
+
+// TODO: Implement middle 0 functionallity
+void IRAM_ATTR setManuvalFire(){
+  gunMod = 1;
+  Serial.println("Manual Fire");
+  client.publish(ISRMODE_PUBLISH_TOPIC, "1");
+}
+
+void IRAM_ATTR setAutomaticFire(){
+  gunMod = -1;
+  Serial.println("Automatic Fire");
+  client.publish(ISRMODE_PUBLISH_TOPIC, "-1");
+}
+
+void IRAM_ATTR setTriger(){
+  Serial.println("Triger");
+  client.publish(ISRFIRE_PUBLISH_TOPIC, "1");
+  delay(50);
+}
+
+void IRAM_ATTR setReload(){
+  Serial.println("Reload");
+  client.publish(ISRRELOAD_PUBLISH_TOPIC, "1");
+  delay(50);
 }
 
 // Show the bullet count on LED bar
@@ -131,8 +156,6 @@ void updateShiftRegister()
   updateBullets();
 }
 
-// TODO: implement ISR for 2 way switch
-// TODO: implement ISR for IR
 
 // Connect to WIFI
 void connectWIFI(){
@@ -176,16 +199,17 @@ void publishMessage(){
 
   StaticJsonDocument<200> doc;
 
-  doc["Roll: "] = roll;
-  doc["Pitch: "] = pitch;
-  doc["BulletVal: "] = bulletVal;
-  doc["ZoomVal: "] = zoomVal;
-  doc["GunMod: "] = gunMod;
+  doc["Roll"] = roll;
+  doc["Pitch"] = pitch;
+  doc["BulletVal"] = bulletVal;
+  doc["ZoomVal"] = zoomVal;
+  doc["GunCategory"] = gunCategory;
 
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
  
   client.publish(PUBLISH_TOPIC, jsonBuffer);
+  // Serial.println("Published");
 }
 
 // TODO: Implement to reload action
@@ -207,10 +231,15 @@ void setup(void) {
   pinMode(LATCH_PIN, OUTPUT);
   pinMode(DATA_PIN, OUTPUT);  
   pinMode(CLOCK_PIN, OUTPUT);
+  pinMode(RELOAD_PIN, INPUT_PULLUP);
+  pinMode(MANUAL_FIRE_PIN, INPUT_PULLUP);
+  pinMode(AUTOMATIC_FIRE_PIN, INPUT_PULLUP);
+  pinMode(TRIGER_PIN, INPUT_PULLUP);
 
-  // pinMode(triger, INPUT);
-
-  // attachInterrupt(digitalPinToInterrupt(triger), updateShiftRegister, HIGH);
+  attachInterrupt(digitalPinToInterrupt(MANUAL_FIRE_PIN), setManuvalFire, FALLING);
+  attachInterrupt(digitalPinToInterrupt(AUTOMATIC_FIRE_PIN), setAutomaticFire, FALLING);
+  attachInterrupt(digitalPinToInterrupt(TRIGER_PIN), setTriger, FALLING);
+  attachInterrupt(digitalPinToInterrupt(RELOAD_PIN), setReload, FALLING);
 
   Serial.println("Gun Power Up");
 
@@ -254,6 +283,7 @@ void setup(void) {
 
   // Initialize the gun
   client.publish(PUBLISH_TOPIC, "Hello from ESP32");
+  // Serial.println("Hello from ESP32");
   getPolVal();
   updateBullets();
   delay(100);
@@ -262,5 +292,5 @@ void setup(void) {
 void loop() {
   /* Get new sensor events with the readings */
   publishMessage();
-  delay(100);
+  delay(50);
 }

@@ -17,12 +17,12 @@ def on_message(client, userdata, msg):
     data = json.loads(msg.payload.decode())  # decode JSON data
 
     # Update the center of the cross using the X and Y rotations
-    #center[1] = 200 - 5 * int(data['Roll: '])
-    x = int(data['Rotation Z: '])
+    center[1] = 200 - 5 * int(data['Roll: '])
+    x = int(data['Pitch: '])
     if x > 0:
-        center[0] -= 15 * int(data['Rotation Z: '])
+        center[0] -= 15 * x
     else:
-        center[0] -=25 * int(data['Rotation Z: '])
+        center[0] -=25 * x
 
     if center[0] > 600:
         center[0] = 600
@@ -42,7 +42,7 @@ client = mqtt.Client()
 client.on_message = on_message
 
 # Connect to the broker
-client.connect("localhost", 1883, 60)
+client.connect("localhost", 1884, 60)
 
 # Subscribe to the topic
 client.subscribe("gyro/pub")

@@ -20,7 +20,7 @@ correction_rot_y = 0.030643184
 correction_rot_z = -0.518802464
 
 broker = 'localhost'
-port = 1883
+port = 1884
 topic = "gyro/pub"
 
 # Generate a Client ID with the subscribe prefix.
@@ -49,12 +49,12 @@ def subscribe(client: mqtt_client):
         global roll, pitch
     
         print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
-        # data = json.loads(msg.payload.decode())  # decode JSON data
+        data = json.loads(msg.payload.decode())  # decode JSON data
 
         # # Append new values to the lists
-        # acceleration_x.append(data['Acceleration X: '])
-        # acceleration_y.append(data['Acceleration Y: '])
-        # acceleration_z.append(data['Acceleration Z: '])
+        acceleration_x.append(data['GunMod'])
+        #acceleration_y.append(data['Pitch: '])
+        #acceleration_z.append(data['GunCategory: '])
         # rotation_x.append(data['Rotation X: '] + correction_rot_x)
         # rotation_y.append(data['Rotation Y: '] + correction_rot_y)
         #rotation_z.append(data['Rotation Z: '] + correction_rot_z)
@@ -62,9 +62,9 @@ def subscribe(client: mqtt_client):
         # pitch.append(data['Pitch: '])
 
         # Keep only the last 20 data points in each array
-        # acceleration_x = acceleration_x[-20:]
-        # acceleration_y = acceleration_y[-20:]
-        # acceleration_z = acceleration_z[-20:]
+        acceleration_x = acceleration_x[-20:]
+        acceleration_y = acceleration_y[-20:]
+        #acceleration_z = acceleration_z[-20:]
         # rotation_x = rotation_x[-20:]
         # rotation_y = rotation_y[-20:]
         # rotation_z = rotation_z[-20:]
@@ -72,12 +72,12 @@ def subscribe(client: mqtt_client):
         # pitch = pitch[-20:]
 
         # Clear the current figure
-        # plt.clf()
+        plt.clf()
 
         # # Plot the new values
-        # plt.plot(acceleration_x, label='Acceleration X')
-        #plt.plot(acceleration_y, label='Acceleration Y')
-        #plt.plot(acceleration_z, label='Acceleration Z')
+        plt.plot(acceleration_x, label='GunMod')
+        #plt.plot(acceleration_y, label='ZoomVal: ')
+        #plt.plot(acceleration_z, label='GunCategory: ')
         # plt.plot(rotation_x, label='Rotation X')
         # plt.plot(rotation_y, label='Rotation Y')
         # plt.plot(rotation_z, label='Rotation Z')
@@ -85,13 +85,13 @@ def subscribe(client: mqtt_client):
         # plt.plot(pitch, label='Pitch')
 
         # Add a legend
-        # plt.legend()
+        plt.legend()
 
         # # Draw the plot
-        # plt.pause(0.01)  # pause a bit so that plots are updated
+        plt.pause(0.01)  # pause a bit so that plots are updated
 
     client.subscribe(topic)
-    #plt.show(block=False)  # start the plot outside the function
+    plt.show(block=False)  # start the plot outside the function
     client.on_message = on_message
 
 def run():
