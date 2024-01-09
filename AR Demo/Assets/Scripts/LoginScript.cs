@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.UI;
 using TMPro;
 using System;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class TokenResponse
@@ -55,7 +56,7 @@ public class LoginScript : MonoBehaviour
 
             Debug.Log("accessToken: " + PlayerPrefs.GetString("AccessToken"));
             
-            // Here, you might save the accessToken for further use, like storing it in PlayerPrefs or using it in subsequent requests.
+            SceneManager.LoadScene(2); // main menu
         }
     }
 

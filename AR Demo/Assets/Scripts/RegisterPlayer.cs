@@ -31,13 +31,14 @@ public class RegisterPlayer : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Error: " + request.error);
-            Debug.LogError("Response code: " + request.responseCode);
-            StartCoroutine(Notification("An error occurred: " + request.error));
+            // Debug.LogError("Error: " + request.error);
+            // Debug.LogError("Response code: " + request.responseCode);
+            StartCoroutine(Notification("An error occurred"));
         }
         else
         {
             Debug.Log("Response: " + request.downloadHandler.text);
+            StartCoroutine(Notification("Registeration successful"));
         }
     }
 
