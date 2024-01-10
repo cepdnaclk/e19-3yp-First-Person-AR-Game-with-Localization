@@ -16,10 +16,11 @@ unsigned long lasttime = 0;
 // const char* mqttUser = "otfxknod";
 // const char* mqttPassword = "nSuUc1dDLygF";
  
-WiFiClientSecure espClient;
+// WiFiClientSecure espClient;
+WiFiClient espClient;
 PubSubClient client(espClient);
 
-BearSSL::X509List cert(ca_crt);
+// BearSSL::X509List cert(ca_crt);
 
 void callback(char* topic, byte* payload, unsigned int length) {
   Serial.print("Message arrived [");
@@ -43,7 +44,7 @@ void wifi_connect(){
 void mqtt_connect() {
   digitalWrite(MQTT_LED, LOW);
 
-  // while (!client.connected()) {
+  while (!client.connected()) {
     if (client.connect(ID)) {
       digitalWrite(MQTT_LED, HIGH);
 
@@ -55,23 +56,24 @@ void mqtt_connect() {
       Serial.println(" try again in 500 miliseconds");
       delay(500);
     }
-  // }
+  }
 }
  
 void setup() {
  
   Serial.begin(115200);
+  // pinMode(2, INPUT);
 
   // initialize GPIO2 and GPIO16 as an output
-  pinMode(OB_LED, OUTPUT);
-  pinMode(MQTT_LED, OUTPUT);
+  // pinMode(OB_LED, OUTPUT);
+  // pinMode(MQTT_LED, OUTPUT);
 
-  digitalWrite(OB_LED, HIGH);
-  digitalWrite(MQTT_LED, LOW);
+  // digitalWrite(OB_LED, HIGH);
+  // digitalWrite(MQTT_LED, LOW);
 
-  // espClient.setCACert(ca_crt, sizeof(ca_crt)); // Set the CA certificate for verification
-  espClient.setInsecure(); // Allow insecure connection for testing purposes
-  // delay(500);
+  // // espClient.setCACert(ca_crt, sizeof(ca_crt)); // Set the CA certificate for verification
+  // espClient.setInsecure(); // Allow insecure connection for testing purposes
+  // // delay(500);
  
   wifi_connect();
  
@@ -89,18 +91,22 @@ void loop() {
   if (!client.connected()) {
     mqtt_connect();
   }else{
-    client.loop();
+  //   client.loop();
 
-    unsigned long now = millis();
-    if (now - lasttime > 1000) {
-      lasttime = now;
-      client.publish(NODESTATUS, ID);
-      digitalWrite(OB_LED, ob_sts);
-      digitalWrite(MQTT_LED, LOW);
-    }
-    if (now - lasttime > 500) {
-      digitalWrite(OB_LED, HIGH);
-      digitalWrite(MQTT_LED, HIGH);
-    }
+  //   unsigned long now = millis();
+  //   if (now - lasttime > 1000) {
+  //     lasttime = now;
+  //     client.publish(NODESTATUS, ID);
+  //     digitalWrite(OB_LED, ob_sts);
+  //     digitalWrite(MQTT_LED, LOW);
+  //   }
+  //   if (now - lasttime > 500) {
+  //     digitalWrite(OB_LED, HIGH);
+  //     digitalWrite(MQTT_LED, HIGH);
+  //   }
+  Serial.println(analogRead(A0));
+  // client.publish(NODESTATUS, ID);
   }
+    
+  delay(100);
 }
