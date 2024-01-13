@@ -1,6 +1,6 @@
 var AWS = require('aws-sdk');
     
-exports.handler = function(event, context, callback) {
+exports.handler = async  (event, context, callback) => {
     
     //Replace it with the AWS region the lambda will be running in
     var region = "ap-southeast-1";
