@@ -9,11 +9,10 @@ exports.handler = async (event) => {
         const stage = event.requestContext.stage;
         const apiEndpoint = event.requestContext.domainName + '/' + stage;
         
-        const jsonString = JSON.stringify({"message": "connection established"})
-        const blobData = Buffer.from(jsonString);
+        const jsonString = JSON.stringify({"message": "connection established"});
 
-        //const requestBody = JSON.parse(event.body);
-        const email = "tt@te"
+        const requestBody = event.headers;
+        const email = requestBody.email;
 
         // const inputdb = {
         //     TableName: "Arcombat-user",
@@ -39,15 +38,6 @@ exports.handler = async (event) => {
       const responsedbEnv = await dbclient.send(commandSock);
 
 
-
-        // const input = { // PostToConnectionRequest
-        //       "Data": blobData, // required
-        //       "ConnectionId": connectionId
-        // }
-        // const command = new PostToConnectionCommand(input);
-        // const response = await client.send(command);
-        // const command = new UpdateItemCommand(inputdb);
-        // const response = await dbclient.send(command);
 
         return {
             statusCode: 200,
