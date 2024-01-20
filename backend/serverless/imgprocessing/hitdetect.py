@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-img = cv2.imread("test")
+img = cv2.imread("test4")
 cv2.imshow("test",img)
 imgResult = img.copy()
 
@@ -12,8 +12,8 @@ def get_contours(img):
     for cnt in contours:
         area = cv2.contourArea(cnt)
         print(area)
-        if area<2500:
-            cv2.drawContours(imgResult, cnt, -1, (25, 255, 0), 5)
+        if area>15:
+            cv2.drawContours(imgResult, cnt, -1, (0, 255, 0), 6)
             peri = cv2.arcLength(cnt,True)
             approx = cv2.approxPolyDP(cnt,0.02*peri,True)
             x, y, w, h = cv2.boundingRect(approx)
