@@ -220,14 +220,14 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// </summary>
         public void SwitchToPrivacyPrompt()
         {
-            if (PlayerPrefs.HasKey(_hasDisplayedStartInfoKey))
-            {
+            ///if (PlayerPrefs.HasKey(_hasDisplayedStartInfoKey))
+            //{
                 SwitchToARView();
                 return;
-            }
+            //}
 
-            ResetAllViews();
-            PrivacyPrompt.SetActive(true);
+           // ResetAllViews();
+           // PrivacyPrompt.SetActive(true);
         }
 
         /// <summary>
@@ -332,7 +332,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             Screen.sleepTimeout = SleepTimeout.SystemSetting;
             SetPlatformActive(false);
             ARView.SetActive(false);
-            PrivacyPrompt.SetActive(false);
+            //PrivacyPrompt.SetActive(false);
             ResolveMenu.SetActive(false);
             HomePage.SetActive(false);
         }
