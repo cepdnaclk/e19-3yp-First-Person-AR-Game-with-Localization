@@ -1,6 +1,6 @@
 const { ApiGatewayManagementApiClient, PostToConnectionCommand } = require("@aws-sdk/client-apigatewaymanagementapi");
 const client = new ApiGatewayManagementApiClient();
-const { DynamoDBClient, UpdateItemCommand } = require("@aws-sdk/client-dynamodb");
+const { DynamoDBClient, UpdateItemCommand, PutItemCommand } = require("@aws-sdk/client-dynamodb");
 const dbclient = new DynamoDBClient();
 
 exports.handler = async (event) => {
@@ -9,42 +9,45 @@ exports.handler = async (event) => {
         const stage = event.requestContext.stage;
         const apiEndpoint = event.requestContext.domainName + '/' + stage;
         
-        const jsonString = JSON.stringify({"message": "connection established"})
-        const blobData = Buffer.from(jsonString);
+        const jsonString = JSON.stringify({"message": "connection established"});
 
-        const requestBody = JSON.parse(event.body);
+        const requestBody = event.headers;
         const email = requestBody.email;
 
-        const inputdb = {
-            TableName: "Arcombat-user",
-            Key: {
-              "email": { S: email },
-            },
-            AttributeUpdates: {
-              connectionid: { Action: "PUT", Value: { S: connectionId } },
-            },
-            // ReturnValues: "ALL_NEW",
-          };
+        // const inputdb = {
+        //     TableName: "Arcombat-user",
+        //     Key: {
+        //       "email": { S: email },
+        //     },
+        //     AttributeUpdates: {
+        //       connectionid: { Action: "PUT", Value: { S: connectionId } },
+        //     },
+        //     // ReturnValues: "ALL_NEW",
+        //   };
 
 
-        // const input = { // PostToConnectionRequest
-        //       "Data": blobData, // required
-        //       "ConnectionId": connectionId
-        // }
-        // const command = new PostToConnectionCommand(input);
-        // const response = await client.send(command);
-        const command = new UpdateItemCommand(inputdb);
-        const response = await client.send(command);
+        const dynamoDBParams = {
+          TableName: 'Arcombat-socket',
+          Item: {
+              email: { S: email },
+              connectionid: { S: connectionId },
+          }
+      };
+
+      const commandSock = new PutItemCommand(dynamoDBParams);
+      const responsedbEnv = await dbclient.send(commandSock);
+
+
 
         return {
             statusCode: 200,
-            body: 'Connection started successfully.',
+            body: JSON.stringify('Connection started successfully.')
         };
     } catch (error) {
         console.error('Error starting connection:', error);
         return {
             statusCode: 500,
-            body: 'Error starting connection.',
+            body: JSON.stringify('Error starting connection.')
         };
     }
 };
