@@ -13,3 +13,20 @@ const sendToOne = async (id, body) => {
     console.error(err);
   }
 };
+
+exports.handler = async (event, context, callback) => {
+    try {
+        await sendToOne('R02GBdCDSQ0CGgA=', { message: 'hello' });
+        return {
+            statusCode: 200,
+            body: JSON.stringify('Connection started successfully.')
+        };
+
+    }catch (error) {
+        return {
+            statusCode: 500,
+            body: JSON.stringify('Error starting connection.')
+        };
+
+    }
+}
