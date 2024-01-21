@@ -1,27 +1,31 @@
 import cv2
 import numpy as np
 
-img = cv2.imread("qr.jpg")
+img = cv2.imread("qr1.jpg")
 cv2.imshow("test",img)
 imgResult = img.copy()
 
 qcd = cv2.QRCodeDetector()
 retval, decoded_info, points, straight_qrcode = qcd.detectAndDecodeMulti(img)
 #print(points)
-#print(decoded_info)
+print(decoded_info)
 def get_contours(img):
     contours,hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
-    x,y,w,h = 0,0,0,0
+    X,Y,W,H = 0,0,0,0
+    cur_area = 0
     #print(contours)
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        #print(area)
+        print(area)
         if area>2:
             cv2.drawContours(imgResult, cnt, -1, (0, 255, 0), 6)
             peri = cv2.arcLength(cnt,True)
             approx = cv2.approxPolyDP(cnt,0.02*peri,True)
             x, y, w, h = cv2.boundingRect(approx)
-    return x+w//2,y
+            if area>cur_area:
+                cur_area = area
+                X, Y, W, H = x, y, w, h
+    return X+W//2,Y
 
 
 def findColor():
@@ -30,7 +34,9 @@ def findColor():
     upper_red = np.array([10, 255, 255])
     mask = cv2.inRange(imgHSV, lower_red, upper_red)
     x, y = get_contours(mask)
-    #print(points)
+    print(points)
+    print(x, y)
+
     for qrs_id in range(len(points)):
         if points[qrs_id][0][0] <=x and points[qrs_id][1][0]>=x:
             if points[qrs_id][0][1] <=y and points[qrs_id][2][1]>=y:
