@@ -1,7 +1,31 @@
 import cv2
 import numpy as np
+from io import BytesIO
+import base64
 
-img = cv2.imread("qr1.jpg")
+
+def imread_from_base64(base64_string):
+    image_binary_data = base64.b64decode(base64_string)
+    bytes_io = BytesIO(image_binary_data)
+
+    # Use cv2.imdecode to read the image from BytesIO
+    image = cv2.imdecode(np.frombuffer(bytes_io.read(), np.uint8), cv2.IMREAD_COLOR)
+
+    return image
+
+
+def image_to_base64(image_path):
+    with open(image_path, "rb") as image_file:
+        image_binary_data = image_file.read()
+        base64_encoded = base64.b64encode(image_binary_data)
+        base64_string = base64_encoded.decode("utf-8")
+    return base64_string
+
+
+img_encode = image_to_base64("qr5.jpg")
+img = imread_from_base64(img_encode)
+
+#img = cv2.imread(img_decode)
 cv2.imshow("test",img)
 imgResult = img.copy()
 
@@ -22,6 +46,8 @@ def get_contours(img):
             peri = cv2.arcLength(cnt,True)
             approx = cv2.approxPolyDP(cnt,0.02*peri,True)
             x, y, w, h = cv2.boundingRect(approx)
+
+            #LOGIC to remove outliers
             if area>cur_area:
                 cur_area = area
                 X, Y, W, H = x, y, w, h
@@ -52,4 +78,4 @@ upper_red = np.array([10, 255, 255])
 
 cv2.imshow("tes",imgResult)
 
-cv2.waitKey(0)
+#cv2.waitKey(0)
