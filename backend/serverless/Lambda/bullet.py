@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from io import BytesIO
 import base64
-
+import json
 
 def imread_from_base64(base64_string):
     image_binary_data = base64.b64decode(base64_string)
@@ -19,12 +19,13 @@ def image_to_base64(image_path):
         image_binary_data = image_file.read()
         base64_encoded = base64.b64encode(image_binary_data)
         base64_string = base64_encoded.decode("utf-8")
+        image_file.close()
     return base64_string
 
 
 # img_encode = image_to_base64("qr5.jpg")
 # img = imread_from_base64(img_encode)
-# 
+#
 # #img = cv2.imread(img_decode)
 # cv2.imshow("test",img)
 # imgResult = img.copy()
@@ -69,17 +70,21 @@ def findColor(img, points, decoded_info):
                 return decoded_info[qrs_id]
     return False
 
-def handler(event, context):
-    encoded_str = event.body.img
+def lambda_handler(event, context):
+    #print(event)
+    body_dict = json.loads(event['body'])
+    #print(body_dict)
+    
+    encoded_str = body_dict['img']
     img = imread_from_base64(encoded_str)
     retval, decoded_info, points, straight_qrcode = qcd.detectAndDecodeMulti(img)
     result = findColor(img, points, decoded_info)
     if result:
-        return {"statusCode": 200, "body": result}
+         return {"statusCode": 200, "body": result}
     else:
-        return {"statusCode":200, "body": "Not a hit"}
+         return {"statusCode":404, "body": "Not a hit"}
 
-
+#body: json.dumps
 # findColor()
 
 
