@@ -1,14 +1,18 @@
 import cv2
 import numpy as np
-
+from io import BytesIO
 import base64
 
 
-def decode_base64_to_image(base64_string):
+def imread_from_base64(base64_string):
     image_binary_data = base64.b64decode(base64_string)
-    np_array = np.frombuffer(image_binary_data, dtype=np.uint8)
-    image = cv2.imdecode(np_array, cv2.IMREAD_COLOR)
+    bytes_io = BytesIO(image_binary_data)
+
+    # Use cv2.imdecode to read the image from BytesIO
+    image = cv2.imdecode(np.frombuffer(bytes_io.read(), np.uint8), cv2.IMREAD_COLOR)
+
     return image
+
 
 def image_to_base64(image_path):
     with open(image_path, "rb") as image_file:
@@ -18,7 +22,10 @@ def image_to_base64(image_path):
     return base64_string
 
 
-img = cv2.imread("qr5.jpg")
+img_encode = image_to_base64("qr5.jpg")
+img = imread_from_base64(img_encode)
+
+#img = cv2.imread(img_decode)
 cv2.imshow("test",img)
 imgResult = img.copy()
 
