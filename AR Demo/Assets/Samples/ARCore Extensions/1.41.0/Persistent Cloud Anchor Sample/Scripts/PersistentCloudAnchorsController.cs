@@ -330,8 +330,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         private void ResetAllViews()
         {
             Screen.sleepTimeout = SleepTimeout.SystemSetting;
-            SetPlatformActive(false);
-            ARView.SetActive(false);
+            //SetPlatformActive(false);
+            //ARView.SetActive(false);
             //PrivacyPrompt.SetActive(false);
             ResolveMenu.SetActive(false);
             HomePage.SetActive(false);
