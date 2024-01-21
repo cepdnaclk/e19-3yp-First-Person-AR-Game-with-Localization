@@ -19,6 +19,13 @@ public class LoginScript : MonoBehaviour
     [SerializeField] private TMP_InputField username;
     [SerializeField] private TMP_InputField password;
     [SerializeField] private TMP_Text textBox;
+    public String DisplayName
+    {
+        get { return PlayerPrefs.GetString("DisplayName", ""); }
+        private set { PlayerPrefs.SetString("DisplayName", value); }
+    }
+
+
 
     IEnumerator Notification(String text){
         textBox.text = text;
@@ -53,10 +60,11 @@ public class LoginScript : MonoBehaviour
 
             // Save the access token to PlayerPrefs
             PlayerPrefs.SetString("AccessToken", accessToken);
-
+            DisplayName = username.text;
             StartCoroutine(Notification("Wait"));
 
             Debug.Log("accessToken: " + PlayerPrefs.GetString("AccessToken"));
+            
             
             SceneManager.LoadScene(2); // main menu
         }
@@ -82,4 +90,6 @@ public class LoginScript : MonoBehaviour
         StartCoroutine(LoginAndGetToken(loginEndpoint,loginJson));
         // Debug.Log($"{username.text}:{password.text}");
     }
+
+   
 }
