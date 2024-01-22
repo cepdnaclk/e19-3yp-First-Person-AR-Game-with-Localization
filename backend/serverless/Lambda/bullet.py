@@ -2,7 +2,12 @@ import cv2
 import numpy as np
 from io import BytesIO
 import base64
-import json
+
+
+
+def zoom(img, zoom_factor=2):
+    return cv2.resize(img, None, fx=zoom_factor, fy=zoom_factor)
+
 
 def imread_from_base64(base64_string):
     image_binary_data = base64.b64decode(base64_string)
@@ -71,18 +76,17 @@ def findColor(img, points, decoded_info):
     return False
 
 def lambda_handler(event, context):
-    #print(event)
-    body_dict = json.loads(event['body'])
-    #print(body_dict)
-    
-    encoded_str = body_dict['img']
-    img = imread_from_base64(encoded_str)
+    encoded_str = event.body.img
+    img_un = imread_from_base64(encoded_str)
+    row, col = img_un.shape[0], img_un.shape[1]
+    img_c = img_un[(1 * row) // 8:(5 * row) // 8, (3 * col) // 16:(5 * col) // 8]
+    img = zoom(img_c, 3)
     retval, decoded_info, points, straight_qrcode = qcd.detectAndDecodeMulti(img)
     result = findColor(img, points, decoded_info)
     if result:
-         return {"statusCode": 200, "body": result}
+        return {"statusCode": 200, "body": result}
     else:
-         return {"statusCode":404, "body": "Not a hit"}
+        return {"statusCode":200, "body": "Not a hit"}
 
 #body: json.dumps
 # findColor()
