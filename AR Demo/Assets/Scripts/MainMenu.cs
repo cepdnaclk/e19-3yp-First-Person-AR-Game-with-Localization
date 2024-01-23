@@ -10,7 +10,7 @@ public class MainMenu : MonoBehaviour
     void Start()
     {
         string displayName = PlayerPrefs.GetString("DisplayName", "");
-        Debug.Log("Display Name: " + displayName);
+        //Debug.Log("Display Name: " + displayName);
         userName.text = displayName;
     }
 
