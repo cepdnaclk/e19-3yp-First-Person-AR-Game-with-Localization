@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections.Generic;
+using static UnityEngine.UIElements.UxmlAttributeDescription;
+
+[System.Serializable]
+public class PlayerData
+{
+    public string email;
+    public List<string> users;
+    public List<string> stationid;
+}
 
 public class NewGame : MonoBehaviour
 {
@@ -17,18 +27,33 @@ public class NewGame : MonoBehaviour
         userName.text = Name;
     }
 
+    List<string> users = new List<string>();
+    List<string> stationid = new List<string>();
+
     public void AddPlayer()
     {
-        string playerID = inputField.text;
-        // Create login data in JSON format
-        string addPlayerJson = "{\"email\":\"" + userName.text +
-                              "\",\"users\":\"" + playerID + "\"}";
-
-        // Get a reference to the Button component
-        StartCoroutine(AddPlayerAndGetToken(AddPlayerEndpoint, addPlayerJson));
-        // Debug.Log($"{username.text}:{password.text}");
+        users.Add(inputField.text);
+        Debug.Log(users.Count);
     }
     
+    public void sendPlayers()
+    {
+        string email = userName.text;
+        // Create an instance of the PlayerData class and set its properties
+        PlayerData playerData = new PlayerData
+        {
+            email = email,
+            users = users,
+            stationid = stationid
+        };
+
+        // Convert the PlayerData object to a JSON-formatted string
+        string json = JsonUtility.ToJson(playerData);
+
+        // Output the generated JSON string
+        Debug.Log(json);
+        StartCoroutine(AddPlayerAndGetToken(AddPlayerEndpoint, json));
+    }
 
 
     IEnumerator AddPlayerAndGetToken(string url, string jsonData)
@@ -38,7 +63,9 @@ public class NewGame : MonoBehaviour
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
         AddPlayerRequest.uploadHandler = new UploadHandlerRaw(bodyRaw);
         AddPlayerRequest.downloadHandler = new DownloadHandlerBuffer();
+        string accessToken = PlayerPrefs.GetString("AccessToken");
         AddPlayerRequest.SetRequestHeader("Content-Type", "application/json");
+        AddPlayerRequest.SetRequestHeader("auth-token", accessToken);
 
         // Send login request
         yield return AddPlayerRequest.SendWebRequest();
@@ -46,8 +73,12 @@ public class NewGame : MonoBehaviour
         // Check for login errors
         if (AddPlayerRequest.result != UnityWebRequest.Result.Success)
         {
-            Debug.Log("Login failed");
-            Debug.LogError("Login Error: " + AddPlayerRequest.error);
+            Debug.Log("Add Player failed");
+            //Debug.Log("Request Headers: " + string.Join(", ", AddPlayerRequest.GetRequestHeader("auth-key")));
+            //Debug.Log("Response Code: " + AddPlayerRequest.responseCode);
+            //Debug.Log("Response Text: " + AddPlayerRequest.downloadHandler.text);
+            Debug.LogError("Add Player Error: " + AddPlayerRequest.error);
+
         }
         else
         {
