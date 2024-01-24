@@ -17,7 +17,7 @@ exports.handler = async (event, context, callback) => {
         const dynamoDBParams = {
             "TableName": 'Arcombat-arcore',
             "Key": {
-                "email": {"S": email},
+                "email": {"S": gameid},
                 
             }
         };
