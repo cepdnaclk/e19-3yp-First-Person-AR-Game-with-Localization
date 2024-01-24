@@ -10,21 +10,21 @@ exports.handler = async (event, context, callback) => {
         const requestBody = JSON.parse(event.body);
         const email = requestBody.email;
     
-        const anchorid = requestBody.anchorid;
+        const gameid = requestBody.gameid;
      
 
         // Add user to DynamoDB arcore
         const dynamoDBParams = {
             "TableName": 'Arcombat-arcore',
             "Key": {
-                "email": {"S": email},
+                "email": {"S": gameid},
                 
             }
         };
         const dynamoDBParamsEnv = {
             "TableName": 'Arcombat-env',
             "Key": {
-                "email": {"S": email},
+                "email": {"S": gameid},
                 
             }
         };
@@ -58,7 +58,7 @@ exports.handler = async (event, context, callback) => {
         // Return a response
         return {
             statusCode: 200,
-            body: anchorid
+            body: JSON.stringify(anchorid)
         };
 
         
