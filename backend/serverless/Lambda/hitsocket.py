@@ -82,7 +82,7 @@ def lambda_handler(event, context):
     result = findColor(img, points, decoded_info)
     if result:
          #return {"statusCode": 200, "body": result}
-         return {"hit": "true", "email": email}
+         return {"hit": "true", "email": result}
     else:
          #return {"statusCode":404, "body": "Not a hit"}
          return {"hit": "false"}
