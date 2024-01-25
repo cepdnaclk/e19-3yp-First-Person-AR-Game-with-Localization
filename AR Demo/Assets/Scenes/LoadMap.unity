@@ -2179,6 +2179,7 @@ GameObject:
   - component: {fileID: 465413876}
   - component: {fileID: 465413875}
   - component: {fileID: 465413874}
+  - component: {fileID: 465413877}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2276,6 +2277,24 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &465413877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 465413872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 713d5a375bdee8448a0ba0dac4c8c0ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthSlider: {fileID: 7343741}
+  redSplatter: {fileID: 817678451}
+  whiteGradient: {fileID: 1077349442}
+  gameOverText: {fileID: 1397496993}
+  maxHealth: 100
+  minHealth: 0
 --- !u!1 &465591900
 GameObject:
   m_ObjectHideFlags: 0
