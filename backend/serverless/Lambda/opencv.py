@@ -1,4 +1,5 @@
 import cv2
+import boto3
 import numpy as np
 from io import BytesIO
 import base64
@@ -13,33 +14,18 @@ def zoom(img, zoom_factor=2):
 def imread_from_base64(base64_string):
     image_binary_data = base64.b64decode(base64_string)
     bytes_io = BytesIO(image_binary_data)
-
     # Use cv2.imdecode to read the image from BytesIO
     image = cv2.imdecode(np.frombuffer(bytes_io.read(), np.uint8), cv2.IMREAD_COLOR)
 
     return image
 
 
-def image_to_base64(image_path):
-    with open(image_path, "rb") as image_file:
-        image_binary_data = image_file.read()
-        base64_encoded = base64.b64encode(image_binary_data)
-        base64_string = base64_encoded.decode("utf-8")
-        image_file.close()
-    return base64_string
 
 
-# img_encode = image_to_base64("qr5.jpg")
-# img = imread_from_base64(img_encode)
-#
-# #img = cv2.imread(img_decode)
-# cv2.imshow("test",img)
-# imgResult = img.copy()
+
 
 qcd = cv2.QRCodeDetector()
-# retval, decoded_info, points, straight_qrcode = qcd.detectAndDecodeMulti(img)
-# #print(points)
-# print(decoded_info)
+
 def get_contours(img):
     contours,hierarchy = cv2.findContours(img, cv2.RETR_EXTERNAL,cv2.CHAIN_APPROX_NONE)
     X,Y,W,H = 0,0,0,0
@@ -67,8 +53,7 @@ def findColor(img, points, decoded_info):
     upper_red = np.array([10, 255, 255])
     mask = cv2.inRange(imgHSV, lower_red, upper_red)
     x, y = get_contours(mask)
-    # print(points)
-    # print(x, y)
+   
 
     for qrs_id in range(len(points)):
         if points[qrs_id][0][0] <=x and points[qrs_id][1][0]>=x:
@@ -81,12 +66,16 @@ def lambda_handler(event, context):
     encoded_str = body_dict['img']
     img_un = imread_from_base64(encoded_str)
     row, col = img_un.shape[0], img_un.shape[1]
+
+    #remove corner pixels
     img_c = img_un[(1 * row) // 8:(5 * row) // 8, (3 * col) // 16:(5 * col) // 8]
+
+    #stretch pixels
     img = zoom(img_c, 3)
     retval, decoded_info, points, straight_qrcode = qcd.detectAndDecodeMulti(img)
     if retval:
         result = findColor(img, points, decoded_info)
-        if result:
+        if result and result != "":
             
             return {"statusCode": 200, "body": result}
             
@@ -97,15 +86,3 @@ def lambda_handler(event, context):
         return {"statusCode":404, "body": "Not a hit"}
         
 
-#body: json.dumps
-# findColor()
-
-
-#hsv min and max values
-# lower_red = np.array([0, 120, 70])
-# upper_red = np.array([10, 255, 255])
-
-
-# cv2.imshow("tes",imgResult)
-
-#cv2.waitKey(0)
