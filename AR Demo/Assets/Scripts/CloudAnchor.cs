@@ -7,8 +7,8 @@ using static UnityEngine.UIElements.UxmlAttributeDescription;
 [System.Serializable]
 public class CloudData
 {
-    public string gameID;
-    public string CloudAnchorId;
+    public string email;
+    public string anchorid;
 }
 
 
@@ -25,8 +25,8 @@ public class CloudAnchor : MonoBehaviour
         // Create an instance of the CloudData class and set its properties
         CloudData cloudData = new CloudData
         {
-            gameID = email,
-            CloudAnchorId = cloudID
+            email = email,
+            anchorid = cloudID
         };
 
         // Convert the PlayerData object to a JSON-formatted string

@@ -12,7 +12,7 @@ public class Player {
 }
 
 public class JoinGame : MonoBehaviour
-    
+
 {
     public TMP_InputField gameIDInputField;
     string email;
@@ -74,3 +74,4 @@ public class JoinGame : MonoBehaviour
             Debug.Log("Success");
         }
     }
+}
