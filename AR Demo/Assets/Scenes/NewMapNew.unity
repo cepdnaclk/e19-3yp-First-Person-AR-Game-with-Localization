@@ -638,7 +638,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3e02ebcc2b6fce468f65ba40d94db64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenshotPrefix: ARDemo
 --- !u!4 &94887911
 Transform:
   m_ObjectHideFlags: 0
@@ -2676,6 +2675,8 @@ MonoBehaviour:
   InputField: {fileID: 887747425}
   InvalidInputWarning: {fileID: 752389314}
   ResolveButton: {fileID: 1543223545}
+  joinGame: {fileID: 0}
+  Screen: {fileID: 0}
 --- !u!1 &616214416
 GameObject:
   m_ObjectHideFlags: 0
@@ -7655,6 +7656,7 @@ MonoBehaviour:
   DebugText: {fileID: 1258448789}
   SaveButton: {fileID: 1042167421}
   ShareButton: {fileID: 1776688850}
+  GameScreen: {fileID: 0}
   cloudAnchor: {fileID: 324495866}
 --- !u!224 &1556076446
 RectTransform:
@@ -9815,6 +9817,7 @@ MonoBehaviour:
   ResolveMenu: {fileID: 613587411}
   PrivacyPrompt: {fileID: 2028280251}
   ARView: {fileID: 1556076444}
+  GameScreen: {fileID: 1481878033}
   Mode: 0
 --- !u!4 &1918402008
 Transform:
