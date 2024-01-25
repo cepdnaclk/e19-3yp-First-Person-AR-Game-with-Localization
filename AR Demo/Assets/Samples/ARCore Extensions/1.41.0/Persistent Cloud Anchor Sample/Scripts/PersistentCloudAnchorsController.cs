@@ -107,6 +107,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// </summary>
         public GameObject ARView;
 
+
+
+        public GameObject GameScreen;
+
         /// <summary>
         /// The current application mode.
         /// </summary>
@@ -300,7 +304,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             // Lock screen to portrait.
             Screen.autorotateToLandscapeLeft = true;
             Screen.autorotateToLandscapeRight = true;
-            Screen.autorotateToPortraitUpsideDown = false;
+            if (GameScreen!= null) {
+                GameScreen.SetActive(false);
+            }
+            
             //Screen.orientation = ScreenOrientation.Portrait;
 
             // Enable Persistent Cloud Anchors sample to target 60fps camera capture frame rate
