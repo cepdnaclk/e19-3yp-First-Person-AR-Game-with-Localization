@@ -259,6 +259,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         {
             GUIUtility.systemCopyBuffer = _hostedCloudAnchor.Id;
             DebugText.text = "Copied cloud id: " + _hostedCloudAnchor.Id;
+            string cloudID = GetCloudAnchorID(_hostedCloudAnchor.Id);
+            cloudAnchor.sendCloudIdtoDatabase(cloudID);
+            Debug.Log("Cloud Anchor ID: " + cloudID);
         }
 
         /// <summary>
@@ -560,8 +563,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
                     new CloudAnchorHistory("CloudAnchor" + count, _hostResult.CloudAnchorId);
                 OnAnchorHostedFinished(true, _hostResult.CloudAnchorId);
 
-                string cloudID = GetCloudAnchorID(_hostResult.CloudAnchorId);
-                cloudAnchor.sendCloudIdtoDatabase(cloudID);
+                
             }
             else
             {

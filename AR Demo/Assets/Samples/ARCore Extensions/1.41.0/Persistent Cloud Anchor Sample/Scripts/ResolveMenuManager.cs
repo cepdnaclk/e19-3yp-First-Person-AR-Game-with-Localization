@@ -22,6 +22,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text.RegularExpressions;
     using UnityEngine;
     using UnityEngine.UI;
@@ -71,6 +72,31 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// Callback handling the validation of the input field.
         /// </summary>
         /// <param name="inputString">Current value of the input field.</param>
+        /// 
+
+
+        public JoinGame joinGame;
+
+
+        void Start()
+        {
+
+            string retreivedID;
+            retreivedID = PlayerPrefs.GetString("RetreivedID", "");
+            retreivedID = retreivedID.Trim('"');
+            Debug.Log(retreivedID);
+
+            if (!string.IsNullOrEmpty(retreivedID))
+            {
+                InputField.text = retreivedID;
+                //SetButtonActive(ResolveButton, true);
+
+                OnResolvingSelectionChanged();
+            }
+
+        }
+
+
         public void OnInputFieldValueChanged(string inputString)
         {
             // Input should only contain:
@@ -117,8 +143,11 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             if (!InvalidInputWarning.activeSelf && InputField.text.Length > 0)
             {
                 string[] inputIds = InputField.text.Split(',');
+                
+
                 if (inputIds.Length > 0)
                 {
+                    
                     Controller.ResolvingSet.UnionWith(inputIds);
                 }
             }
@@ -144,6 +173,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             InvalidInputWarning.SetActive(false);
             InputField.text = string.Empty;
             _history = Controller.LoadCloudAnchorHistory();
+
+            
+
+
 
             Multiselection.OnValueChanged += OnResolvingSelectionChanged;
             var options = new List<MultiselectionDropdown.OptionData>();
