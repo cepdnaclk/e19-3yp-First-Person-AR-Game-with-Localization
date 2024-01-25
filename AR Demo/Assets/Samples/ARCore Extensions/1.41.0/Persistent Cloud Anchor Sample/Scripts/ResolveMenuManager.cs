@@ -77,6 +77,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
 
         public JoinGame joinGame;
 
+        public GameObject Screen;
+
 
         void Start()
         {
@@ -173,6 +175,7 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             InvalidInputWarning.SetActive(false);
             InputField.text = string.Empty;
             _history = Controller.LoadCloudAnchorHistory();
+            Screen.SetActive(false);
 
             
 

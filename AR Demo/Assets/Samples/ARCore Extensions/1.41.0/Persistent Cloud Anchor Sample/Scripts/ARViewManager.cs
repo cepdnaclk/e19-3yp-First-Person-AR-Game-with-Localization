@@ -217,6 +217,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         private Color _activeColor;
         private AndroidJavaClass _versionInfo;
 
+
+        public GameObject GameScreen;
+
         /// <summary>
         /// Get the camera pose for the current frame.
         /// </summary>
@@ -665,6 +668,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
                 InstructionText.text = "Resolve success!";
                 DebugText.text =
                     string.Format("Succeed to resolve the Cloud Anchor: {0}.", cloudId);
+
+                GameScreen.SetActive(true);
+                UpdatePlaneVisibility(false);
+
             }
             else
             {

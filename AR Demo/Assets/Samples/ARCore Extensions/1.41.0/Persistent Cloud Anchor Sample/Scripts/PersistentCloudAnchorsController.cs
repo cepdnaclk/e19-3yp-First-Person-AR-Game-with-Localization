@@ -56,6 +56,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         public ARSessionOrigin SessionOrigin;
 #endif
 
+       
+
+
         /// <summary>
         /// The ARSession used in the example.
         /// </summary>
