@@ -1,8 +1,15 @@
 #include <ESP8266WiFi.h>
 
+const int pirPin = D6;  // Assuming the PIR sensor is connected to GPIO pin D2
+const int LEDPin = D7; 
+
 void setup() {
   Serial.begin(115200);
   delay(10);
+
+  pinMode(pirPin, INPUT);
+  digitalWrite(pirPin, LOW);  // Set initial value to LOW
+  pinMode(LEDPin, OUTPUT);
 
   // Connect to Wi-Fi
   WiFi.mode(WIFI_STA);
@@ -13,13 +20,20 @@ void setup() {
     Serial.print(".");
   }
   Serial.println("");
-
 }
 
 void loop() {
-   // Display Wi-Fi networks and signal strength
-  displayWiFiNetworks();
-  delay(250);
+  
+  if (digitalRead(pirPin) == 1) {
+    // PIR sensor detected motion, display Wi-Fi networks
+    displayWiFiNetworks();
+    digitalWrite(LEDPin, HIGH);
+    delay(5000);  // Wait for 5 seconds to avoid continuous scanning
+  }
+  else{
+    digitalWrite(LEDPin, LOW);
+  }
+  
 }
 
 void displayWiFiNetworks() {
