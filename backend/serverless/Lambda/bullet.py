@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from io import BytesIO
 import base64
+import json
 
 
 
@@ -46,7 +47,7 @@ def get_contours(img):
     #print(contours)
     for cnt in contours:
         area = cv2.contourArea(cnt)
-        print(area)
+        
         if area>2:
             # cv2.drawContours(imgResult, cnt, -1, (0, 255, 0), 6)
             peri = cv2.arcLength(cnt,True)
@@ -76,17 +77,25 @@ def findColor(img, points, decoded_info):
     return False
 
 def lambda_handler(event, context):
-    encoded_str = event.body.img
+    body_dict = json.loads(event['body'])
+    encoded_str = body_dict['img']
     img_un = imread_from_base64(encoded_str)
     row, col = img_un.shape[0], img_un.shape[1]
     img_c = img_un[(1 * row) // 8:(5 * row) // 8, (3 * col) // 16:(5 * col) // 8]
     img = zoom(img_c, 3)
     retval, decoded_info, points, straight_qrcode = qcd.detectAndDecodeMulti(img)
-    result = findColor(img, points, decoded_info)
-    if result:
-        return {"statusCode": 200, "body": result}
+    if retval:
+        result = findColor(img, points, decoded_info)
+        if result:
+            
+            return {"statusCode": 200, "body": result}
+            
+        else:
+            return {"statusCode":404, "body": "Not a hit"}
+             #return {"hit": "false"}
     else:
-        return {"statusCode":200, "body": "Not a hit"}
+        return {"statusCode":404, "body": "Not a hit"}
+        
 
 #body: json.dumps
 # findColor()
