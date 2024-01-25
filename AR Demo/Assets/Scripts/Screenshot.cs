@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Text;
+using System.IO;
 
 public class ScreenShotImage
 {
@@ -23,12 +24,19 @@ public class Screenshot : MonoBehaviour
     private void Start()
     {
         email = PlayerPrefs.GetString("DisplayName","");
+        Debug.Log(email);
     }
 
     public void TakeScreenshot()
     {
         // Capture the screen pixels
         Texture2D screenTexture = CaptureScreen();
+        // Generate a filename with a timestamp
+        string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        string screenshotName = screenshotPrefix + "_" + timestamp + ".png";
+
+        // Capture a screenshot and save it with the generated filename
+        ScreenCapture.CaptureScreenshot(screenshotName);
 
         // Encode the texture to base64
         string base64String = TextureToBase64(screenTexture);
@@ -40,6 +48,8 @@ public class Screenshot : MonoBehaviour
             img = base64String,
             email = email
         };
+        Debug.Log(screenShotImage.img);
+        Debug.Log(screenShotImage.email);
 
 
         // Convert the PlayerData object to a JSON-formatted string
@@ -53,6 +63,8 @@ public class Screenshot : MonoBehaviour
 
     IEnumerator SendImageAndGetToken(string url, string jsonData)
     {
+        Debug.Log(url);
+        SaveJsonToFile(jsonData);
         // Create a UnityWebRequest for login
         UnityWebRequest SendImageRequest = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
@@ -61,28 +73,40 @@ public class Screenshot : MonoBehaviour
         string accessToken = PlayerPrefs.GetString("AccessToken");
         SendImageRequest.SetRequestHeader("Content-Type", "application/json");
         SendImageRequest.SetRequestHeader("auth-token", accessToken);
+        Debug.Log("Request Headers: " + string.Join(", ", SendImageRequest.GetRequestHeader("auth-token")));
 
         // Send login request
         yield return SendImageRequest.SendWebRequest();
 
-        // Check for login errors
-        if (SendImageRequest.result != UnityWebRequest.Result.Success)
+        // Check for errors
+        if (SendImageRequest.result != UnityWebRequest.Result.Success && SendImageRequest.responseCode == 404)
         {
-            Debug.Log("Send Image failed");
-            //Debug.Log("Request Headers: " + string.Join(", ", SendImageRequest.GetRequestHeader("auth-key")));
-            //Debug.Log("Response Code: " + SendImageRequest.responseCode);
-            //Debug.Log("Response Text: " + SendImageRequest.downloadHandler.text);
-            Debug.LogError("Send Image Error: " + SendImageRequest.error);
-
+            string responseText = SendImageRequest.downloadHandler.text;
+            Debug.Log("API Response: " + responseText);
+        }
+        else if (SendImageRequest.result == UnityWebRequest.Result.ProtocolError)
+        {
+            Debug.LogError("Protocol Error. Response Code: " + SendImageRequest.responseCode);
+            Debug.LogError("Response Text: " + SendImageRequest.downloadHandler.text);
+            Debug.LogError("Error: " + SendImageRequest.error);
         }
         else
         {
             Debug.Log("Success");
-            
+
+            string responseText = SendImageRequest.downloadHandler.text;
+            Debug.Log("API Response: " + responseText);
 
 
-            
         }
+    }
+
+    void SaveJsonToFile(string jsonData)
+    {
+        // Save JSON data to a file (you can modify the file path as needed)
+        string filePath = Application.persistentDataPath + "/image_data.json";
+        File.WriteAllText(filePath, jsonData);
+        Debug.Log("JSON data saved to file: " + filePath);
     }
 
     private Texture2D CaptureScreen()
