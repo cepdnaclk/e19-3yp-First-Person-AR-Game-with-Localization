@@ -26,6 +26,9 @@ exports.handler = async (event, context) => {
                 
             }
         };
+        const commandHitId = new GetItemCommand(hitterIdParams);
+       const responseHitId = await client.send(commandHitId);
+       const hitterId = response.Item.connectionid.S;
 
         console.log(event);
         const hitMsg = {
@@ -33,7 +36,7 @@ exports.handler = async (event, context) => {
                 "hit": "1",
                 "shoot": "0"
             }),
-            ConnectionId: 'R1QipefWSQ0CEUQ=', // Replace with your actual ConnectionId
+            ConnectionId: hitterId,
         };
         const shootMsg = {
             Data: JSON.stringify({
