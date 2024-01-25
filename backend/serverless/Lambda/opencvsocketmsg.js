@@ -36,15 +36,22 @@ exports.handler = async (event, context) => {
         const commandShootId = new GetItemCommand(shooterIdParams);
         const responseShootId = await dbclient.send(commandShootId);
         const shooterId = responseShootId.Item.connectionid.S;
-        console.log(hitterId)
-        console.log(shooterId)
-        // {
-        //     "hit": "1",
-        //     "shoot": "0"
-        // },
+        
+
+        const hitsocketmsg =JSON.stringify({
+            "hit": "1",
+            "shoot": "0"
+        })
+        const shootsocketmsg =JSON.stringify({
+            "hit": "0",
+            "shoot": "1"
+        })
+
+
         // console.log(event);
         const hitMsg = {
-            Data: "hit",
+           // Data : hitsocketmsg,
+           Data: "hit",
             ConnectionId: hitterId,
         };
         const shootMsg = {
