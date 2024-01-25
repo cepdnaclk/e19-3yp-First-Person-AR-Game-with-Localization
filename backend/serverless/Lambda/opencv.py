@@ -6,7 +6,7 @@ import base64
 import json
 
 
-
+client = boto3.client('lambda')
 def zoom(img, zoom_factor=2):
     return cv2.resize(img, None, fx=zoom_factor, fy=zoom_factor)
 
@@ -56,6 +56,7 @@ def findColor(img, points, decoded_info):
    
 
     for qrs_id in range(len(points)):
+        width = abs(points[qrs_id][1][0] - points[qrs_id][0][0])
         if points[qrs_id][0][0] <=x and points[qrs_id][1][0]>=x:
             if points[qrs_id][0][1] <=y and points[qrs_id][2][1]>=y:
                 return decoded_info[qrs_id]
@@ -64,6 +65,7 @@ def findColor(img, points, decoded_info):
 def lambda_handler(event, context):
     body_dict = json.loads(event['body'])
     encoded_str = body_dict['img']
+    shooter = body_dict['email']
     img_un = imread_from_base64(encoded_str)
     row, col = img_un.shape[0], img_un.shape[1]
 
@@ -76,6 +78,8 @@ def lambda_handler(event, context):
     if retval:
         result = findColor(img, points, decoded_info)
         if result and result != "":
+            socketmsg = {"hit": result, "shooter": shooter}
+            client.invoke( FunctionName='opencvsocket', InvocationType='Event', Payload=json.dumps(socketmsg))
             
             return {"statusCode": 200, "body": result}
             
