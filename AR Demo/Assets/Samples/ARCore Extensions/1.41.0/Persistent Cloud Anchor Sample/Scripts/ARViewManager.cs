@@ -20,6 +20,7 @@
 
 namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
@@ -544,6 +545,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             }
         }
 
+        public CloudAnchor cloudAnchor;
+
         private IEnumerator HostAnchor()
         {
             yield return _hostPromise;
@@ -556,11 +559,19 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
                 _hostedCloudAnchor =
                     new CloudAnchorHistory("CloudAnchor" + count, _hostResult.CloudAnchorId);
                 OnAnchorHostedFinished(true, _hostResult.CloudAnchorId);
+
+                string cloudID = GetCloudAnchorID(_hostResult.CloudAnchorId);
+                cloudAnchor.sendCloudIdtoDatabase(cloudID);
             }
             else
             {
                 OnAnchorHostedFinished(false, _hostResult.CloudAnchorState.ToString());
             }
+        }
+
+        public string GetCloudAnchorID(string cloudAnchorId)
+        {
+            return cloudAnchorId;
         }
 
         private void ResolvingCloudAnchors()
