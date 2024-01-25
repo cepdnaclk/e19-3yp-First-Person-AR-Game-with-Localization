@@ -7,7 +7,7 @@ using UnityEngine.Networking;
 
 public class Player {
     public string email;
-    public string gameID;
+    public string gameid;
     
 }
 
@@ -27,15 +27,15 @@ public class JoinGame : MonoBehaviour
         gameID = gameIDInputField.text;
     }
 
-    public void joinGame(string cloudID)
+    public void joinGame()
     {
         string playeremail = email;
         // Create an instance of the CloudData class and set its properties
         Player cloudData = new Player
         {
             email = playeremail,
-            gameID = gameID
-        };
+            gameid = gameIDInputField.text
+    };
 
         // Convert the PlayerData object to a JSON-formatted string
         string json = JsonUtility.ToJson(cloudData);
@@ -72,6 +72,8 @@ public class JoinGame : MonoBehaviour
         else
         {
             Debug.Log("Success");
+            string responseText = JoinGameRequest.downloadHandler.text;
+            Debug.Log("API Response: " + responseText);
         }
     }
 }
