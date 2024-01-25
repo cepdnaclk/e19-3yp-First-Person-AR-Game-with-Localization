@@ -17,7 +17,6 @@ exports.handler = async (event, context, callback) => {
         const dynamoDBParams = {
             "TableName": 'Arcombat-arcore',
             "Item": {
-                //"UserId": signUpResponse.UserSub,  // Use the Cognito User Sub as the DynamoDB key
                 "email": {"S": email},
                 "anchorid": {"S": anchorid},
                 
