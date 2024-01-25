@@ -20,10 +20,6 @@ def imread_from_base64(base64_string):
     return image
 
 
-
-
-
-
 qcd = cv2.QRCodeDetector()
 
 def get_contours(img):
@@ -35,7 +31,6 @@ def get_contours(img):
         area = cv2.contourArea(cnt)
         
         if area>2:
-            # cv2.drawContours(imgResult, cnt, -1, (0, 255, 0), 6)
             peri = cv2.arcLength(cnt,True)
             approx = cv2.approxPolyDP(cnt,0.02*peri,True)
             x, y, w, h = cv2.boundingRect(approx)
