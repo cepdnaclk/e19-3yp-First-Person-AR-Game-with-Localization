@@ -74,3 +74,4 @@ public class JoinGame : MonoBehaviour
             Debug.Log("Success");
         }
     }
+}
