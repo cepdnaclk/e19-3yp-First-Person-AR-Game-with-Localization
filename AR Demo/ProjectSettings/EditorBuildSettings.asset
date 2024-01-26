@@ -42,8 +42,9 @@ EditorBuildSettings:
     path: Assets/Scenes/LoadMap.unity
     guid: 4f0f68f431edbec4cb2677f68ce2b038
   - enabled: 0
-    path: Assets/Scenes/MR.unity
-    guid: 48f4ba2d16f6c0e489011c124b3e3831
+
+    path: Assets/Scenes/GameScreen 1.unity
+    guid: 15f8b6de85af23141ad6dfd9469b2334
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 744b813df90924c169af73489b8325de,
       type: 2}
