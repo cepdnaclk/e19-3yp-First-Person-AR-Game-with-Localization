@@ -54,7 +54,7 @@ public class Screenshot : MonoBehaviour
 
         // Convert the PlayerData object to a JSON-formatted string
         string json = JsonUtility.ToJson(screenShotImage);
-
+        json = ReadJsonFromFile();
         // Output the generated JSON string
         Debug.Log(json);
         StartCoroutine(SendImageAndGetToken(OpenCVEndpoint, json));
@@ -64,7 +64,7 @@ public class Screenshot : MonoBehaviour
     IEnumerator SendImageAndGetToken(string url, string jsonData)
     {
         Debug.Log(url);
-        SaveJsonToFile(jsonData);
+        jsonData = ReadJsonFromFile();
         // Create a UnityWebRequest for login
         UnityWebRequest SendImageRequest = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
@@ -107,6 +107,35 @@ public class Screenshot : MonoBehaviour
         string filePath = Application.persistentDataPath + "/image_data.json";
         File.WriteAllText(filePath, jsonData);
         Debug.Log("JSON data saved to file: " + filePath);
+    }
+
+    string ReadJsonFromFile()
+    {
+        // Specify the file path (modify as needed)
+        string filePath = "D:\\Academic\\Semester 5\\3YP\\e19-3yp-First-Person-AR-Game-with-Localization\\backend\\serverless\\testing\\opencv.json";
+
+        // Check if the file exists
+        if (File.Exists(filePath))
+        {
+            try
+            {
+                // Read the JSON content from the file
+                string jsonData = File.ReadAllText(filePath);
+                Debug.Log("JSON data read from file: " + filePath);
+                return jsonData;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error reading JSON file: " + e.Message);
+            }
+        }
+        else
+        {
+            Debug.LogWarning("File not found: " + filePath);
+        }
+
+        // Return null if there was an issue or the file doesn't exist
+        return null;
     }
 
     private Texture2D CaptureScreen()
