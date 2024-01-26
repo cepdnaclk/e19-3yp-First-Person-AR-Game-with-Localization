@@ -1,6 +1,9 @@
 {
   "dependencies": {
-    "com.google.ar.core.arfoundation.extensions": "https://github.com/google-ar/arcore-unity-extensions.git",
+
+    "com.endel.nativewebsocket": "https://github.com/endel/NativeWebSocket.git#upm",
+    "com.google.ar.core.arfoundation.extensions": "file:C:/Users/USER/Downloads/arcore-unity-extensions-1.41.0.tgz",
+
     "com.unity.adaptiveperformance": "5.0.2",
     "com.unity.adaptiveperformance.google.android": "1.2.1",
     "com.unity.cinemachine": "2.9.5",
