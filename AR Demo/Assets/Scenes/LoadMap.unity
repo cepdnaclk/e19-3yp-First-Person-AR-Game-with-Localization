@@ -2973,7 +2973,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 525964288}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97a41619ce0a5a243ad22339cd86d7c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 99d34cd88063ad04682891e661b5cb97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   arCamera: {fileID: 525964292}
@@ -5413,11 +5413,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1176306749}
   m_CullTransparentMesh: 0
-<<<<<<< HEAD
 --- !u!1 &1185346957
-=======
---- !u!1 &1208988257
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5425,45 +5421,28 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-<<<<<<< HEAD
   - component: {fileID: 1185346958}
   - component: {fileID: 1185346960}
   - component: {fileID: 1185346959}
   m_Layer: 5
   m_Name: RawImage2
-=======
-  - component: {fileID: 1208988258}
-  - component: {fileID: 1208988260}
-  - component: {fileID: 1208988259}
-  m_Layer: 5
-  m_Name: Checkmark
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
-<<<<<<< HEAD
 --- !u!224 &1185346958
-=======
---- !u!224 &1208988258
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
 RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1185346957}
-=======
-  m_GameObject: {fileID: 1208988257}
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-<<<<<<< HEAD
   m_Father: {fileID: 1495200938}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5472,32 +5451,15 @@ RectTransform:
   m_SizeDelta: {x: 1036.2, y: 574.29}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1185346959
-=======
-  m_Father: {fileID: 1437970918}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 20, y: 20}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1208988259
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1185346957}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-=======
-  m_GameObject: {fileID: 1208988257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
@@ -5508,7 +5470,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-<<<<<<< HEAD
   m_Texture: {fileID: 0}
   m_UVRect:
     serializedVersion: 2
@@ -5517,29 +5478,12 @@ MonoBehaviour:
     width: 1
     height: 1
 --- !u!222 &1185346960
-=======
-  m_Sprite: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1208988260
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
 CanvasRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-<<<<<<< HEAD
   m_GameObject: {fileID: 1185346957}
-=======
-  m_GameObject: {fileID: 1208988257}
->>>>>>> 91853e9291c31c7cc7c0dd4a5af82715b851a3cc
   m_CullTransparentMesh: 1
 --- !u!1 &1229399952
 GameObject:
@@ -6402,7 +6346,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 1437970919}
   toggleTransition: 1
-  graphic: {fileID: 1208988259}
+  graphic: {fileID: 0}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
@@ -6473,8 +6417,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1208988258}
+  m_Children: []
   m_Father: {fileID: 1431258846}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
