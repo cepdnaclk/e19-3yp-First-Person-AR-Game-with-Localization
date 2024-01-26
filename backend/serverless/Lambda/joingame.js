@@ -13,7 +13,7 @@ exports.handler = async (event, context, callback) => {
         const gameid = requestBody.gameid;
      
 
-        // Add user to DynamoDB arcore
+        // retrieval parameters
         const dynamoDBParams = {
             "TableName": 'Arcombat-arcore',
             "Key": {

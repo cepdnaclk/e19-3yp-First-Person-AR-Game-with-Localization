@@ -35,10 +35,14 @@ Creating games that involve physical activity and providing spaces for gaming an
 
 
 ## 🎮 Software Features
-
+- First Person AR Experience: Immerse yourself in a first-person perspective within the augmented reality environment.
+- AR Environments: Explore diverse augmented reality environments, enhancing the gaming experience.
+- AR Cloud Anchor Support: Utilize AR Cloud Anchor technology to anchor virtual objects in real-world locations for a persistent AR experience.
+- Multiplayer Capabilities: Engage in multiplayer gameplay, allowing multiple users to participate and interact in the ARCombat world.
 
 ## 🎮 Hardware Features
-
+- Custom 3D Printed Gun: Experience a unique gaming interface with a custom-designed 3D printed gun.
+- ESPs, Triggers, and Reload Mechanisms: Enhance gameplay with electronic sighting devices (ESPs), responsive triggers, and realistic reload mechanisms for a more immersive gaming experience.
 
 
 ## Contributors
