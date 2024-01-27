@@ -123,9 +123,9 @@ public class WebSocketController : MonoBehaviour
         score++;
         
         Debug.Log("Score: " + score);
-        
-        
 
-        
+
+
+
     }
 }
