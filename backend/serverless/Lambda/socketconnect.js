@@ -10,8 +10,10 @@ exports.handler = async (event) => {
         const apiEndpoint = event.requestContext.domainName + '/' + stage;
         
         const jsonString = JSON.stringify({"message": "connection established"});
+        const blobData = Buffer.from(jsonString);
+        // console.log(event);
 
-        const requestBody = event.headers;
+        const requestBody = event.queryStringParameters;
         const email = requestBody.email;
 
         // const inputdb = {
@@ -38,6 +40,15 @@ exports.handler = async (event) => {
       const responsedbEnv = await dbclient.send(commandSock);
 
 
+
+        // const input = { // PostToConnectionRequest
+        //       "Data": blobData, // required
+        //       "ConnectionId": connectionId
+        // }
+        // const command = new PostToConnectionCommand(input);
+        // const response = await client.send(command);
+        // const command = new UpdateItemCommand(inputdb);
+        // const response = await dbclient.send(command);
 
         return {
             statusCode: 200,
