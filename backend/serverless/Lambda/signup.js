@@ -2,7 +2,7 @@ const AWS = require('aws-sdk');
 const cognito = new AWS.CognitoIdentityServiceProvider();
 const { DynamoDBClient, PutItemCommand } = require("@aws-sdk/client-dynamodb");
 const client = new DynamoDBClient()
-
+const lambda = new AWS.Lambda();
 
 exports.handler = async (event, context, callback) => {
     try {
@@ -10,14 +10,8 @@ exports.handler = async (event, context, callback) => {
         
         const requestBody = JSON.parse(event.body);
         const email = requestBody.email;
-        // console.log(event);
-        // console.log(event.body);
-        // console.log(email);
-        // console.log(JSON.stringify(requestBody.email));
         const password = requestBody.password;
         const gunid = requestBody.gunid;
-        const gloveid = requestBody.gloveid;
-        const headsetid = requestBody.headsetid;
 
         // Add user to Cognito User Pool
         const signUpParams = {
@@ -41,8 +35,6 @@ exports.handler = async (event, context, callback) => {
                 //"UserId": signUpResponse.UserSub,  // Use the Cognito User Sub as the DynamoDB key
                 "email": {"S": email},
                 "gunid": {"S": gunid},
-                "gloveid": {"S": gloveid},
-                "headsetid": {"S": headsetid},
                 
             }
         };
@@ -56,6 +48,13 @@ exports.handler = async (event, context, callback) => {
                            
             }
         };
+        //invoke qr generate and store in s3
+        qrdata = {"email": email}
+        const qrinput = { 
+            FunctionName: "qrstore",
+            InvocationType: "RequestResponse",
+            Payload: JSON.stringify(qrdata),
+          };
 
         //add to user db
         const commandUser = new PutItemCommand(dynamoDBParamsUser);
@@ -63,6 +62,8 @@ exports.handler = async (event, context, callback) => {
 
         const commandEnv = new PutItemCommand(dynamoDBParamsEnv);
         const responsedbEnv = await client.send(commandEnv);
+
+
 
         // Return a response
         const response = {
