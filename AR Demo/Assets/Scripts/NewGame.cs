@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Networking;
-using System.Collections.Generic;
 using static UnityEngine.UIElements.UxmlAttributeDescription;
 
 [System.Serializable]
