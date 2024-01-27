@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using WebSocketSharp;
+using System.Security.Authentication;
 
 public class WebSocketController : MonoBehaviour
 {
@@ -10,11 +11,15 @@ public class WebSocketController : MonoBehaviour
     public TMP_Text scoreText;
     public Slider healthBar;
     public Button shootButton;
-
+    public short score = 0;
     void Start()
     {
-        string webSocketUrl = "wss://9c0zh8p4oj.execute-api.ap-southeast-1.amazonaws.com/beta/";
+        string emailAddress = PlayerPrefs.GetString("DisplayName","");
+        string webSocketUrl = $"wss://9c0zh8p4oj.execute-api.ap-southeast-1.amazonaws.com/beta/?email={Uri.EscapeDataString(emailAddress)}";
+        Debug.Log("Connecting to WebSocket server at " + webSocketUrl);
         ws = new WebSocket(webSocketUrl);
+
+        ws.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
 
         // Set up WebSocket event handlers
         ws.OnOpen += (sender, e) =>
@@ -53,6 +58,10 @@ public class WebSocketController : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        
+    }
     void OnShootButtonClick()
     {
         // Send a message to the WebSocket server when the button is clicked
@@ -69,12 +78,17 @@ public class WebSocketController : MonoBehaviour
         if (message == "hit")
         {
             // Player hit, update health accordingly
+            Debug.Log("Hit");
             DecreaseHealth();
         }
         else if (message == "score")
         {
             // Player scored, update score accordingly
-            IncreaseScore();
+            Debug.Log("Score");
+            score++;
+            scoreText.text = "Score: " + (score);
+            
+            Debug.Log("Score: " + score);
         }
         else if (message == "null")
         {
@@ -95,7 +109,9 @@ public class WebSocketController : MonoBehaviour
     void IncreaseScore()
     {
         // Update your score text UI here (example: increase score by 1)
-        int currentScore = int.Parse(scoreText.text.Split(':')[1].Trim());
-        scoreText.text = "Score: " + (currentScore + 1).ToString();
+        Debug.Log("Method called");
+        score++;
+        scoreText.text = "Score: " + (score);
+        Debug.Log("Score: " + score);
     }
 }
