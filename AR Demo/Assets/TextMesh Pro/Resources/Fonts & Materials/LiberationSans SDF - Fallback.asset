@@ -197,6 +197,7 @@ MonoBehaviour:
     m_StrikethroughOffset: 18
     m_StrikethroughThickness: 6.298828
     m_TabWidth: 24
+
   m_GlyphTable:
   - m_Index: 2030
     m_Metrics:
@@ -617,17 +618,22 @@ MonoBehaviour:
     m_Unicode: 98
     m_GlyphIndex: 69
     m_Scale: 1
+
+
   m_AtlasTextures:
   - {fileID: 28268798066460806}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_ClearDynamicDataOnBuild: 1
-  m_UsedGlyphRects: []
-  m_FreeGlyphRects:
+  m_UsedGlyphRects:
   - m_X: 0
     m_Y: 0
-    m_Width: -1
-    m_Height: -1
+
+
+
+    m_Width: 511
+    m_Height: 511
+
   m_fontInfo:
     Name: 
     PointSize: 0
@@ -739,7 +745,10 @@ Texture2D:
   m_Width: 0
   m_Height: 0
   m_CompleteImageSize: 0
+
   m_MipsStripped: 0
+
+
   m_TextureFormat: 1
   m_MipCount: 1
   m_IsReadable: 1
@@ -762,7 +771,9 @@ Texture2D:
     m_WrapW: 0
   m_LightmapFormat: 0
   m_ColorSpace: 0
+
   m_PlatformBlob: 
+
   image data: 0
   _typelessdata: 
   m_StreamData:
