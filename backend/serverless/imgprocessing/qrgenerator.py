@@ -5,4 +5,5 @@ qr.add_data('e19236@eng.pdn.ac.lk')
 qr.make(fit=True)
 
 img = qr.make_image(fill_color="black", back_color="white")
+
 img.save('236.png')
