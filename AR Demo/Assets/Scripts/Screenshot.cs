@@ -36,7 +36,7 @@ public class Screenshot : MonoBehaviour
         string screenshotName = screenshotPrefix + "_" + timestamp + ".png";
 
         // Capture a screenshot and save it with the generated filename
-        ScreenCapture.CaptureScreenshot(screenshotName);
+        //ScreenCapture.CaptureScreenshot(screenshotName);
 
         // Encode the texture to base64
         string base64String = TextureToBase64(screenTexture);
@@ -54,7 +54,7 @@ public class Screenshot : MonoBehaviour
 
         // Convert the PlayerData object to a JSON-formatted string
         string json = JsonUtility.ToJson(screenShotImage);
-        json = ReadJsonFromFile();
+        //json = ReadJsonFromFile();
         // Output the generated JSON string
         Debug.Log(json);
         StartCoroutine(SendImageAndGetToken(OpenCVEndpoint, json));
@@ -64,7 +64,7 @@ public class Screenshot : MonoBehaviour
     IEnumerator SendImageAndGetToken(string url, string jsonData)
     {
         Debug.Log(url);
-        jsonData = ReadJsonFromFile();
+        //jsonData = ReadJsonFromFile();
         // Create a UnityWebRequest for login
         UnityWebRequest SendImageRequest = new UnityWebRequest(url, "POST");
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);

@@ -1,6 +1,6 @@
 using System;
 using UnityEngine;
-using TMPro;
+
 using UnityEngine.UI;
 using WebSocketSharp;
 using System.Security.Authentication;
@@ -8,18 +8,25 @@ using System.Security.Authentication;
 public class WebSocketController : MonoBehaviour
 {
     private WebSocket ws;
-    public TMP_Text scoreText;
-    public Slider healthBar;
-    public Button shootButton;
+    public Text scoreText, scoreText2;
+    public Slider healthBar, healthBar2;
+    public Button shootButton, shootButton2;
     public short score = 0;
+    public float health = 1.0f;
+
+
     void Start()
     {
         string emailAddress = PlayerPrefs.GetString("DisplayName","");
+        
         string webSocketUrl = $"wss://9c0zh8p4oj.execute-api.ap-southeast-1.amazonaws.com/beta/?email={Uri.EscapeDataString(emailAddress)}";
         Debug.Log("Connecting to WebSocket server at " + webSocketUrl);
         ws = new WebSocket(webSocketUrl);
 
-        ws.SslConfiguration.EnabledSslProtocols = SslProtocols.Tls12;
+        ws.SslConfiguration.EnabledSslProtocols =
+    SslProtocols.Tls |
+        SslProtocols.Tls11 |
+            SslProtocols.Tls12;
 
         // Set up WebSocket event handlers
         ws.OnOpen += (sender, e) =>
@@ -61,6 +68,13 @@ public class WebSocketController : MonoBehaviour
     private void Update()
     {
         
+        healthBar2.value = health;
+        healthBar.value = health;
+        scoreText.text = "Score: " + (score);
+        scoreText2.text = "Score: " + (score);
+
+        Debug.Log("Score2 : " + scoreText2.text);
+        Debug.Log("health2 : " + healthBar2.value);
     }
     void OnShootButtonClick()
     {
@@ -85,15 +99,9 @@ public class WebSocketController : MonoBehaviour
         {
             // Player scored, update score accordingly
             Debug.Log("Score");
-            score++;
-            scoreText.text = "Score: " + (score);
-            
-            Debug.Log("Score: " + score);
+            IncreaseScore();
         }
-        else if (message == "null")
-        {
-            // Do nothing for null response
-        }
+        
         else
         {
             // Handle other response cases as needed
@@ -103,7 +111,9 @@ public class WebSocketController : MonoBehaviour
     void DecreaseHealth()
     {
         // Update your health bar UI here (example: decrease health by 5)
-        healthBar.value -= 5;
+        health -= 0.05f;
+        Debug.Log("Health: " + health);
+
     }
 
     void IncreaseScore()
@@ -111,7 +121,11 @@ public class WebSocketController : MonoBehaviour
         // Update your score text UI here (example: increase score by 1)
         Debug.Log("Method called");
         score++;
-        scoreText.text = "Score: " + (score);
+        
         Debug.Log("Score: " + score);
+        
+        
+
+        
     }
 }
