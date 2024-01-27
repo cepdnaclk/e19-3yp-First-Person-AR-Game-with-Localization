@@ -34,7 +34,7 @@ exports.handler = async (event, context, callback) => {
             Payload: JSON.stringify(qrdata)
           };
 
-        lambda.invoke(signUpParams, (err, data) => {
+        lambda.invoke(qrinput, (err, data) => {
             if (err) {
               console.error(err);
             } else {
