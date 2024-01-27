@@ -26,6 +26,7 @@
 const int GUN_STEPS = 4095 / 5;
 const int BULLET_STEPS = 4095 / 10;
 const IPAddress dns(8, 8, 8, 8); // Google's DNS server
+const int MPU_addr = 0x68;
 
 // Variables Declaration
 volatile unsigned long lastInterruptTime = 0;
@@ -44,17 +45,18 @@ int bulletPotVal; // Pot 2
 int gunPotVal; // Pot 3
 double roll;
 double pitch;
+int16_t AcX, AcY, AcZ;
 
 // Define offsets of Gyro 
-float accel_x_offset = 0.0;
-float accel_y_offset = 0.0;
-float accel_z_offset = 0.0;
-float gyro_x_offset = 0.0;
-float gyro_y_offset = 0.0;
-float gyro_z_offset = 0.0;
+// float accel_x_offset = 0.0;
+// float accel_y_offset = 0.0;
+// float accel_z_offset = 0.0;
+// float gyro_x_offset = 0.0;
+// float gyro_y_offset = 0.0;
+// float gyro_z_offset = 0.0;
 
 // Create MPU Object
-Adafruit_MPU6050 mpu;
+// Adafruit_MPU6050 mpu;
 
 // WIFI Client
 WiFiClientSecure net = WiFiClientSecure();
@@ -63,37 +65,37 @@ WiFiClientSecure net = WiFiClientSecure();
 // MQTT Client
 PubSubClient client(net);
 
-void calibrateSensor() {
-  // Calibration variables
-  int32_t accel_x, accel_y, accel_z;
-  int32_t gyro_x, gyro_y, gyro_z;
-  int16_t count = 0;
-  double tempSumAccel = 0, tempSumGyro = 0;
+// void calibrateSensor() {
+//   // Calibration variables
+//   int32_t accel_x, accel_y, accel_z;
+//   int32_t gyro_x, gyro_y, gyro_z;
+//   int16_t count = 0;
+//   double tempSumAccel = 0, tempSumGyro = 0;
 
-  // Calibrate accelerometer
-  while (count < 1000) {
-    mpu.getEvent(&a, &g, &temp);
+//   // Calibrate accelerometer
+//   while (count < 1000) {
+//     // mpu.getEvent(&a, &g, &temp);
 
-    accel_x += a.acceleration.x;
-    accel_y += a.acceleration.y;
-    accel_z += a.acceleration.z;
+//     accel_x += a.acceleration.x;
+//     accel_y += a.acceleration.y;
+//     accel_z += a.acceleration.z;
 
-    gyro_x += g.gyro.x;
-    gyro_y += g.gyro.y;
-    gyro_z += g.gyro.z;
+//     gyro_x += g.gyro.x;
+//     gyro_y += g.gyro.y;
+//     gyro_z += g.gyro.z;
 
-    count++;
-  }
+//     count++;
+//   }
 
   // Calculate average offset
-  accel_x_offset = accel_x / count;
-  accel_y_offset = accel_y / count;
-  accel_z_offset = (accel_z / count) + 16384;
+  // accel_x_offset = accel_x / count;
+  // accel_y_offset = accel_y / count;
+  // accel_z_offset = (accel_z / count) + 16384;
 
-  gyro_x_offset = gyro_x / count;
-  gyro_y_offset = gyro_y / count;
-  gyro_z_offset = gyro_z / count;
-}
+  // gyro_x_offset = gyro_x / count;
+  // gyro_y_offset = gyro_y / count;
+  // gyro_z_offset = gyro_z / count;
+// }
 
 // Get Potentiameter values
 void getPolVal(){
@@ -107,16 +109,29 @@ void getPolVal(){
 }
 
 void getGyro(){
-  mpu.getEvent(&a, &g, &temp);
+  // mpu.getEvent(&a, &g, &temp);
 
   // Get data
-  double ax = a.acceleration.x - accel_x_offset ;
-  double ay = a.acceleration.y - accel_y_offset;
-  double az = a.acceleration.z - accel_z_offset;
+  // double ax = a.acceleration.x - accel_x_offset ;
+  // double ay = a.acceleration.y - accel_y_offset;
+  // double az = a.acceleration.z - accel_z_offset;
+  Wire.beginTransmission(MPU_addr);
+  Wire.write(0x3B);
+  Wire.endTransmission(false);
+  Wire.requestFrom(MPU_addr, 6, true);
+  AcX = Wire.read() << 8 | Wire.read();
+  AcY = Wire.read() << 8 | Wire.read();
+  AcZ = Wire.read() << 8 | Wire.read();
+
+  double Ax = AcX / 16384.0;
+  double Ay = AcY / 16384.0;
+  double Az = AcZ / 16384.0;
 
   // Calculate roll and pitch
-  roll = atan2(ay, az) * RAD_TO_DEG;
-  pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
+  // roll = atan2(ay, az) * RAD_TO_DEG;
+  // pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
+   roll  = atan2(Ay, Az) * 180 / PI;
+   pitch = atan2(Ax, sqrt(Ay * Ay + Az * Az)) * 180 / PI;
 }
 
 // TODO: Implement middle 0 functionallity
@@ -250,25 +265,31 @@ void setup(void) {
   attachInterrupt(digitalPinToInterrupt(TRIGER_PIN), setTriger, FALLING);
   attachInterrupt(digitalPinToInterrupt(RELOAD_PIN), setReload, FALLING);
 
+  Wire.begin();
+  Wire.beginTransmission(MPU_addr);
+  Wire.write(0x6B);
+  Wire.write(0);
+  Wire.endTransmission(true);
+
   Serial.println("Gun Power Up");
 
   // Try to initialize mpu
-  if (!mpu.begin()) {
-    Serial.println("Failed to find MPU6050 chip");
+  // if (!mpu.begin()) {
+  //   Serial.println("Failed to find MPU6050 chip");
     // while (1) {
     //   Serial.print(".");
     //   delay(10);
     // }
-  }
-  Serial.println("MPU6050 Found!");
+  // }
+  // Serial.println("MPU6050 Found!");
 
   // Configure MPU
-  mpu.setAccelerometerRange(MPU6050_RANGE_2_G);
-  mpu.setGyroRange(MPU6050_RANGE_250_DEG);
-  mpu.setFilterBandwidth(MPU6050_BAND_44_HZ);
+  // mpu.setAccelerometerRange(MPU6050_RANGE_2_G);
+  // mpu.setGyroRange(MPU6050_RANGE_250_DEG);
+  // mpu.setFilterBandwidth(MPU6050_BAND_44_HZ);
 
   // Calibrate mpu
-  calibrateSensor();
+  // calibrateSensor();
 
   // Configure the Broker
   // Configure WiFiClientSecure to use the AWS IoT device credentials
