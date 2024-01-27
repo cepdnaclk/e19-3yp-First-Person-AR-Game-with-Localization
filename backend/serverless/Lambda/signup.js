@@ -26,6 +26,26 @@ exports.handler = async (event, context, callback) => {
             ]
         };
 
+        //invoke qr generate and store in s3
+        const qrdata = {"email": email}
+        const qrinput = { 
+            FunctionName: "qrstore",
+            InvocationType: "RequestResponse",
+            Payload: JSON.stringify(qrdata)
+          };
+
+        lambda.invoke(signUpParams, (err, data) => {
+            if (err) {
+              console.error(err);
+            } else {
+              console.log('Lambda Invocation Response:', data);
+              return {
+                statusCode: 500,
+                body: {"msg":JSON.stringify('Internal Server Error')}
+            };
+            }
+          });
+
         const signUpResponse = await cognito.signUp(signUpParams).promise();
 
         // Add user to DynamoDBUser model
@@ -48,13 +68,7 @@ exports.handler = async (event, context, callback) => {
                            
             }
         };
-        //invoke qr generate and store in s3
-        qrdata = {"email": email}
-        const qrinput = { 
-            FunctionName: "qrstore",
-            InvocationType: "RequestResponse",
-            Payload: JSON.stringify(qrdata),
-          };
+        
 
         //add to user db
         const commandUser = new PutItemCommand(dynamoDBParamsUser);
@@ -62,7 +76,8 @@ exports.handler = async (event, context, callback) => {
 
         const commandEnv = new PutItemCommand(dynamoDBParamsEnv);
         const responsedbEnv = await client.send(commandEnv);
-
+        
+        
 
 
         // Return a response
