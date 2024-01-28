@@ -6,6 +6,7 @@
 #include <WiFiClientSecure.h>
 // #include <WiFiClient.h>
 #include <ArduinoJson.h>
+#include <ShiftRegister74HC595.h>
 
 #include "../lib/Secrets.h"
 
@@ -27,6 +28,7 @@ const int GUN_STEPS = 4095 / 5;
 const int BULLET_STEPS = 4095 / 10;
 const IPAddress dns(8, 8, 8, 8); // Google's DNS server
 const int MPU_addr = 0x68;
+const int numberOfShiftRegisters = 2;
 
 // Variables Declaration
 volatile unsigned long lastInterruptTime = 0;
@@ -65,6 +67,9 @@ WiFiClientSecure net = WiFiClientSecure();
 
 // MQTT Client
 PubSubClient client(net);
+
+// Connect to the shift register
+ShiftRegister74HC595<numberOfShiftRegisters> sr (DATA_PIN, CLOCK_PIN, LATCH_PIN);
 
 // void calibrateSensor() {
 //   // Calibration variables
@@ -154,6 +159,7 @@ void IRAM_ATTR setTriger(){
   unsigned long interruptTime = millis();
   if (interruptTime - lastInterruptTime > 50){
     trigerState = 1;
+    bullets--;
   }
   lastInterruptTime = interruptTime;
 }
@@ -162,6 +168,7 @@ void IRAM_ATTR setReload(){
   unsigned long interruptTime = millis();
   if (interruptTime - lastInterruptTime > 100){
     reloadState = 1;
+    bullets = 10;
   }
   lastInterruptTime = interruptTime;
 }
@@ -172,9 +179,15 @@ void updateBullets(){
   bulletsLEDs = bulletsLEDs << 1;
 
   // Write on shift register
-  digitalWrite(LATCH_PIN, LOW);
-  shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, bulletsLEDs);
-  digitalWrite(LATCH_PIN, HIGH);
+  // digitalWrite(LATCH_PIN, LOW);
+  // shiftOut(DATA_PIN, CLOCK_PIN, LSBFIRST, bulletsLEDs);
+  // digitalWrite(LATCH_PIN, HIGH);
+  for (int i = 0; i < 10; i++) {
+    sr.set(i, LOW);
+  }
+  for (int i = 0; i < bullets; i++) {
+    sr.set(i, HIGH);
+  }
 }
 
 // TODO: implement ISR for trigure
@@ -220,6 +233,19 @@ void connectAWS(){
   Serial.println("AWS IoT Connected!");
 }
 
+void initLED(){
+  for (int i = 0; i < 10; i++) {
+    // Turn on the current LED
+    sr.set(i, HIGH);
+
+    // Wait for a bit
+    delay(500);
+
+    // Turn off the current LED
+    sr.set(i, LOW);
+  }
+
+}
 // TODO: Implement message handling
 void publishMessage(){
   // Get Data
@@ -276,6 +302,8 @@ void setup(void) {
   attachInterrupt(digitalPinToInterrupt(TRIGER_PIN), setTriger, FALLING);
   attachInterrupt(digitalPinToInterrupt(RELOAD_PIN), setReload, FALLING);
 
+  sr.setAllLow();
+
   Wire.begin();
   Wire.beginTransmission(MPU_addr);
   Wire.write(0x6B);
@@ -283,7 +311,7 @@ void setup(void) {
   Wire.endTransmission(true);
 
   Serial.println("Gun Power Up");
-
+  initLED();
   // Try to initialize mpu
   // if (!mpu.begin()) {
   //   Serial.println("Failed to find MPU6050 chip");
@@ -373,7 +401,7 @@ void loop() {
     gunModeStatus = 0;
   }
   unsigned long time = millis();
-  if (time - lastTime > 100){
+  if (time - lastTime > 200){
     publishMessage();
     Serial.println("Pub");
     lastTime = time;
