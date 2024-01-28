@@ -24,16 +24,31 @@ exports.handler = async (event, context) => {
             }
         };
 
+      
+
+
         const commandPlayer = new GetItemCommand(playerParams);
         const playerResponse = await dbclient.send(commandPlayer);
         const email = playerResponse.Item.email.S;
+
+        const playerIdParams = {
+            "TableName": 'Arcombat-socket',
+            "Key": {
+                "email": {"S": email},
+                
+            }
+        };
+
+        const commandplayerId = new GetItemCommand(playerIdParams);
+        const responseplayerId = await dbclient.send(commandplayerId);
+        const playerId = responseplayerId.Item.connectionid.S;
        
     
         
 
-        const hitsocketmsg =JSON.stringify({
-            "hit": "1",
-            "shoot": "0"
+        const gyrosocketmsg =JSON.stringify({
+            "gyrox": gyrox,
+            "gyroy": gyroy
         })
         const shootsocketmsg =JSON.stringify({
             "hit": "0",
@@ -42,33 +57,35 @@ exports.handler = async (event, context) => {
 
 
         // console.log(event);
-        const hitMsg = {
+        const gyroMsg = {
            // Data : hitsocketmsg,
-           Data: "hit",
-            ConnectionId: hitterId,
+            Data: gyrosocketmsg,
+            ConnectionId: playerId
         };
-        const shootMsg = {
-            Data:"score",
-            ConnectionId: shooterId,
+        const screenshotMsg = {
+            Data:"screenshot",
+            ConnectionId: playerId,
         };
 
+        if (screenshot == "1"){
+            const commandSendScreenshot = new PostToConnectionCommand(screenshotMsg);
+            await client.send(commandSendScreenshot);
+        }
 
-        const commandSendHitter = new PostToConnectionCommand(hitMsg);
-        await client.send(commandSendHitter);
+        const commandSendGyro = new PostToConnectionCommand(gyroMsg);
+        await client.send(commandSendGyro);
 
-        const commandSendShooter = new PostToConnectionCommand(shootMsg);
-        await client.send(commandSendShooter);
 
         return {
             statusCode: 200,
-            body: JSON.stringify('Connection started successfully.')
+            body: JSON.stringify('msg passed.')
         };
     } catch (error) {
         console.error('Error:', error);
 
         return {
             statusCode: 500,
-            body: JSON.stringify('Error starting connection.')
+            body: JSON.stringify('Error starting connectio.')
         };
     }
 };
