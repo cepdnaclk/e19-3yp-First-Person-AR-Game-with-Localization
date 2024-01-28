@@ -25,6 +25,7 @@ exports.handler = async (event, context) => {
                 "gunid": {"S": gunid},
                 
             }
+            
         };
 
 
@@ -51,7 +52,7 @@ exports.handler = async (event, context) => {
         
 
         const gyrosocketmsg =JSON.stringify({
-            "gyrox": gyrox,
+            // "gyrox": gyrox,
             "gyroy": gyroy
         })
         const shootsocketmsg =JSON.stringify({
