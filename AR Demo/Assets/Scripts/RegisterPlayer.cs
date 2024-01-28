@@ -9,6 +9,7 @@ public class RegisterPlayer : MonoBehaviour
     [SerializeField] private TMP_InputField username;
     [SerializeField] private TMP_InputField password;
     [SerializeField] private TMP_InputField re_password;
+    [SerializeField] private TMP_InputField gun_id;
     [SerializeField] private TMP_Text textBox;
 
     IEnumerator Notification(string text)
@@ -31,8 +32,8 @@ public class RegisterPlayer : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            // Debug.LogError("Error: " + request.error);
-            // Debug.LogError("Response code: " + request.responseCode);
+            Debug.LogError("Error: " + request.error);
+            Debug.LogError("Response code: " + request.responseCode);
             StartCoroutine(Notification("An error occurred"));
         }
         else
@@ -50,7 +51,7 @@ public class RegisterPlayer : MonoBehaviour
 
             string jsonData = "{\"email\":\"" + username.text +
                               "\",\"password\":\"" + password.text +
-                              "\",\"gunid\":\"" + "gunid" +
+                              "\",\"gunid\":\"" + gun_id.text +
                               "\",\"gloveid\":\"" + "gloveid" +
                               "\",\"headsetid\":\"" + "headsetid" + "\"}";
 

@@ -8,9 +8,9 @@ using System.Security.Authentication;
 public class WebSocketController : MonoBehaviour
 {
     private WebSocket ws;
-    public Text scoreText, scoreText2;
-    public Slider healthBar, healthBar2;
-    public Button shootButton, shootButton2;
+    public Text scoreText;
+    public Slider healthBar;
+    public Button shootButton;
     public short score = 0;
     public float health = 1.0f;
 
@@ -68,13 +68,13 @@ public class WebSocketController : MonoBehaviour
     private void Update()
     {
         
-        healthBar2.value = health;
+        //healthBar2.value = health;
         healthBar.value = health;
         scoreText.text = "Score: " + (score);
-        scoreText2.text = "Score: " + (score);
+        //scoreText2.text = "Score: " + (score);
 
-        Debug.Log("Score2 : " + scoreText2.text);
-        Debug.Log("health2 : " + healthBar2.value);
+        //Debug.Log("Score2 : " + scoreText2.text);
+        //Debug.Log("health2 : " + healthBar2.value);
     }
     void OnShootButtonClick()
     {
