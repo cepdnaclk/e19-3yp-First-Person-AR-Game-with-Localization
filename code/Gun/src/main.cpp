@@ -46,6 +46,7 @@ int gunPotVal; // Pot 3
 double roll;
 double pitch;
 int16_t AcX, AcY, AcZ;
+int bullets = 10;
 
 // Define offsets of Gyro 
 // float accel_x_offset = 0.0;
@@ -227,12 +228,12 @@ void publishMessage(){
 
   StaticJsonDocument<200> doc;
 
-  doc["gyrox"] = roll;
-  doc["gyroy"] = pitch;
+  doc["gyrox"] = String(roll);
+  doc["gyroy"] = String(pitch);
   // doc["BulletVal"] = bulletVal;
   // doc["ZoomVal"] = zoomVal;
-  doc["gunid"] = 1;
-  doc["guncategory"] = gunCategory;
+  doc["gunid"] = "gun1";
+  doc["guncategory"] = String(gunCategory);
 
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
@@ -241,7 +242,6 @@ void publishMessage(){
   // Serial.println("Published");
 }
 
-// TODO: Implement to reload action
 void messageHandler(char* topic, byte* payload, unsigned int length)
 {
   Serial.print("incoming: ");
@@ -249,8 +249,14 @@ void messageHandler(char* topic, byte* payload, unsigned int length)
  
   StaticJsonDocument<200> doc;
   deserializeJson(doc, payload);
-  const char* message = doc["message"];
-  Serial.println(message);
+
+  int health = doc["health"].as<int>();
+  int ammo = doc["ammo"].as<int>();
+
+  Serial.print("Health: ");
+  Serial.println(health);
+  Serial.print("Ammo: ");
+  Serial.println(ammo);
 }
 
 void setup(void) {
@@ -316,6 +322,7 @@ void setup(void) {
 
   // Connect to AWS
   connectAWS();
+  client.subscribe(SUBSCRIBE_TOPIC);
 
   Serial.println("");
 
@@ -335,14 +342,24 @@ void loop() {
   /* Get new sensor events with the readings */
   if (trigerState){
     Serial.println("Triger");
+    Serial.println(bulletVal);
+    Serial.println(gunMod);
     StaticJsonDocument<200> doc;
 
-    doc["fire"] = 1;
-    doc["gunid"] = 1;
-    
+    doc["fire"] = "1";
+    doc["gunid"] = "gun1";
+
     char jsonBuffer[512];
     serializeJson(doc, jsonBuffer);
-    client.publish(ISRFIRE_PUBLISH_TOPIC, jsonBuffer);
+    if (gunMod == -1){
+      for (int i = 1; i < bulletVal; i++){
+        Serial.println("Triger l");
+        client.publish(ISRFIRE_PUBLISH_TOPIC, jsonBuffer);
+        delay(100);
+      }
+    }else{
+      client.publish(ISRFIRE_PUBLISH_TOPIC, jsonBuffer);
+    }
     trigerState = 0;
   }
   if (reloadState){
