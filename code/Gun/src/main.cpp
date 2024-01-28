@@ -17,7 +17,7 @@
 #define LATCH_PIN 25 // Shift Register
 #define CLOCK_PIN 26 // Shift Register 
 #define DATA_PIN  27 // Shift Register
-#define ZOOM_PIN 32 // Pot 1
+// #define ZOOM_PIN 32 // Pot 1
 #define RELOAD_PIN 33 // IR Sensor
 #define BULLET_COUNT_PIN 34 // Pot 2
 #define GUN_SELECT_PIN 35 // Pot 3
@@ -34,13 +34,13 @@ volatile unsigned long lastTime = 0;
 byte bulletsLEDs = 0b1111111111;
 int gunCategory = 1;
 int bulletVal = 1;
-int zoomVal = 100;
+// int zoomVal = 100;
 int gunMod = 0;
 bool trigerState = 0;
 bool reloadState = 0;
 bool gunModeStatus = 0;
 sensors_event_t a, g, temp;
-int zoomPotVal; // Pot 1
+// int zoomPotVal; // Pot 1
 int bulletPotVal; // Pot 2
 int gunPotVal; // Pot 3
 double roll;
@@ -99,11 +99,11 @@ PubSubClient client(net);
 
 // Get Potentiameter values
 void getPolVal(){
-  zoomPotVal = analogRead(ZOOM_PIN);
+  // zoomPotVal = analogRead(ZOOM_PIN);
   bulletPotVal = analogRead(BULLET_COUNT_PIN);
   gunPotVal = analogRead(GUN_SELECT_PIN);
 
-  zoomVal = (zoomPotVal / 4095.0) * 100;
+  // zoomVal = (zoomPotVal / 4095.0) * 100;
   bulletVal = bulletPotVal / BULLET_STEPS + 1;
   gunCategory = gunPotVal / GUN_STEPS + 1;
 }
@@ -130,7 +130,9 @@ void getGyro(){
   // Calculate roll and pitch
   // roll = atan2(ay, az) * RAD_TO_DEG;
   // pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
-   roll  = atan2(Ay, Az) * 180 / PI;
+  // roll  = atan2(Ay, Az) * 180 / PI;
+  // pitch = atan2(Ax, sqrt(Ay * Ay + Az * Az)) * 180 / PI;
+   roll  = atan2(-Az, Ay) * 180 / PI;
    pitch = atan2(Ax, sqrt(Ay * Ay + Az * Az)) * 180 / PI;
 }
 
@@ -183,7 +185,7 @@ void updateShiftRegister()
 // Connect to WIFI
 void connectWIFI(){
   WiFi.mode(WIFI_STA);
-  WiFi.config(INADDR_NONE, INADDR_NONE, dns);
+  // WiFi.config(INADDR_NONE, INADDR_NONE, dns);
   WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
  
   Serial.println("Connecting to Wi-Fi");
@@ -210,7 +212,7 @@ void connectAWS(){
   }
  
   // Subscribe to a topic
-  client.subscribe(SUBSCRIBE_TOPIC);
+  // client.subscribe(SUBSCRIBE_TOPIC);
  
   Serial.println("AWS IoT Connected!");
 }
@@ -226,7 +228,7 @@ void publishMessage(){
   doc["Roll"] = roll;
   doc["Pitch"] = pitch;
   doc["BulletVal"] = bulletVal;
-  doc["ZoomVal"] = zoomVal;
+  // doc["ZoomVal"] = zoomVal;
   doc["GunCategory"] = gunCategory;
 
   char jsonBuffer[512];
@@ -294,6 +296,7 @@ void setup(void) {
   // Configure the Broker
   // Configure WiFiClientSecure to use the AWS IoT device credentials
   net.setCACert(AWS_CERT_CA);
+  // net.setCACertBundle(AWS_CERT_CRT);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);
 
@@ -315,13 +318,18 @@ void setup(void) {
   Serial.println("");
 
   // Initialize the gun
-  client.publish(PUBLISH_TOPIC, "Hello from ESP32");
+  // client.publish(PUBLISH_TOPIC, "Hello from ESP32");
   getPolVal();
   updateBullets();
-  delay(100);
 }
 
 void loop() {
+  if (!client.connected()) {
+    connectAWS();
+    delay(500);
+  } else {
+    client.loop();
+  }
   /* Get new sensor events with the readings */
   if (trigerState){
     Serial.println("Triger");
@@ -340,6 +348,7 @@ void loop() {
   unsigned long time = millis();
   if (time - lastTime > 100){
     publishMessage();
+    Serial.println("Pub");
     lastTime = time;
   }
 }
