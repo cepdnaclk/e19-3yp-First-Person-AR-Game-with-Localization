@@ -11,9 +11,9 @@ const client = new ApiGatewayManagementApiClient({ endpoint: ENDPOINT });
 exports.handler = async (event, context) => {
     try {
         const result = event;
-        const ammo = result.ammo;
-        const health = result.health;
-        const gunid = fireresult.ssid;
+        const ammo = result.Ammo;
+        const health = result.Health;
+        const gunid = result.SSID;
         
         var numericPart = gunid[3];
         var topic = "gun/"+numericPart+"/healthammo";
@@ -33,7 +33,7 @@ exports.handler = async (event, context) => {
 
         
         const command = new PublishCommand(input);
-        const response = await client.send(command)
+        const response = await iotclient.send(command)
 
         const playerParams = {
             "TableName": 'arcombat-gunid',
