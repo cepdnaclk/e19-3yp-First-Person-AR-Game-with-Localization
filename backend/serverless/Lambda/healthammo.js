@@ -1,6 +1,8 @@
 const { ApiGatewayManagementApiClient, PostToConnectionCommand } = require("@aws-sdk/client-apigatewaymanagementapi");
 const { DynamoDBClient,  GetItemCommand } = require("@aws-sdk/client-dynamodb");
+const { IoTDataPlaneClient, PublishCommand } = require("@aws-sdk/client-iot-data-plane");
 const dbclient = new DynamoDBClient()
+const iotclient = new IoTDataPlaneClient();
 
 const ENDPOINT = 'https://9c0zh8p4oj.execute-api.ap-southeast-1.amazonaws.com/beta/';
 
@@ -13,6 +15,25 @@ exports.handler = async (event, context) => {
         const health = result.health;
         const gunid = fireresult.ssid;
         
+        var numericPart = gunid[3];
+        var topic = "gun/"+numericPart+"/healthammo";
+
+          
+        const msg =JSON.stringify({
+            "health":health,
+            'ammo':ammo
+        })
+
+        const input = { // PublishRequest
+            topic: topic, 
+            
+            payload: msg,
+           
+          };
+
+        
+        const command = new PublishCommand(input);
+        const response = await client.send(command)
 
         const playerParams = {
             "TableName": 'arcombat-gunid',
@@ -42,11 +63,7 @@ exports.handler = async (event, context) => {
         const playerId = responseplayerId.Item.connectionid.S;
        
     
-        
-        const msg =JSON.stringify({
-            "health":health,
-            'ammo':ammo
-        })
+      
 
         // console.log(event);
         const Msg = {
