@@ -3,12 +3,12 @@
 #include <PubSubClient.h>
 
 // WiFi credentials
-const char* ssid = "SLT-4G_166F33";
-const char* password = "F568A2FF";
+const char* ssid = "";
+const char* password = "";
 
 // AWS IoT credentials
-const char* aws_endpoint = "a2leuqp8y2i70g-ats.iot.ap-southeast-1.amazonaws.com"; // Your AWS IoT endpoint
-const char* aws_topic = "pir/1/pub"; // Your MQTT topic
+const char* aws_endpoint = ""; // Your AWS IoT endpoint
+const char* aws_topic = ""; // Your MQTT topic
 
 // Certificates and private key
 const char* root_ca = R"EOF(
