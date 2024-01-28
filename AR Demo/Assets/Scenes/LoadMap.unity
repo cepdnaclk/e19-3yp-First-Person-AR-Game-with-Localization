@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708985, g: 0.3783704, b: 0.35722548, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311918, g: 0.3807398, b: 0.35872716, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1646,12 +1646,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b128226ef7bb4a479014d3841883e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scoreText: {fileID: 88658948}
-  scoreText2: {fileID: 1004700075}
-  healthBar: {fileID: 89891845}
-  healthBar2: {fileID: 7343741}
-  shootButton: {fileID: 1911649515}
-  shootButton2: {fileID: 465206409}
+  scoreText: {fileID: 0}
+  scoreText2: {fileID: 0}
+  healthBar: {fileID: 0}
+  healthBar2: {fileID: 0}
+  shootButton: {fileID: 0}
+  shootButton2: {fileID: 0}
   score: 0
   health: 1
 --- !u!4 &295199176
@@ -2591,14 +2591,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 713d5a375bdee8448a0ba0dac4c8c0ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSlider: {fileID: 89891845}
-  healthSlider2: {fileID: 7343741}
-  redSplatter: {fileID: 817678451}
-  redSplatter2: {fileID: 1631777267}
-  whiteGradient: {fileID: 1077349442}
+  healthSlider: {fileID: 0}
+  healthSlider2: {fileID: 0}
+  redSplatter: {fileID: 0}
+  redSplatter2: {fileID: 0}
+  whiteGradient: {fileID: 0}
   whiteGradient2: {fileID: 1320087751}
-  gameOverText: {fileID: 1397496993}
-  gameOverText2: {fileID: 716231012}
+  gameOverText: {fileID: 0}
+  gameOverText2: {fileID: 0}
   maxHealth: 1
   minHealth: 0
 --- !u!1 &465591900
@@ -3590,16 +3590,17 @@ RectTransform:
   - {fileID: 817678450}
   - {fileID: 1631777266}
   - {fileID: 1077349441}
-  - {fileID: 1320087750}
   - {fileID: 7343740}
   - {fileID: 89891844}
   - {fileID: 1397496992}
   - {fileID: 716231011}
   - {fileID: 1911649514}
   - {fileID: 465206408}
-
-
   - {fileID: 898818466}
+  - {fileID: 88658946}
+  - {fileID: 1004700073}
+  - {fileID: 1472792109}
+  - {fileID: 1025985656}
   m_Father: {fileID: 465413873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -4350,7 +4351,7 @@ MonoBehaviour:
   ResolveMenu: {fileID: 1135502107}
   PrivacyPrompt: {fileID: 1592774298}
   ARView: {fileID: 773448182}
-  GameScreen: {fileID: 557033158}
+  GameScreen: {fileID: 0}
   Mode: 0
 --- !u!4 &768157053
 Transform:
@@ -4588,7 +4589,7 @@ MonoBehaviour:
   DebugText: {fileID: 1918516692}
   SaveButton: {fileID: 2100399337}
   ShareButton: {fileID: 288205550}
-  GameScreen: {fileID: 557033158}
+  GameScreen: {fileID: 0}
   cloudAnchor: {fileID: 0}
 --- !u!224 &773448184
 RectTransform:
@@ -4989,9 +4990,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-
-  m_SizeDelta: {x: 0, y: 0}
-
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &857380707
 MonoBehaviour:
@@ -7080,10 +7079,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1319548629}
   m_CullTransparentMesh: 0
-
-
 --- !u!1 &1320087749
-
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -7091,70 +7087,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-
   - component: {fileID: 1320087750}
-  - component: {fileID: 1320087752}
-  - component: {fileID: 1320087751}
-  m_Layer: 5
-  m_Name: BlackBakground (1)
-
+  m_Layer: 0
+  m_Name: 
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
-
---- !u!224 &1320087750
-
-RectTransform:
+  m_IsActive: 0
+--- !u!4 &1320087750
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-
   m_GameObject: {fileID: 1320087749}
-
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-
-  m_Father: {fileID: 557033159}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -6, y: 0}
-  m_SizeDelta: {x: 1820, y: 786.15375}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1320087751
-
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-
-  m_GameObject: {fileID: 1320087749}
-  m_Enabled: 0
-
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-
-  m_Color: {r: 1, g: 0, b: 0, a: 0.40392157}
-
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-
-  m_Sprite: {fileID: 21300000, guid: b3e3e640f57b9cf4aacc81ce2a852237, type: 3}
-
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7164,18 +7140,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
-
---- !u!222 &1320087752
-
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-
-  m_GameObject: {fileID: 1320087749}
-
-  m_CullTransparentMesh: 1
 --- !u!1 &1372654769
 GameObject:
   m_ObjectHideFlags: 0
@@ -9876,11 +9840,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 857380706}
-
   - {fileID: 474897650}
   - {fileID: 183914136}
   - {fileID: 1012290601}
-
   m_Father: {fileID: 465413873}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -10232,8 +10194,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-
-
 --- !u!114 &1911649516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11549,6 +11509,4 @@ SceneRoots:
   - {fileID: 591552620}
   - {fileID: 588276225}
   - {fileID: 481558932}
-
   - {fileID: 295199176}
-
