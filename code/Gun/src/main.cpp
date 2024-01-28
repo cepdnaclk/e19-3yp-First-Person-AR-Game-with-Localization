@@ -138,11 +138,13 @@ void getGyro(){
 
 // TODO: Implement middle 0 functionallity
 void IRAM_ATTR setManuvalFire(){
+  Serial.println("Manuval Fire");
   gunMod = 1;
   gunModeStatus = 1;
 }
 
 void IRAM_ATTR setAutomaticFire(){
+  Serial.println("Automatic Fire");
   gunMod = -1;
   gunModeStatus = 1;
 }
@@ -225,11 +227,12 @@ void publishMessage(){
 
   StaticJsonDocument<200> doc;
 
-  doc["Roll"] = roll;
-  doc["Pitch"] = pitch;
-  doc["BulletVal"] = bulletVal;
+  doc["gyrox"] = roll;
+  doc["gyroy"] = pitch;
+  // doc["BulletVal"] = bulletVal;
   // doc["ZoomVal"] = zoomVal;
-  doc["GunCategory"] = gunCategory;
+  doc["gunid"] = 1;
+  doc["guncategory"] = gunCategory;
 
   char jsonBuffer[512];
   serializeJson(doc, jsonBuffer); // print to client
@@ -296,7 +299,6 @@ void setup(void) {
   // Configure the Broker
   // Configure WiFiClientSecure to use the AWS IoT device credentials
   net.setCACert(AWS_CERT_CA);
-  // net.setCACertBundle(AWS_CERT_CRT);
   net.setCertificate(AWS_CERT_CRT);
   net.setPrivateKey(AWS_CERT_PRIVATE);
 
@@ -333,16 +335,24 @@ void loop() {
   /* Get new sensor events with the readings */
   if (trigerState){
     Serial.println("Triger");
-    client.publish(ISRFIRE_PUBLISH_TOPIC, "1");
+    StaticJsonDocument<200> doc;
+
+    doc["fire"] = 1;
+    doc["gunid"] = 1;
+    
+    char jsonBuffer[512];
+    serializeJson(doc, jsonBuffer);
+    client.publish(ISRFIRE_PUBLISH_TOPIC, jsonBuffer);
     trigerState = 0;
   }
   if (reloadState){
     Serial.println("Reload");
-    client.publish(ISRRELOAD_PUBLISH_TOPIC, "1");
+    //client.publish(ISRRELOAD_PUBLISH_TOPIC, "1");
     reloadState = 0;
   }
   if (gunModeStatus){
-    client.publish(ISRMODE_PUBLISH_TOPIC, String(gunMod).c_str());
+    Serial.println("Gun Mode");
+    // client.publish(ISRMODE_PUBLISH_TOPIC, String(gunMod).c_str());
     gunModeStatus = 0;
   }
   unsigned long time = millis();
