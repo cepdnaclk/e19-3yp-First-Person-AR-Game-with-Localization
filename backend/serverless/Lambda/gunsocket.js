@@ -8,28 +8,32 @@ const client = new ApiGatewayManagementApiClient({ endpoint: ENDPOINT });
 
 exports.handler = async (event, context) => {
     try {
-        const gunresult = event
-        const screenshot = gunresult.screenshot
-        const gyrox = gunresult.gyrox
-        const gyroy = gunresult.gyroy
-        const gunid = gunresult.gunid
+        const gunresult = event;
+        const screenshot = gunresult.screenshot;
+        const gyrox = gunresult.gyrox;
+        const gyroy = gunresult.gyroy;
+        const gunid = gunresult.gunid;
         console.log(event)
-        
+        ;
 
         const playerParams = {
-            "TableName": 'Arcombat-gunid',
+            "TableName": 'arcombat-gunid',
             "Key": {
                 "gunid": {"S": gunid},
                 
             }
         };
+      
 
       
 
 
         const commandPlayer = new GetItemCommand(playerParams);
+        
         const playerResponse = await dbclient.send(commandPlayer);
+        console.log(playerResponse);
         const email = playerResponse.Item.email.S;
+    //        const email = "e19163@eng.pdn.ac.lk"
 
         const playerIdParams = {
             "TableName": 'Arcombat-socket',
@@ -67,19 +71,13 @@ exports.handler = async (event, context) => {
             ConnectionId: playerId,
         };
 
-        if (screenshot == "1"){
-            const commandSendScreenshot = new PostToConnectionCommand(screenshotMsg);
-            await client.send(commandSendScreenshot);
-        }
+       
 
         const commandSendGyro = new PostToConnectionCommand(gyroMsg);
         await client.send(commandSendGyro);
 
 
-        return {
-            statusCode: 200,
-            body: JSON.stringify('msg passed.')
-        };
+        return "success"
     } catch (error) {
         console.error('Error:', error);
 
