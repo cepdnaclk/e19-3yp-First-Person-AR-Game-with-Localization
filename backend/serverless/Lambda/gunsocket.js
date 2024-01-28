@@ -12,31 +12,23 @@ exports.handler = async (event, context) => {
         const screenshot = gunresult.screenshot
         const gyrox = gunresult.gyrox
         const gyroy = gunresult.gyroy
+        const gunid = gunresult.gunid
         console.log(event)
         
 
-        const hitterIdParams = {
-            "TableName": 'Arcombat-socket',
+        const playerParams = {
+            "TableName": 'Arcombat-gunid',
             "Key": {
-                "email": {"S": hit},
+                "gunid": {"S": gunid},
                 
             }
         };
 
-        const shooterIdParams = {
-            "TableName": 'Arcombat-socket',
-            "Key": {
-                "email": {"S": shooter},
-                
-            }
-        };
-        const commandHitId = new GetItemCommand(hitterIdParams);
-        const responseHitId = await dbclient.send(commandHitId);
-        const hitterId = responseHitId.Item.connectionid.S;
-
-        const commandShootId = new GetItemCommand(shooterIdParams);
-        const responseShootId = await dbclient.send(commandShootId);
-        const shooterId = responseShootId.Item.connectionid.S;
+        const commandPlayer = new GetItemCommand(playerParams);
+        const playerResponse = await dbclient.send(commandPlayer);
+        const email = playerResponse.Item.email.S;
+       
+    
         
 
         const hitsocketmsg =JSON.stringify({
