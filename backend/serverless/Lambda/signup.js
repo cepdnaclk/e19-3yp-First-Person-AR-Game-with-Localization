@@ -61,7 +61,7 @@ exports.handler = async (event, context, callback) => {
 
          // Map gunid to email table
          const dynamoDBParamsgunids = {
-            "TableName": 'Arcombat-gunid',
+            "TableName": 'arcombat-gunid',
             "Item": {
                 "gunid": {"S": gunid},
                 "email": {"S": email},
@@ -74,8 +74,6 @@ exports.handler = async (event, context, callback) => {
             "TableName": 'Arcombat-env',
             "Item": {
                 "email": {"S": email},
-                // "users": {"L":{}},
-                // "stationid": {"L":{}}
                            
             }
         };
