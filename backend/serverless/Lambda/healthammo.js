@@ -8,11 +8,10 @@ const client = new ApiGatewayManagementApiClient({ endpoint: ENDPOINT });
 
 exports.handler = async (event, context) => {
     try {
-        const fireresult = event;
-
-
-        const gyroy = fireresult.fire;
-        const gunid = fireresult.gunid;
+        const result = event;
+        const ammo = result.ammo;
+        const health = result.health;
+        const gunid = fireresult.ssid;
         
 
         const playerParams = {
@@ -44,12 +43,15 @@ exports.handler = async (event, context) => {
        
     
         
-
+        const msg =JSON.stringify({
+            "health":health,
+            'ammo':ammo
+        })
 
         // console.log(event);
         const Msg = {
            // Data : hitsocketmsg,
-            Data: "fire",
+            Data: msg,
             ConnectionId: playerId
         };
      
