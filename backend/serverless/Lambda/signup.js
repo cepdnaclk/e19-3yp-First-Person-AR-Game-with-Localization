@@ -58,6 +58,17 @@ exports.handler = async (event, context, callback) => {
                 
             }
         };
+
+         // Map gunid to email table
+         const dynamoDBParamsgunids = {
+            "TableName": 'Arcombat-gunid',
+            "Item": {
+                "gunid": {"S": gunid},
+                "email": {"S": email},
+                
+            }
+        };
+
         //add environment to DynamoDB model
         const dynamoDBParamsEnv = {
             "TableName": 'Arcombat-env',
@@ -76,6 +87,9 @@ exports.handler = async (event, context, callback) => {
 
         const commandEnv = new PutItemCommand(dynamoDBParamsEnv);
         const responsedbEnv = await client.send(commandEnv);
+        
+        const commandGunid = new PutItemCommand(dynamoDBParamsgunids);
+        const responsedbGunid = await client.send(commandGunid);
         
         
 
