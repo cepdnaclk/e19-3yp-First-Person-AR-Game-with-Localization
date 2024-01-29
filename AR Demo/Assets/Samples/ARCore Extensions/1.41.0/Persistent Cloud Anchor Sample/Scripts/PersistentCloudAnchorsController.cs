@@ -56,6 +56,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         public ARSessionOrigin SessionOrigin;
 #endif
 
+       
+
+
         /// <summary>
         /// The ARSession used in the example.
         /// </summary>
@@ -103,6 +106,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// and returns to home page.
         /// </summary>
         public GameObject ARView;
+
+
+
+        public GameObject GameScreen;
 
         /// <summary>
         /// The current application mode.
@@ -220,14 +227,14 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// </summary>
         public void SwitchToPrivacyPrompt()
         {
-            if (PlayerPrefs.HasKey(_hasDisplayedStartInfoKey))
-            {
+            ///if (PlayerPrefs.HasKey(_hasDisplayedStartInfoKey))
+            //{
                 SwitchToARView();
                 return;
-            }
+            //}
 
-            ResetAllViews();
-            PrivacyPrompt.SetActive(true);
+           // ResetAllViews();
+           // PrivacyPrompt.SetActive(true);
         }
 
         /// <summary>
@@ -295,10 +302,13 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         public void Awake()
         {
             // Lock screen to portrait.
-            Screen.autorotateToLandscapeLeft = false;
-            Screen.autorotateToLandscapeRight = false;
-            Screen.autorotateToPortraitUpsideDown = false;
-            Screen.orientation = ScreenOrientation.Portrait;
+            Screen.autorotateToLandscapeLeft = true;
+            Screen.autorotateToLandscapeRight = true;
+            if (GameScreen!= null) {
+                GameScreen.SetActive(false);
+            }
+            
+            //Screen.orientation = ScreenOrientation.Portrait;
 
             // Enable Persistent Cloud Anchors sample to target 60fps camera capture frame rate
             // on supported devices.
@@ -330,9 +340,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         private void ResetAllViews()
         {
             Screen.sleepTimeout = SleepTimeout.SystemSetting;
-            SetPlatformActive(false);
-            ARView.SetActive(false);
-            PrivacyPrompt.SetActive(false);
+            //SetPlatformActive(false);
+            //ARView.SetActive(false);
+            //PrivacyPrompt.SetActive(false);
             ResolveMenu.SetActive(false);
             HomePage.SetActive(false);
         }

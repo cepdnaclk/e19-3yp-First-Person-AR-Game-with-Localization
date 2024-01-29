@@ -9,56 +9,56 @@ public class RegisterPlayer : MonoBehaviour
     [SerializeField] private TMP_InputField username;
     [SerializeField] private TMP_InputField password;
     [SerializeField] private TMP_InputField re_password;
+    [SerializeField] private TMP_InputField gun_id;
     [SerializeField] private TMP_Text textBox;
 
-    IEnumerator Notification(String text){
+    IEnumerator Notification(string text)
+    {
         textBox.text = text;
         yield return text;
     }
 
     IEnumerator PostRequest(string url, string jsonData)
     {
-        // Create a UnityWebRequest object
         UnityWebRequest request = new UnityWebRequest(url, "POST");
-
-        // Set request headers
-        request.SetRequestHeader("Content-Type", "application/json");
-
-        // Convert JSON data to byte array
         byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes(jsonData);
 
-        // Set the request body
         request.uploadHandler = new UploadHandlerRaw(bodyRaw);
         request.downloadHandler = new DownloadHandlerBuffer();
 
-        // Send the request
+        request.SetRequestHeader("Content-Type", "application/json");
+
         yield return request.SendWebRequest();
 
-        // Check for errors
         if (request.result != UnityWebRequest.Result.Success)
         {
             Debug.LogError("Error: " + request.error);
-            StartCoroutine(Notification("An error occured"));
+            Debug.LogError("Response code: " + request.responseCode);
+            StartCoroutine(Notification("An error occurred"));
         }
         else
         {
-            // Request successful, process the response
             Debug.Log("Response: " + request.downloadHandler.text);
+            StartCoroutine(Notification("Registeration successful"));
         }
     }
 
     public void Register()
     {
-        Debug.Log(password,re_password);
-        if (password.text == re_password.text) {
-            string url = "https://your-backend-endpoint-url.com/api/endpoint";
-            
-            // Example JSON data to send in the request
-            string jsonData = "{\"username\":\"" + username.text + "\",\"password\":\"" + password.text + "\"}";
+        if (password.text == re_password.text)
+        {
+            string url = "https://z760hx70mc.execute-api.ap-southeast-1.amazonaws.com/beta/signup";
+
+            string jsonData = "{\"email\":\"" + username.text +
+                              "\",\"password\":\"" + password.text +
+                              "\",\"gunid\":\"" + gun_id.text +
+                              "\",\"gloveid\":\"" + "gloveid" +
+                              "\",\"headsetid\":\"" + "headsetid" + "\"}";
 
             StartCoroutine(PostRequest(url, jsonData));
-        } else {
-            Debug.Log("Passwords are not equal");
+        }
+        else
+        {
             StartCoroutine(Notification("Passwords are not equal"));
         }
     }

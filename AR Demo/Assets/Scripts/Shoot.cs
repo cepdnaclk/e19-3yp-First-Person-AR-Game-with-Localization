@@ -6,7 +6,7 @@ public class Shoot : MonoBehaviour
 {
 
     public GameObject arCamera;
-    private int score = 0;
+    public int score = 0;
     public TMPro.TextMeshProUGUI scoreText;
     
     
@@ -25,6 +25,11 @@ public class Shoot : MonoBehaviour
                 scoreText.text = "Score: " + score;
             }
         }
+    }
+    public void IncrementScore()
+    {
+        score++;
+        scoreText.text = "Score: " + score;
     }
     
     

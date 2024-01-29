@@ -1,9 +1,13 @@
 {
   "dependencies": {
+    "com.endel.nativewebsocket": "https://github.com/endel/NativeWebSocket.git#upm",
     "com.google.ar.core.arfoundation.extensions": "https://github.com/google-ar/arcore-unity-extensions.git",
+    "com.unity.adaptiveperformance": "5.0.2",
+    "com.unity.adaptiveperformance.google.android": "1.2.1",
     "com.unity.cinemachine": "2.9.5",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.ext.nunit": "1.0.6",
+    "com.unity.feature.2d": "2.0.0",
     "com.unity.feature.ar": "1.0.1",
     "com.unity.feature.development": "1.0.1",
     "com.unity.ide.rider": "3.0.26",
@@ -12,7 +16,7 @@
     "com.unity.postprocessing": "3.2.2",
     "com.unity.progrids": "3.0.3-preview.6",
     "com.unity.test-framework": "1.1.33",
-    "com.unity.textmeshpro": "3.0.6",
+    "com.unity.textmeshpro": "3.0.7",
     "com.unity.timeline": "1.7.6",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.1",

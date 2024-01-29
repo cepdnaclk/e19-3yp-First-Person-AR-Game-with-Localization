@@ -20,6 +20,7 @@
 
 namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
 {
+    using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
@@ -30,6 +31,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
     using UnityEngine.XR.ARFoundation;
     using UnityEngine.XR.ARSubsystems;
 
+    
+
     /// <summary>
     /// A manager component that helps with hosting and resolving Cloud Anchors.
     /// </summary>
@@ -39,6 +42,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         /// The main controller for Persistent Cloud Anchors sample.
         /// </summary>
         public PersistentCloudAnchorsController Controller;
+
+        
 
         /// <summary>
         /// The 3D object that represents a Cloud Anchor.
@@ -212,6 +217,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         private Color _activeColor;
         private AndroidJavaClass _versionInfo;
 
+
+        public GameObject GameScreen;
+
         /// <summary>
         /// Get the camera pose for the current frame.
         /// </summary>
@@ -254,6 +262,9 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
         {
             GUIUtility.systemCopyBuffer = _hostedCloudAnchor.Id;
             DebugText.text = "Copied cloud id: " + _hostedCloudAnchor.Id;
+            string cloudID = GetCloudAnchorID(_hostedCloudAnchor.Id);
+            cloudAnchor.sendCloudIdtoDatabase(cloudID);
+            Debug.Log("Cloud Anchor ID: " + cloudID);
         }
 
         /// <summary>
@@ -540,6 +551,8 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
             }
         }
 
+        public CloudAnchor cloudAnchor;
+
         private IEnumerator HostAnchor()
         {
             yield return _hostPromise;
@@ -552,11 +565,18 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
                 _hostedCloudAnchor =
                     new CloudAnchorHistory("CloudAnchor" + count, _hostResult.CloudAnchorId);
                 OnAnchorHostedFinished(true, _hostResult.CloudAnchorId);
+
+                
             }
             else
             {
                 OnAnchorHostedFinished(false, _hostResult.CloudAnchorState.ToString());
             }
+        }
+
+        public string GetCloudAnchorID(string cloudAnchorId)
+        {
+            return cloudAnchorId;
         }
 
         private void ResolvingCloudAnchors()
@@ -648,6 +668,10 @@ namespace Google.XR.ARCoreExtensions.Samples.PersistentCloudAnchors
                 InstructionText.text = "Resolve success!";
                 DebugText.text =
                     string.Format("Succeed to resolve the Cloud Anchor: {0}.", cloudId);
+
+                GameScreen.SetActive(true);
+                UpdatePlaneVisibility(false);
+
             }
             else
             {
