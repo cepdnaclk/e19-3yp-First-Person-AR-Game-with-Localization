@@ -2,7 +2,7 @@ const { ApiGatewayManagementApiClient, PostToConnectionCommand } = require("@aws
 const { DynamoDBClient,  GetItemCommand } = require("@aws-sdk/client-dynamodb");
 const { IoTDataPlaneClient, PublishCommand } = require("@aws-sdk/client-iot-data-plane");
 const dbclient = new DynamoDBClient()
-const iotclient = new IoTDataPlaneClient();
+const iotclient = new IoTDataPlaneClient({endpoint: 'https://a2leuqp8y2i70g-ats.iot.ap-southeast-1.amazonaws.com'});
 
 const ENDPOINT = 'https://9c0zh8p4oj.execute-api.ap-southeast-1.amazonaws.com/beta/';
 
