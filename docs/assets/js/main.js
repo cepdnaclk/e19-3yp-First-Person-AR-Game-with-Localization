@@ -168,3 +168,50 @@
   });
 
 })()
+
+// slider.js
+let slideIndex = 0;
+let slides = document.getElementsByClassName("slide");
+let dotsContainer = document.querySelector(".dots");
+let dots = [];
+
+// Function to create dots
+function createDots() {
+    for (let i = 0; i < slides.length; i++) {
+        let dot = document.createElement("span");
+        dot.classList.add("dot");
+        dot.addEventListener("click", () => {
+            moveSlide(i - slideIndex);
+        });
+        dotsContainer.appendChild(dot);
+        dots.push(dot);
+    }
+}
+
+function moveSlide(n) {
+    slideIndex += n;
+    if (slideIndex >= slides.length) {
+        slideIndex = 0;
+    } else if (slideIndex < 0) {
+        slideIndex = slides.length - 1;
+    }
+    showSlides();
+}
+
+function showSlides() {
+    for (let i = 0; i < slides.length; i++) {
+        slides[i].classList.remove("active");
+        dots[i].classList.remove("active-dot");
+    }
+    
+    slides[slideIndex].classList.add("active");
+    dots[slideIndex].classList.add("active-dot");
+}
+
+createDots(); // Create dots dynamically
+showSlides(); // Initialize slides
+
+// Optional: Auto sliding
+setInterval(function() {
+    moveSlide(1);
+}, 3000); // Change image every 3 seconds
